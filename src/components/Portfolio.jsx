@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 // GitHub SVG Icon
 const GitHubIcon = () => (
@@ -295,24 +296,46 @@ function Nav({ active }) {
       </a>
 
       <div className="nav-links" style={{ display: "flex", gap: 24, alignItems: "center" }}>
-        {NAV_ITEMS.map(item => (
-          <a
-            key={item}
-            href={`#${item.toLowerCase()}`}
-            data-hover
-            style={{
-              color: active === item.toLowerCase() ? "#ff6b35" : "#64748b",
-              textDecoration: "none",
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 600, fontSize: 13,
-              transition: "color 0.2s",
-            }}
-            onMouseEnter={e => e.target.style.color = "#ff6b35"}
-            onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#64748b"}
-          >
-            {item}
-          </a>
-        ))}
+        {NAV_ITEMS.map(item => {
+          if (item === "Projects") {
+            return (
+              <Link
+                key={item}
+                to="/projects"
+                data-hover
+                style={{
+                  color: active === item.toLowerCase() ? "#ff6b35" : "#64748b",
+                  textDecoration: "none",
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 600, fontSize: 13,
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => e.target.style.color = "#ff6b35"}
+                onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#64748b"}
+              >
+                {item}
+              </Link>
+            );
+          }
+          return (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              data-hover
+              style={{
+                color: active === item.toLowerCase() ? "#ff6b35" : "#64748b",
+                textDecoration: "none",
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 600, fontSize: 13,
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={e => e.target.style.color = "#ff6b35"}
+              onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#64748b"}
+            >
+              {item}
+            </a>
+          );
+        })}
         <a
           href="https://github.com/varuna1704"
           target="_blank" rel="noreferrer" data-hover
@@ -801,6 +824,40 @@ function Projects() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div style={{ marginTop: 60, display: "flex", justifyContent: "center" }}>
+        <Link 
+          to="/projects"
+          data-hover
+          style={{
+            padding: "14px 40px",
+            background: "transparent",
+            border: "2px solid #ff6b35",
+            color: "#ff6b35",
+            borderRadius: 12,
+            textDecoration: "none",
+            fontFamily: "'Syne', sans-serif",
+            fontWeight: 700,
+            fontSize: 15,
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+            display: "flex",
+            alignItems: "center",
+            gap: 10
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = "#ff6b35";
+            e.currentTarget.style.color = "#fff";
+            e.currentTarget.style.boxShadow = "0 10px 30px #ff6b3540";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "#ff6b35";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          View All Projects <span style={{ fontSize: 18 }}>→</span>
+        </Link>
       </div>
     </section>
   );
