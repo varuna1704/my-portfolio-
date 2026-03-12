@@ -9,7 +9,7 @@ const GitHubIcon = () => (
 
 /* ─── DATA ─────────────────────────────────────────────────────────────── */
 
-const NAV_ITEMS = ["About", "Skills", "Experience", "Education", "Certifications", "Resume", "Contact"];
+const NAV_ITEMS = ["About", "Skills", "Experience", "Projects", "Education", "Certifications", "Resume", "Contact"];
 
 const SKILLS = [
   { name: "Shopify Development", level: 90, cat: "E-commerce" },
@@ -93,6 +93,33 @@ const CERTIFICATIONS = [
   { title: "Introduction to Technology Apprenticeship", issuer: "Accenture UK", icon: "💼", color: "#00d4aa" },
   { title: "Technology Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#7c3aed" },
   { title: "GenAI Powered Data Analytics", issuer: "Tata", icon: "🤖", color: "#ec4899" },
+];
+
+const PROJECTS = [
+  {
+    title: "AI Review Generator",
+    desc: "A high-performance SaaS tool that generates authentic, SEO-optimized product reviews in bulk using Google's Gemini AI. Features include multi-URL processing and custom persona matching.",
+    tech: ["React", "Gemini AI", "Framer Motion", "Vite"],
+    link: "https://ai-powered-review-generator.vercel.app/",
+    image: "/images/review-gen.png",
+    color: "#ff6b35"
+  },
+  {
+    title: "EcoFarm Management",
+    desc: "An integrated management platform for agricultural operations, helping farmers track stock, manage resources, and optimize yield through data-driven insights.",
+    tech: ["React", "Node.js", "Chart.js"],
+    link: "#",
+    image: "/images/farm-system.png",
+    color: "#00d4aa"
+  },
+  {
+    title: "Capture Studio",
+    desc: "A luxury photography portfolio and booking system featuring cinematic animations, client galleries, and a seamless reservation workflow.",
+    tech: ["React", "Tailwind CSS", "Framer Motion"],
+    link: "#",
+    image: "/images/photo-studio.png",
+    color: "#7c3aed"
+  }
 ];
 
 const CAT_COLORS = {
@@ -693,12 +720,98 @@ function Experience() {
   );
 }
 
+/* ─── PROJECTS ───────────────────────────────────────────────────────── */
+
+function Projects() {
+  const [ref, visible] = useInView();
+  return (
+    <section id="projects" ref={ref} style={{ padding: "100px 8vw" }}>
+      <SectionLabel label="04 — Projects" />
+      <h2 style={{
+        fontFamily: "'Syne', sans-serif",
+        fontSize: "clamp(2rem,5vw,3.2rem)",
+        fontWeight: 800, color: "#fff", margin: "12px 0 48px",
+      }}>
+        Selected <span style={{ color: "#ff6b35" }}>Works</span>
+      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 32 }}>
+        {PROJECTS.map((p, i) => (
+          <div
+            key={i}
+            style={{
+              background: "#0f172a", border: "1px solid #1e293b",
+              borderRadius: 24, overflow: "hidden",
+              transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(40px)",
+              transitionDelay: `${i * 150}ms`,
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = p.color;
+              e.currentTarget.style.transform = "translateY(-10px)";
+              e.currentTarget.style.boxShadow = `0 30px 60px ${p.color}15`;
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = "#1e293b";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <div style={{ height: 210, overflow: "hidden", position: "relative", background: "#111827" }}>
+              <img 
+                src={p.image} 
+                alt={p.title} 
+                style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }}
+              />
+              <div style={{ position: "absolute", top: 12, right: 12 }}>
+                <a 
+                  href={p.link} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  style={{ 
+                    width: 38, height: 38, borderRadius: "50%", 
+                    background: "#ff6b35", display: "flex", 
+                    alignItems: "center", justifyContent: "center", 
+                    color: "#fff", textDecoration: "none",
+                    boxShadow: "0 4px 12px rgba(255,107,53,0.3)"
+                  }}
+                >↗</a>
+              </div>
+            </div>
+            <div style={{ padding: 28 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+                {p.tech.map(t => (
+                  <span key={t} style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", color: p.color, background: `${p.color}15`, padding: "4px 10px", borderRadius: 99, fontWeight: 700 }}>{t}</span>
+                ))}
+              </div>
+              <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 21, fontWeight: 800, color: "#fff", margin: "0 0 12px" }}>{p.title}</h3>
+              <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, marginBottom: 24, height: 68, overflow: "hidden" }}>{p.desc}</p>
+              <a 
+                href={p.link} 
+                target="_blank" 
+                rel="noreferrer" 
+                style={{ 
+                  color: p.color, fontFamily: "'Syne', sans-serif", 
+                  fontWeight: 700, fontSize: 13, textDecoration: "none", 
+                  display: "flex", alignItems: "center", gap: 6 
+                }}
+              >
+                View Live Project ↗
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── EDUCATION ──────────────────────────────────────────────────────── */
 
 function Education() {
   return (
     <section id="education" style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="04 — Education" />
+      <SectionLabel label="05 — Education" />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
@@ -746,7 +859,7 @@ function Certifications() {
   const [ref, visible] = useInView();
   return (
     <section id="certifications" ref={ref} style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="05 — Certifications" />
+      <SectionLabel label="06 — Certifications" />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
@@ -792,7 +905,7 @@ function Certifications() {
 function Resume() {
   return (
     <section id="resume" style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="06 — Resume" />
+      <SectionLabel label="07 — Resume" />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
@@ -947,7 +1060,7 @@ function Contact() {
 
   return (
     <section id="contact" style={{ padding: "100px 8vw 60px" }}>
-      <SectionLabel label="07 — Contact" />
+      <SectionLabel label="08 — Contact" />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
@@ -1053,6 +1166,7 @@ export default function Portfolio() {
         <Hero />
         <Skills />
         <Experience />
+        <Projects />
         <Education />
         <Certifications />
         <Resume />
