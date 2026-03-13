@@ -13,131 +13,116 @@ const GitHubIcon = () => (
 const NAV_ITEMS = ["About", "Skills", "Experience", "Projects", "Education", "Certifications", "Resume", "Contact"];
 
 const SKILLS = [
-  { name: "Shopify Development", level: 90, cat: "E-commerce" },
-  { name: "Theme Customization", level: 88, cat: "E-commerce" },
-  { name: "HTML5", level: 92, cat: "Frontend" },
-  { name: "CSS / UI Design", level: 85, cat: "Frontend" },
-  { name: "Core Java", level: 80, cat: "Backend" },
-  { name: "Python", level: 75, cat: "Backend" },
-  { name: "SQL", level: 82, cat: "Data" },
-  { name: "Data Analytics", level: 78, cat: "Data" },
+  { name: "Shopify Development", level: 95, cat: "E-commerce" },
+  { name: "Liquid / Storefront API", level: 90, cat: "E-commerce" },
+  { name: "React.js / Next.js", level: 85, cat: "Frontend" },
+  { name: "JavaScript (ES6+)", level: 88, cat: "Frontend" },
+  { name: "Python", level: 80, cat: "Backend" },
+  { name: "Node.js / Express", level: 75, cat: "Backend" },
+  { name: "SQL (MySQL/PostgreSQL)", level: 85, cat: "Backend" },
+  { name: "Java / Core Java", level: 75, cat: "Backend" },
+  { name: "Data Analytics", level: 85, cat: "Data" },
+  { name: "Excel / Power BI", level: 82, cat: "Data" },
 ];
 
 const EXPERIENCE = [
   {
-    role: "Shopify Developer",
-    company: "Indigen Services & AI SaaS Development",
-    period: "November 2025 – Present · 5 months",
-    location: "Nashik, Maharashtra, India",
+    role: "Process Associate",
+    company: "Indigen Services",
+    location: "Pune, Maharashtra",
+    period: "Nov 2025 – Present",
+    icon: "⚽",
     color: "#ff6b35",
-    icon: "🛍️",
     points: [
-      "Develop & optimize Shopify stores — theme customization, front-end coding, and UX improvements",
-      "Boost store performance by enhancing conversion rate and page experience",
-      "Contribute to AI SaaS product development alongside e-commerce work",
-    ],
+      "Worked on structured event classification and match tagging for international basketball games.",
+      "Delivered high-quality analytics datasets for sports performance evaluation.",
+      "Maintained 98%+ accuracy in high-speed data annotation environments."
+    ]
   },
   {
-    role: "Data Analyst",
+    role: "Sports Trader Trainee",
     company: "Privan Sports",
-    period: "July 2024 – March 2025 · 9 months",
-    location: "Remote / Global Teams",
-    color: "#00d4aa",
-    icon: "📊",
-    tools: [
-      {
-        name: "SQ – Advanced Version",
-        icon: "🏀",
-        points: [
-          "Tagged 1.5 matches/day at frame-level granularity with 100% QC accuracy",
-          "Mapped jersey numbers, court positions & event timestamps for spatial performance modeling",
-          "Handled high-frame-density workflows requiring precision-based data entry",
-        ],
-      },
-      {
-        name: "VidSwap – Advanced Version",
-        icon: "🎬",
-        points: [
-          "Tagged 2.5 full matches/day (~80/month) using structured event classification",
-          "Annotated goals, plays & player-specific events across international basketball matches",
-          "Delivered analytics-ready datasets supporting performance & strategy evaluation",
-        ],
-      },
-    ],
+    location: "Nashik, Maharashtra",
+    period: "July 2024 – March 2025",
+    icon: "📈",
+    color: "#7c3aed",
+    points: [
+      "Tagged 2.5 full matches per day using structured event classification systems.",
+      "Analyzed game patterns and provided data-driven insights for sports strategy.",
+      "Managed real-time data feeds for international cricket and football matches."
+    ]
+  }
+];
+
+const PROJECTS = [
+  {
+    title: "AI Powered Review Generator",
+    desc: "A powerful tool that generates authentic customer reviews using AI. Supports bulk processing and customization.",
+    tech: ["React", "AI", "Tailwind"],
+    link: "https://aicustomerreviewgenerator.netlify.app/",
+    image: "/images/review-gen.png",
+    color: "#ff6b35"
   },
+  {
+    title: "EcoFarm Management System",
+    desc: "A comprehensive solution for farm management, tracking crops, resources, and sales efficiency.",
+    tech: ["PHP", "MySQL", "Bootstrap"],
+    link: "https://github.com/varuna1704",
+    image: "/images/farm-system.png",
+    color: "#00d4aa"
+  },
+  {
+    title: "Gym Management Pro",
+    desc: "Modern dashboard for gym owners to manage memberships, trainers, and schedules seamlessly.",
+    tech: ["React", "Firebase", "MUI"],
+    link: "https://github.com/varuna1704",
+    image: "/images/gym-system.png",
+    color: "#7c3aed"
+  }
 ];
 
 const EDUCATION = [
   {
     degree: "Master of Computer Applications (MCA)",
-    school: "Dr. B.V. Hiray College of Management & Research Centre",
-    location: "Malegaon, Nashik",
-    period: "August 2023 – June 2025",
-    focus: "Computer Programming, Specific Applications",
-    icon: "🎓",
-    color: "#ff6b35",
-  },
-  {
-    degree: "Bachelor of Computer Science",
-    school: "MGV's Loknete Vyankatrao Hiray Arts, Science & Commerce",
+    school: "Dr. B.V. Hiray College of Management",
     location: "Nashik",
-    period: "March 2020 – July 2023",
-    focus: "Computer Science",
-    icon: "🏫",
-    color: "#7c3aed",
-  },
-];
-
-const CERTIFICATIONS = [
-  { title: "AWS re/Start Graduate", issuer: "Amazon Web Services", icon: "☁️", color: "#f59e0b" },
-  { title: "Solutions Architecture Job Simulation", issuer: "AWS", icon: "🏗️", color: "#ff6b35" },
-  { title: "Introduction to Technology Apprenticeship", issuer: "Accenture UK", icon: "💼", color: "#00d4aa" },
-  { title: "Technology Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#7c3aed" },
-  { title: "GenAI Powered Data Analytics", issuer: "Tata", icon: "🤖", color: "#ec4899" },
-];
-
-const PROJECTS = [
-  {
-    title: "AI Review Generator",
-    desc: "A high-performance SaaS tool that generates authentic, SEO-optimized product reviews in bulk using Google's Gemini AI. Features include multi-URL processing and custom persona matching.",
-    tech: ["React", "Gemini AI", "Framer Motion", "Vite"],
-    link: "https://ai-powered-review-generator.vercel.app/",
-    image: "/images/review-gen.png",
+    period: "2023 – 2025",
+    focus: "Application Development & Data Analytics",
+    icon: "🎓",
     color: "#ff6b35"
   },
   {
-    title: "EcoFarm Management",
-    desc: "An integrated management platform for agricultural operations, helping farmers track stock, manage resources, and optimize yield through data-driven insights.",
-    tech: ["React", "Node.js", "Chart.js"],
-    link: "#",
-    image: "/images/farm-system.png",
-    color: "#00d4aa"
-  },
-  {
-    title: "Capture Studio",
-    desc: "A luxury photography portfolio and booking system featuring cinematic animations, client galleries, and a seamless reservation workflow.",
-    tech: ["React", "Tailwind CSS", "Framer Motion"],
-    link: "#",
-    image: "/images/photo-studio.png",
+    degree: "BSc Computer Science",
+    school: "Loknete Vyankatrao Hiray College",
+    location: "Nashik",
+    period: "2020 – 2023",
+    focus: "Software Engineering & Database Management",
+    icon: "🏫",
     color: "#7c3aed"
   }
 ];
 
-const CAT_COLORS = {
-  "E-commerce": "#ff6b35",
-  Frontend: "#00d4aa",
-  Backend: "#7c3aed",
-  Data: "#f59e0b",
-};
+const CERTIFICATIONS = [
+  { title: "AWS re/Start Graduate", issuer: "Amazon Web Services", icon: "☁️", color: "#f59e0b" },
+  { title: "AWS Solutions Architect Simulation", issuer: "Forage / AWS", icon: "🏗", color: "#ff6b35" },
+  { title: "Introduction to Tech Apprenticeship", issuer: "Accenture UK", icon: "💼", color: "#00d4aa" },
+  { title: "Tech Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#7c3aed" },
+  { title: "GenAI Powered Data Analytics", issuer: "Tata", icon: "🤖", color: "#ec4899" }
+];
 
 const RESUME_DETAILS = [
-  { icon: "🛍️", label: "Current Role", value: "Shopify Developer @ Indigen Services" },
-  { icon: "📊", label: "Previous Role", value: "Data Analyst @ Privan Sports" },
-  { icon: "🎓", label: "Education", value: "MCA 2025 · Dr. B.V. Hiray College, Nashik" },
-  { icon: "☁️", label: "Top Certification", value: "AWS re/Start Graduate" },
-  { icon: "💻", label: "Core Skills", value: "Shopify · HTML5 · Java · Python · SQL" },
-  { icon: "📍", label: "Location", value: "Nashik, Maharashtra, India" },
+  { icon: "📧", label: "Email", value: "nikamvaruna@gmail.com" },
+  { icon: "📞", label: "Phone", value: "+91 7768289006" },
+  { icon: "📍", label: "Location", value: "Nashik, MH, India" },
+  { icon: "🌐", label: "Languages", value: "English, Hindi, Marathi" }
 ];
+
+const CAT_COLORS = {
+  "E-commerce": "#ff6b35",
+  "Frontend": "#00d4aa",
+  "Backend": "#7c3aed",
+  "Data": "#f59e0b"
+};
 
 /* ─── HOOKS ─────────────────────────────────────────────────────────────── */
 
@@ -184,42 +169,6 @@ function AnimatedBar({ level, color, visible }) {
         boxShadow: `0 0 12px ${color}55`,
       }} />
     </div>
-  );
-}
-
-function Cursor() {
-  const [pos, setPos] = useState({ x: -200, y: -200 });
-  const [big, setBig] = useState(false);
-  useEffect(() => {
-    const onMove = (e) => setPos({ x: e.clientX, y: e.clientY });
-    const onOver = (e) => setBig(!!e.target.closest("a,button,[data-hover]"));
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseover", onOver);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseover", onOver);
-    };
-  }, []);
-  return (
-    <>
-      <div style={{
-        position: "fixed", left: pos.x - 6, top: pos.y - 6,
-        width: 12, height: 12, borderRadius: "50%", background: "#ff6b35",
-        pointerEvents: "none", zIndex: 9999,
-        transform: big ? "scale(2.2)" : "scale(1)",
-        transition: "transform 0.15s",
-        mixBlendMode: "screen",
-      }} />
-      <div style={{
-        position: "fixed",
-        left: big ? pos.x - 28 : pos.x - 20,
-        top: big ? pos.y - 28 : pos.y - 20,
-        width: big ? 56 : 40, height: big ? 56 : 40,
-        borderRadius: "50%", border: "1.5px solid #ff6b3555",
-        pointerEvents: "none", zIndex: 9998,
-        transition: "all 0.18s ease",
-      }} />
-    </>
   );
 }
 
@@ -270,7 +219,6 @@ function TypedText() {
 
 function Nav({ active }) {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 40);
@@ -356,25 +304,6 @@ function Nav({ active }) {
         >
           <GitHubIcon /> GitHub ↗
         </a>
-        <a
-          href="https://www.linkedin.com/in/varunanikam-200255255"
-          target="_blank" rel="noreferrer" data-hover
-          style={{
-            padding: "7px 18px",
-            background: "#ff6b3520",
-            border: "1.5px solid #ff6b3540",
-            color: "#ff6b35",
-            borderRadius: 8,
-            textDecoration: "none",
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 700, fontSize: 12,
-            transition: "all 0.2s",
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = "#ff6b35"; e.currentTarget.style.color = "#fff"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "#ff6b3520"; e.currentTarget.style.color = "#ff6b35"; }}
-        >
-          LinkedIn ↗
-        </a>
       </div>
     </nav>
   );
@@ -392,23 +321,17 @@ function Hero() {
       <div style={{
         position: "absolute", top: "8%", right: "3%",
         width: 500, height: 500, borderRadius: "50%",
-        background: "radial-gradient(circle, #ff6b3516 0%, transparent 70%)",
+        background: "radial-gradient(circle, #ff6b3512 0%, transparent 70%)",
         pointerEvents: "none", animation: "float 8s ease-in-out infinite",
       }} />
       <div style={{
         position: "absolute", bottom: "5%", left: "6%",
         width: 360, height: 360, borderRadius: "50%",
-        background: "radial-gradient(circle, #7c3aed16 0%, transparent 70%)",
+        background: "radial-gradient(circle, #7c3aed12 0%, transparent 70%)",
         pointerEvents: "none", animation: "float 10s ease-in-out infinite reverse",
       }} />
-      <div style={{
-        position: "absolute", top: "50%", left: "50%",
-        width: 600, height: 600, borderRadius: "50%",
-        background: "radial-gradient(circle, #00d4aa06 0%, transparent 70%)",
-        transform: "translate(-50%,-50%)", pointerEvents: "none",
-      }} />
 
-      {/* Grid */}
+      {/* Main Container */}
       <div
         className="hero-grid"
         style={{
@@ -475,19 +398,6 @@ function Hero() {
             >
               📄 View Resume
             </a>
-            <a
-              href="mailto:nikamvaruna@gmail.com" data-hover
-              style={{
-                padding: "13px 32px", border: "1.5px solid #334155",
-                color: "#94a3b8", borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-                transition: "all 0.25s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; }}
-            >
-              ✉ Email Me
-            </a>
           </div>
 
           <div style={{
@@ -521,23 +431,11 @@ function Hero() {
           {/* Glow rings */}
           <div style={{
             position: "absolute", width: 460, height: 460, borderRadius: "50%",
-            background: "radial-gradient(circle, #ff6b3512 0%, transparent 70%)",
-            filter: "blur(40px)", animation: "pulse-glow 4s ease-in-out infinite",
-          }} />
-          <div style={{
-            position: "absolute", width: 360, height: 360, borderRadius: "50%",
-            background: "radial-gradient(circle, #7c3aed12 0%, transparent 70%)",
+            background: "radial-gradient(circle, #ff6b3510 0%, transparent 70%)",
             filter: "blur(40px)",
           }} />
-
-          {/* Spinning orbit ring */}
-          <div style={{
-            position: "absolute", width: 420, height: 530,
-            border: "1px dashed #ff6b3520", borderRadius: 24,
-            animation: "spin-slow 30s linear infinite", zIndex: 1,
-          }} />
-
-          {/* Profile image */}
+          
+          {/* Profile image container */}
           <div
             style={{
               position: "relative",
@@ -560,19 +458,18 @@ function Hero() {
           >
             <img
               src="/images/profile.png"
-              alt="Varuna Nikam – Shopify Developer"
+              alt="Varuna Nikam"
               style={{
                 width: "100%", height: "100%",
-                objectFit: "cover", objectPosition: "center top",
+                objectFit: "cover", objectPosition: "center",
                 display: "block",
               }}
               onError={e => {
-                // Fallback avatar if no profile image
                 e.currentTarget.style.display = "none";
                 e.currentTarget.parentElement.innerHTML = `
                   <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);gap:16px;">
                     <div style="font-size:80px">👩‍💻</div>
-                    <div style="color:#334155;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-align:center;">Add profile.png<br/>to public/images/</div>
+                    <div style="color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
                   </div>
                 `;
               }}
@@ -712,29 +609,11 @@ function Experience() {
                 <span style={{ color: "#334155", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>📅 {e.period}</span>
                 <span style={{ color: "#334155", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>📍 {e.location}</span>
               </div>
-              {e.tools ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                  {e.tools.map((tool, ti) => (
-                    <div key={ti} style={{ borderLeft: `2px solid ${e.color}44`, paddingLeft: 16 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                        <span style={{ fontSize: 16 }}>{tool.icon}</span>
-                        <span style={{ color: e.color, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700 }}>{tool.name}</span>
-                      </div>
-                      <ul style={{ margin: 0, padding: "0 0 0 18px" }}>
-                        {tool.points.map((pt, j) => (
-                          <li key={j} style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.85, marginBottom: 5 }}>{pt}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <ul style={{ margin: 0, padding: "0 0 0 18px" }}>
-                  {e.points.map((pt, j) => (
-                    <li key={j} style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.85, marginBottom: 5 }}>{pt}</li>
-                  ))}
-                </ul>
-              )}
+              <ul style={{ margin: 0, padding: "0 0 0 18px" }}>
+                {e.points.map((pt, j) => (
+                  <li key={j} style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.85, marginBottom: 5 }}>{pt}</li>
+                ))}
+              </ul>
             </div>
           </div>
         ))}
@@ -785,6 +664,9 @@ function Projects() {
                 src={p.image} 
                 alt={p.title} 
                 style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }}
+                onError={e => {
+                   e.target.src = "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop";
+                }}
               />
               <div style={{ position: "absolute", top: 12, right: 12 }}>
                 <a 
@@ -809,18 +691,16 @@ function Projects() {
               </div>
               <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 21, fontWeight: 800, color: "#fff", margin: "0 0 12px" }}>{p.title}</h3>
               <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, marginBottom: 24, height: 68, overflow: "hidden" }}>{p.desc}</p>
-              <a 
-                href={p.link} 
-                target="_blank" 
-                rel="noreferrer" 
+              <Link 
+                to="/projects"
                 style={{ 
                   color: p.color, fontFamily: "'Syne', sans-serif", 
                   fontWeight: 700, fontSize: 13, textDecoration: "none", 
                   display: "flex", alignItems: "center", gap: 6 
                 }}
               >
-                View Live Project ↗
-              </a>
+                View Details ↗
+              </Link>
             </div>
           </div>
         ))}
@@ -978,7 +858,6 @@ function Resume() {
         className="resume-grid"
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, maxWidth: 960, alignItems: "start" }}
       >
-        {/* Resume card preview */}
         <div
           style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 20, overflow: "hidden", transition: "box-shadow 0.3s" }}
           onMouseEnter={e => e.currentTarget.style.boxShadow = "0 24px 60px #ff6b3520"}
@@ -1015,22 +894,9 @@ function Resume() {
                 </div>
               </div>
             ))}
-            <div style={{ marginTop: 8, paddingTop: 16, borderTop: "1px solid #1e293b" }}>
-              <div style={{ color: "#334155", fontFamily: "'JetBrains Mono', monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>Certifications</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                {["AWS re/Start", "AWS Solutions Arch", "Accenture UK", "Deloitte AU", "Tata GenAI"].map(c => (
-                  <span key={c} style={{
-                    padding: "3px 10px", borderRadius: 99,
-                    background: "#1e293b", color: "#64748b",
-                    fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
-                  }}>{c}</span>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Download side */}
         <div style={{ display: "flex", flexDirection: "column", gap: 24, justifyContent: "center" }}>
           <div>
             <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 22, color: "#fff", margin: "0 0 12px" }}>
@@ -1040,20 +906,6 @@ function Resume() {
               My resume includes my full work history, educational background, technical skills,
               and all 5 professional certifications — ready for any recruiter or job portal.
             </p>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {[
-              "Work experience at Indigen Services & Privan Sports",
-              "MCA & BSc Computer Science education",
-              "5 industry certifications (AWS, Accenture, Deloitte, Tata)",
-              "Full skills: Shopify, Java, Python, SQL, HTML5",
-              "ATS-friendly format · Clean black & white layout",
-            ].map((item, i) => (
-              <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <span style={{ color: "#00d4aa", marginTop: 1 }}>✓</span>
-                <span style={{ color: "#94a3b8", fontSize: 13, fontFamily: "'Syne', sans-serif" }}>{item}</span>
-              </div>
-            ))}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
             <a
@@ -1071,20 +923,6 @@ function Resume() {
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px #ff6b3540"; }}
             >
               <span style={{ fontSize: 16 }}>⬇</span> Download Resume (PDF)
-            </a>
-            <a
-              href="https://www.linkedin.com/in/varunanikam-200255255"
-              target="_blank" rel="noreferrer" data-hover
-              style={{
-                padding: "14px 28px", border: "1.5px solid #1e293b",
-                color: "#64748b", borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-                transition: "all 0.25s", textAlign: "center",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.color = "#64748b"; }}
-            >
-              View LinkedIn Profile ↗
             </a>
           </div>
         </div>
@@ -1130,7 +968,6 @@ function Contact() {
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 52, maxWidth: 880 }}>
-        {/* Form */}
         <div>
           <input
             type="text" placeholder="Your Name" value={form.name}
@@ -1166,13 +1003,11 @@ function Contact() {
           </button>
         </div>
 
-        {/* Contact info */}
         <div style={{ display: "flex", flexDirection: "column", gap: 14, justifyContent: "center" }}>
           {[
             { icon: "✉️", label: "Email", val: "nikamvaruna@gmail.com", href: "mailto:nikamvaruna@gmail.com" },
             { icon: "📱", label: "Mobile", val: "+91 7768289006", href: "tel:+917768289006" },
             { icon: "💼", label: "LinkedIn", val: "linkedin.com/in/varunanikam-200255255", href: "https://www.linkedin.com/in/varunanikam-200255255" },
-            { icon: "🐙", label: "GitHub", val: "github.com/varuna1704", href: "https://github.com/varuna1704" },
             { icon: "📍", label: "Location", val: "Nashik, Maharashtra, India", href: null },
           ].map(c => (
             <a
@@ -1217,7 +1052,6 @@ export default function Portfolio() {
 
   return (
     <>
-      <Cursor />
       <Nav active={activeSection} />
       <main>
         <Hero />
