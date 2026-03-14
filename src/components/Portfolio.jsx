@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
+import AboutSection from "./AboutSection";
+import ServicesSection from "./ServicesSection";
+import CaseStudiesSection from "./CaseStudiesSection";
+import TestimonialsSection from "./TestimonialsSection";
+import ContactSection from "./ContactSection";
+
 // GitHub SVG Icon
 const GitHubIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
@@ -10,7 +16,7 @@ const GitHubIcon = () => (
 
 /* ─── DATA ─────────────────────────────────────────────────────────────── */
 
-const NAV_ITEMS = ["About", "Skills", "Experience", "Projects", "Education", "Certifications", "Resume", "Contact"];
+const NAV_ITEMS = ["About", "Services", "Case Studies", "Projects", "Testimonials", "Skills", "Experience", "Education", "Certifications", "Resume", "Contact"];
 
 const SKILLS = [
   { name: "Shopify Development", level: 95, cat: "E-commerce" },
@@ -268,17 +274,17 @@ function Nav({ active }) {
           return (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
               data-hover
               style={{
-                color: active === item.toLowerCase() ? "#ff6b35" : "#64748b",
+                color: active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#64748b",
                 textDecoration: "none",
                 fontFamily: "'Syne', sans-serif",
                 fontWeight: 600, fontSize: 13,
                 transition: "color 0.2s",
               }}
               onMouseEnter={e => e.target.style.color = "#ff6b35"}
-              onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#64748b"}
+              onMouseLeave={e => e.target.style.color = active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#64748b"}
             >
               {item}
             </a>
@@ -313,7 +319,7 @@ function Nav({ active }) {
 
 function Hero() {
   return (
-    <section id="about" style={{
+    <section id="home" style={{
       minHeight: "100vh", display: "flex", alignItems: "center",
       padding: "80px 8vw 40px", position: "relative", overflow: "hidden",
     }}>
@@ -383,7 +389,7 @@ function Hero() {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px #ff6b3560"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px #ff6b3540"; }}
             >
-              Hire Me
+              Start Your Project
             </a>
             <a
               href="#resume" data-hover
@@ -1039,7 +1045,7 @@ function Contact() {
 /* ─── ROOT ────────────────────────────────────────────────────────────── */
 
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState("about");
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -1055,13 +1061,17 @@ export default function Portfolio() {
       <Nav active={activeSection} />
       <main>
         <Hero />
+        <AboutSection />
+        <ServicesSection />
+        <CaseStudiesSection />
+        <Projects />
+        <TestimonialsSection />
         <Skills />
         <Experience />
-        <Projects />
         <Education />
         <Certifications />
         <Resume />
-        <Contact />
+        <ContactSection />
       </main>
       <footer style={{
         borderTop: "1px solid #0f172a",

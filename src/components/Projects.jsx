@@ -10,6 +10,7 @@ const FEATURED_PROJECTS = [
     id: 'feat-1',
     title: 'AI Customer Review Generator',
     description: 'A powerful tool that generates authentic customer reviews using AI. Supports bulk processing and customization.',
+    image: '/images/review-gen.png',
     url: 'https://github.com/varuna1704/AI-customer-reviews-generator',
     liveLink: 'https://aicustomerreviewgenerator.netlify.app/',
     language: 'React',
@@ -23,6 +24,7 @@ const FEATURED_PROJECTS = [
     id: 'feat-2',
     title: 'Precision Stock Market Analysis',
     description: 'Advanced stock market analysis tool with real-time data visualization and predictive trends.',
+    image: null,
     url: 'https://github.com/varuna1704/Stock_Market_Analysis',
     liveLink: null,
     language: 'Python',
@@ -36,6 +38,7 @@ const FEATURED_PROJECTS = [
     id: 'feat-3',
     title: 'EcoFarm Management System',
     description: 'A comprehensive solution for farm management, tracking crops, resources, and sales efficiency.',
+    image: '/images/farm-system.png',
     url: 'https://github.com/varuna1704/online-system-for-farm',
     liveLink: null,
     language: 'PHP/SQL',
@@ -48,6 +51,7 @@ const FEATURED_PROJECTS = [
     id: 'feat-4',
     title: 'Capture Studio Pro',
     description: 'Elegant photography studio booking and management platform with client galleries.',
+    image: null,
     url: 'https://github.com/varuna1704/photo-studio',
     liveLink: null,
     language: 'JavaScript',
@@ -60,6 +64,7 @@ const FEATURED_PROJECTS = [
     id: 'feat-5',
     title: 'Gym Management Pro',
     description: 'Modern dashboard for gym owners to manage memberships, trainers, and schedules seamlessly.',
+    image: '/images/gym-system.png',
     url: 'https://github.com/varuna1704/gym_manage_system',
     liveLink: null,
     language: 'Node.js',
@@ -93,6 +98,7 @@ export default function Projects() {
             id: repo.id,
             title: repo.name.replace(/-/g, ' '),
             description: repo.description || 'Professional development repository showcased for technical assessment.',
+            image: null,
             url: repo.html_url,
             liveLink: repo.homepage || null,
             language: repo.language || 'Code',
@@ -166,6 +172,52 @@ export default function Projects() {
                 {/* Visual Flair */}
                 <div className="card-accent" style={{ background: project.isFeatured ? '#ff6b35' : '#ffffff' }}></div>
                 <div className="card-depth" style={{ opacity: hoveredId === project.id ? 1 : 0 }}></div>
+
+                {/* Project Image */}
+                <div style={{
+                  width: '100%', height: '190px', position: 'relative', overflow: 'hidden',
+                  background: project.image ? '#0f172a' : 'linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)',
+                  borderBottom: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  {project.image ? (
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      style={{
+                        width: '100%', height: '100%', objectFit: 'cover',
+                        transform: hoveredId === project.id ? 'scale(1.05)' : 'scale(1)',
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        opacity: 0.9, filter: hoveredId === project.id ? 'brightness(1.1)' : 'brightness(0.95)'
+                      }}
+                      onError={e => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.innerHTML = `<span style="font-size:40px;opacity:0.5">📂</span>`;
+                      }}
+                    />
+                  ) : (
+                    <span style={{ 
+                      fontSize: '60px', opacity: 0.15,
+                      transform: hoveredId === project.id ? 'scale(1.1)' : 'scale(1)',
+                      transition: 'transform 0.4s ease', color: '#fff'
+                    }}>
+                      {project.language === 'React' ? '⚛️' : project.language === 'Python' ? '🐍' : '💻'}
+                    </span>
+                  )}
+                  {/* Hover Overlay Hint */}
+                  <div style={{
+                    position: 'absolute', inset: 0, background: 'rgba(10,14,39,0.4)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    opacity: hoveredId === project.id ? 1 : 0, transition: 'opacity 0.3s ease',
+                    backdropFilter: 'blur(2px)'
+                  }}>
+                    <span style={{ 
+                      background: '#ff6b35', color: '#fff', padding: '8px 16px', 
+                      borderRadius: '8px', fontSize: '13px', fontWeight: 700, 
+                      fontFamily: "'Syne', sans-serif", transform: hoveredId === project.id ? 'translateY(0)' : 'translateY(10px)',
+                      transition: 'transform 0.3s ease', boxShadow: '0 8px 16px rgba(255,107,53,0.3)'
+                    }}>View Project</span>
+                  </div>
+                </div>
 
                 {/* Card Content */}
                 <div className="card-content">
