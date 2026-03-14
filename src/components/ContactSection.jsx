@@ -14,15 +14,36 @@ export default function ContactSection() {
     setForm(f => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (form.name && form.email && form.projectType && form.description && form.terms) {
       setStatus("sending");
-      setTimeout(() => setStatus("success"), 1500);
-      setTimeout(() => {
-        setStatus("idle");
-        setForm({ name: "", email: "", phone: "", company: "", projectType: "", description: "", budget: "", terms: false });
-      }, 5000);
+      
+      try {
+        // NOTE: Replace YOUR_FORMSPREE_ID with your actual Formspree form ID
+        const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(form)
+        });
+
+        if (response.ok) {
+          setStatus("success");
+          setTimeout(() => {
+            setStatus("idle");
+            setForm({ name: "", email: "", phone: "", company: "", projectType: "", description: "", budget: "", terms: false });
+          }, 8000); // Give them time to click the Calendly link
+        } else {
+          throw new Error("Form submission failed");
+        }
+      } catch (error) {
+        console.error("Submission error:", error);
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 3000);
+      }
     } else {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 3000);
@@ -64,10 +85,24 @@ export default function ContactSection() {
           transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease"
         }}>
           {status === "success" ? (
-            <div style={{ textAlign: "center", padding: "40px 0" }}>
+            <div style={{ textAlign: "center", padding: "40px 0", animation: "fade-in-up 0.5s ease" }}>
               <div style={{ fontSize: "60px", marginBottom: "20px" }}>🎉</div>
               <h3 style={{ color: "#00d4aa", fontFamily: "'Syne', sans-serif", fontSize: "24px", marginBottom: "16px" }}>Thanks for reaching out!</h3>
-              <p style={{ color: "#94a3b8", fontSize: "16px" }}>I'll get back to you within 24 hours.</p>
+              <p style={{ color: "#94a3b8", fontSize: "16px", marginBottom: "32px" }}>I'll get back to you within 24 hours.</p>
+              
+              <div style={{ background: "#111827", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
+                <p style={{ color: "#e2e8f0", fontSize: "15px", marginBottom: "16px", fontWeight: 600 }}>Or book a free consultation directly:</p>
+                <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" style={{
+                  display: "inline-flex", padding: "12px 24px", background: "transparent", color: "#fff", border: "2px solid #334155", 
+                  borderRadius: "8px", textDecoration: "none", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "14px", 
+                  transition: "all 0.3s", alignItems: "center", justifyContent: "center", gap: "8px"
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#ff6b35"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#fff"; }}
+                >
+                  📅 Schedule with Calendly
+                </a>
+              </div>
             </div>
           ) : (
             <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
@@ -135,11 +170,16 @@ export default function ContactSection() {
 
               <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginTop: "12px" }}>
                 <button type="submit" disabled={status === "sending"} style={{
-                  padding: "16px 36px", background: "#ff6b35", color: "#fff", border: "none", borderRadius: "10px",
-                  fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "16px", cursor: "pointer",
-                  transition: "all 0.3s", boxShadow: "0 8px 30px #ff6b3540", flex: 1, minWidth: "200px"
+                  padding: "16px 36px", background: status === "sending" ? "#475569" : "#ff6b35", color: "#fff", border: "none", borderRadius: "10px",
+                  fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "16px", cursor: status === "sending" ? "not-allowed" : "pointer",
+                  transition: "all 0.3s", boxShadow: status === "sending" ? "none" : "0 8px 30px #ff6b3540", flex: 1, minWidth: "200px"
                 }}>
-                  {status === "sending" ? "Sending..." : "Send Message"}
+                  {status === "sending" ? (
+                    <span style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
+                      <span style={{ width: "16px", height: "16px", border: "2px solid #fff", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 1s linear infinite" }} />
+                      Sending...
+                    </span>
+                  ) : "Send Message"}
                 </button>
                 <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" style={{
                   padding: "16px 36px", background: "transparent", color: "#fff", border: "2px solid #334155", 
@@ -226,6 +266,10 @@ export default function ContactSection() {
       </div>
 
       <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
         @media (max-width: 900px) {
           .contact-grid { grid-template-columns: 1fr !important; }
         }
