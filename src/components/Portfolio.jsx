@@ -372,9 +372,9 @@ function Hero() {
             color: "#94a3b8", fontSize: 16, lineHeight: 1.9,
             maxWidth: 540, marginTop: 22,
           }}>
-            Shopify Developer with hands-on experience building and optimizing e-commerce stores.
-            MCA 2025 graduate combining technical development with data analytics and a passion
-            for scalable digital products.
+            Shopify Developer & Data Analyst with 1 year of professional experience.
+            MCA 2025 graduate. I help startups and small businesses build and optimize
+            their online stores — with honest pricing, real results, and no fluff.
           </p>
 
           <div style={{ display: "flex", gap: 14, marginTop: 36, flexWrap: "wrap" }}>
@@ -411,9 +411,9 @@ function Hero() {
             borderTop: "1px solid #1e293b", flexWrap: "wrap",
           }}>
             {[
-              { label: "Current Role", val: "Shopify Dev" },
-              { label: "Experience", val: "1+ yr" },
-              { label: "Certifications", val: "5" },
+              { label: "Experience", val: "1 Year" },
+              { label: "Store Projects", val: "5+" },
+              { label: "Available", val: "Now" },
             ].map(s => (
               <div key={s.label}>
                 <div style={{

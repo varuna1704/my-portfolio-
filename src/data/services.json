@@ -3,75 +3,71 @@
     "title": "Shopify Store Setup & Optimization",
     "icon": "🛍️",
     "shortDesc": "Complete Shopify store design, setup, and optimization to turn visitors into customers.",
-    "detailedDesc": "I'll help you launch or optimize your Shopify store from the ground up. Whether you're starting fresh or improving an existing store, I handle everything from design to conversion optimization.",
+    "detailedDesc": "I'll help you launch or optimize your Shopify store. Whether you're starting fresh or improving an existing store, I handle everything from theme customization to mobile optimization — at a price that makes sense for small businesses.",
     "included": [
-      "Shopify store setup and customization",
+      "Shopify store setup and theme customization",
       "Professional store design matching your brand",
-      "Product catalog configuration",
+      "Product catalog and collections setup",
       "Payment and shipping integration",
-      "Mobile optimization and testing",
-      "Initial SEO setup",
-      "Performance optimization",
-      "4 weeks of post-launch support"
+      "Mobile optimization and cross-device testing",
+      "Basic SEO setup (meta titles, descriptions)",
+      "Page speed improvements",
+      "2 weeks of post-launch support"
     ],
-    "timeline": "3-4 weeks",
-    "price": "Starting at $3,000",
-    "bestFor": "New stores or stores needing redesign"
+    "timeline": "3–4 weeks",
+    "price": "$1,500 – $2,500",
+    "bestFor": "Startups & small businesses launching or redesigning their store"
   },
   {
     "title": "E-Commerce Analytics & Reporting",
     "icon": "📊",
-    "shortDesc": "Setup, tracking, and analysis to understand your customer behavior and optimize your business.",
-    "detailedDesc": "Most store owners don't have proper analytics. I'll set up comprehensive tracking and provide actionable insights to help you understand what's working and what needs improvement.",
+    "shortDesc": "Setup proper tracking so you finally know what's working in your store.",
+    "detailedDesc": "Most small stores have no idea where their customers come from or why they leave. I'll set up Google Analytics 4, conversion tracking, and build you a simple dashboard so you can start making data-informed decisions.",
     "included": [
-      "Google Analytics 4 setup",
-      "Conversion tracking implementation",
-      "Custom event tracking",
-      "Custom analytics dashboard",
-      "Monthly analysis and insights report",
-      "Quarterly strategy review",
-      "Data-driven recommendations",
-      "Training for your team"
+      "Google Analytics 4 setup and configuration",
+      "Shopify–GA4 integration",
+      "Conversion and add-to-cart event tracking",
+      "Basic Looker Studio dashboard",
+      "One-time walkthrough and training session",
+      "30-day follow-up check"
     ],
-    "timeline": "2-3 weeks (plus ongoing)",
-    "price": "Starting at $1,500/month",
-    "bestFor": "Stores wanting data-driven decisions"
+    "timeline": "1–2 weeks",
+    "price": "$800 – $1,500",
+    "bestFor": "Stores that want to understand their customers and stop guessing"
   },
   {
     "title": "Conversion Rate Optimization",
     "icon": "🚀",
-    "shortDesc": "Increase conversions through strategic optimization, testing, and data-driven improvements.",
-    "detailedDesc": "The average store converts 2% of visitors. I'll audit your store, identify friction points, and implement optimizations to increase conversions. My clients typically see 30-100% improvement in 3 months.",
+    "shortDesc": "Find and fix the friction points that are costing you sales.",
+    "detailedDesc": "I'll audit your store, identify where customers are dropping off, and implement targeted improvements. I keep things honest — I'll tell you what I can realistically impact, and I'll track results transparently.",
     "included": [
-      "Complete store audit",
-      "Competitor analysis",
-      "Friction point identification",
-      "A/B testing strategy",
-      "Implementation of quick wins",
-      "Advanced testing and optimization",
-      "Monthly performance reporting",
-      "Ongoing optimization"
+      "Full store UX audit",
+      "Checkout flow review",
+      "Mobile experience check",
+      "Speed and performance analysis",
+      "Prioritized list of fixes",
+      "Implementation of top quick wins",
+      "Before/after performance report"
     ],
-    "timeline": "4-6 weeks",
-    "price": "Starting at $5,000",
-    "bestFor": "Stores wanting to increase sales"
+    "timeline": "2–4 weeks",
+    "price": "$1,000 – $2,000",
+    "bestFor": "Stores getting traffic but struggling to convert visitors to buyers"
   },
   {
-    "title": "Custom Development & Consulting",
+    "title": "Consulting & Custom Development",
     "icon": "💻",
-    "shortDesc": "Custom solutions for unique challenges, from Shopify apps to strategic consulting.",
-    "detailedDesc": "Sometimes you need something custom. Whether it's a custom Shopify app, complex integration, or strategic guidance, I work with you to build the perfect solution.",
+    "shortDesc": "Affordable hourly consulting or custom Shopify work for unique needs.",
+    "detailedDesc": "Need something custom built, want advice on your tech stack, or need help with a specific Shopify problem? I offer flexible hourly consulting and custom development at rates designed for early-stage businesses.",
     "included": [
-      "Custom Shopify app development",
-      "API integrations",
-      "Advanced customizations",
-      "Strategic business consulting",
-      "Growth strategy development",
-      "Technical architecture planning",
-      "Full support and deployment"
+      "Shopify Liquid template customization",
+      "Custom section or feature development",
+      "Third-party app integration",
+      "Technical advice and strategy",
+      "Code review and cleanup",
+      "Detailed documentation of all work done"
     ],
-    "timeline": "Custom (2-12 weeks typically)",
-    "price": "Starting at $200/hour or fixed",
-    "bestFor": "Complex projects, strategic partnerships"
+    "timeline": "Varies by scope",
+    "price": "$25 – $40 / hour",
+    "bestFor": "Businesses needing flexible, affordable technical help without long-term commitments"
   }
 ]
