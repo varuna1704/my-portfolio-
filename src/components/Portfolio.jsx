@@ -6,6 +6,7 @@ import ServicesSection from "./ServicesSection";
 import CaseStudiesSection from "./CaseStudiesSection";
 import TestimonialsSection from "./TestimonialsSection";
 import ContactSection from "./ContactSection";
+import PROJECTS_DATA from "../data/projects.json";
 
 // GitHub SVG Icon
 const GitHubIcon = () => (
@@ -60,32 +61,7 @@ const EXPERIENCE = [
   }
 ];
 
-const PROJECTS = [
-  {
-    title: "AI Powered Review Generator",
-    desc: "A powerful tool that generates authentic customer reviews using AI. Supports bulk processing and customization.",
-    tech: ["React", "AI", "Tailwind"],
-    link: "https://aicustomerreviewgenerator.netlify.app/",
-    image: "/images/projects/review-gen.png",
-    color: "#ff6b35"
-  },
-  {
-    title: "EcoFarm Management System",
-    desc: "A comprehensive solution for farm management, tracking crops, resources, and sales efficiency.",
-    tech: ["PHP", "MySQL", "Bootstrap"],
-    link: "https://github.com/varuna1704",
-    image: "/images/projects/farm-system.png",
-    color: "#00d4aa"
-  },
-  {
-    title: "Gym Management Pro",
-    desc: "Modern dashboard for gym owners to manage memberships, trainers, and schedules seamlessly.",
-    tech: ["React", "Firebase", "MUI"],
-    link: "https://github.com/varuna1704",
-    image: "/images/projects/gym-system.png",
-    color: "#7c3aed"
-  }
-];
+const PROJECTS = PROJECTS_DATA.filter(p => p.isFeatured).slice(0, 3);
 
 const EDUCATION = [
   {
@@ -609,29 +585,10 @@ function Experience() {
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginBottom: 6 }}>
                 <span style={{ fontSize: 22 }}>{e.icon}</span>
                 <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>{e.role}</h3>
-                <span style={{ color: e.color, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14 }}>@ {e.company}</span>
-              </div>
-              <div style={{ display: "flex", gap: 16, marginBottom: 18, flexWrap: "wrap" }}>
-                <span style={{ color: "#334155", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>📅 {e.period}</span>
-                <span style={{ color: "#334155", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>📍 {e.location}</span>
-              </div>
-              <ul style={{ margin: 0, padding: "0 0 0 18px" }}>
-                {e.points.map((pt, j) => (
-                  <li key={j} style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.85, marginBottom: 5 }}>{pt}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ─── PROJECTS ───────────────────────────────────────────────────────── */
-
-function Projects() {
+                <span style=function Projects() {
   const [ref, visible] = useInView();
+  const [hovered, setHovered] = useState(null);
+
   return (
     <section id="projects" ref={ref} style={{ padding: "100px 8vw" }}>
       <SectionLabel label="04 — Projects" />
@@ -646,51 +603,112 @@ function Projects() {
         {PROJECTS.map((p, i) => (
           <div
             key={i}
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
             style={{
               background: "#0f172a", border: "1px solid #1e293b",
               borderRadius: 24, overflow: "hidden",
               transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
               opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(40px)",
+              transform: visible ? (hovered === i ? "translateY(-10px)" : "translateY(0)") : "translateY(40px)",
               transitionDelay: `${i * 150}ms`,
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = p.color;
-              e.currentTarget.style.transform = "translateY(-10px)";
-              e.currentTarget.style.boxShadow = `0 30px 60px ${p.color}15`;
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = "#1e293b";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "none";
+              boxShadow: hovered === i ? `0 30px 60px ${p.color || '#ff6b35'}15` : "none",
+              borderColor: hovered === i ? (p.color || '#ff6b35') : "#1e293b",
             }}
           >
-            <div style={{ height: 210, overflow: "hidden", position: "relative", background: "#111827" }}>
-              <img 
-                src={p.image} 
-                alt={p.title} 
-                style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }}
-                onError={e => {
-                   e.target.src = "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop";
-                }}
-              />
+            <div style={{ height: 200, overflow: "hidden", position: "relative", background: p.image ? "#111827" : "linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {p.image ? (
+                <img 
+                  src={p.image} 
+                  alt={p.title} 
+                  style={{ 
+                    width: "100%", height: "100%", objectFit: "cover", 
+                    opacity: hovered === i ? 1 : 0.8,
+                    transform: hovered === i ? "scale(1.05)" : "scale(1)",
+                    transition: "all 0.4s ease" 
+                  }}
+                  onError={e => {
+                     e.target.style.display = 'none';
+                     e.target.parentElement.innerHTML = `<span style="font-size:60px;opacity:0.15">💻</span>`;
+                  }}
+                />
+              ) : (
+                <span style={{ 
+                  fontSize: '60px', opacity: 0.15, color: '#fff',
+                  transform: hovered === i ? 'scale(1.1)' : 'scale(1)',
+                  transition: 'transform 0.4s ease'
+                }}>💻</span>
+              )}
+              
+              {/* Overlay on hover */}
+              <div style={{
+                position: 'absolute', inset: 0, background: 'rgba(10,14,39,0.4)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                opacity: hovered === i ? 1 : 0, transition: 'opacity 0.3s ease',
+                backdropFilter: 'blur(2px)'
+              }}>
+                <span style={{ 
+                  background: p.color || '#ff6b35', color: '#fff', padding: '8px 16px', 
+                  borderRadius: '8px', fontSize: '13px', fontWeight: 700, 
+                  fontFamily: "'Syne', sans-serif", transform: hovered === i ? 'translateY(0)' : 'translateY(10px)',
+                  transition: 'transform 0.3s ease', boxShadow: `0 8px 16px ${(p.color || '#ff6b35')}30`
+                }}>View Project</span>
+              </div>
+
               <div style={{ position: "absolute", top: 12, right: 12 }}>
                 <a 
-                  href={p.link} 
+                  href={p.url} 
                   target="_blank" 
                   rel="noreferrer" 
                   style={{ 
                     width: 38, height: 38, borderRadius: "50%", 
-                    background: "#ff6b35", display: "flex", 
+                    background: p.color || "#ff6b35", display: "flex", 
                     alignItems: "center", justifyContent: "center", 
                     color: "#fff", textDecoration: "none",
-                    boxShadow: "0 4px 12px rgba(255,107,53,0.3)"
+                    boxShadow: `0 4px 12px ${(p.color || "#ff6b35")}30`
                   }}
                 >↗</a>
               </div>
             </div>
             <div style={{ padding: 28 }}>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+                {(p.tech || p.topics || []).map(t => (
+                  <span key={t} style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", color: p.color || "#ff6b35", background: `${p.color || "#ff6b35"}15`, padding: "4px 10px", borderRadius: 99, fontWeight: 700 }}>{t}</span>
+                ))}
+              </div>
+              <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 21, fontWeight: 800, color: "#fff", margin: "0 0 12px" }}>{p.title}</h3>
+              <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, marginBottom: 24, height: 68, overflow: "hidden" }}>{p.description || p.desc}</p>
+              <div style={{ display: "flex", gap: 16 }}>
+                <Link 
+                  to="/projects"
+                  style={{ 
+                    color: p.color || "#ff6b35", fontFamily: "'Syne', sans-serif", 
+                    fontWeight: 700, fontSize: 13, textDecoration: "none", 
+                    display: "flex", alignItems: "center", gap: 6 
+                  }}
+                >
+                  View Details ↗
+                </Link>
+                {p.liveLink && (
+                  <a 
+                    href={p.liveLink}
+                    target="_blank" 
+                    rel="noreferrer"
+                    style={{ 
+                      color: "#94a3b8", fontFamily: "'Syne', sans-serif", 
+                      fontWeight: 700, fontSize: 13, textDecoration: "none", 
+                      display: "flex", alignItems: "center", gap: 6 
+                    }}
+                  >
+                    Live Preview ↗
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+x", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
                 {p.tech.map(t => (
                   <span key={t} style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", color: p.color, background: `${p.color}15`, padding: "4px 10px", borderRadius: 99, fontWeight: 700 }}>{t}</span>
                 ))}
