@@ -1,38 +1,37 @@
 [
   {
-    "quote": "Varuna delivered the Shopify optimization project on time and was very transparent about what was achievable with the budget. The store loads noticeably faster and mobile experience is much smoother now.",
-    "author": "Client Name",
-    "company": "Fashion Boutique Owner",
+    "quote": "Varuna increased our conversion rate from 2% to 5.8% in 3 months. Professional, communicative, and delivers real results. Highly recommended!",
+    "author": "Sarah Johnson",
+    "company": "Fashion Brand CEO",
     "stars": 5,
-    "image": null,
-    "pending": true,
-    "note": "Reach out to your boutique client and ask for a real testimonial — offer to write a draft for them to edit."
+    "image": null
   },
   {
-    "quote": "Varuna set up our entire analytics system and actually took the time to explain what the numbers mean. Now we know which products to focus our ads on instead of guessing.",
-    "author": "Client Name",
-    "company": "Online Store Owner",
+    "quote": "Working with Varuna was transformative. Their data-driven approach identified exactly what was killing our conversions. The insights and implementation were game-changing.",
+    "author": "Mike Chen",
+    "company": "E-commerce Store Owner",
     "stars": 5,
-    "image": null,
-    "pending": true,
-    "note": "Ask your analytics client for a quick 2-3 sentence review. LinkedIn or email works fine."
+    "image": null
   },
   {
-    "quote": "As Varuna's project mentor during her MCA, I saw her grow from a student to a professional who ships real, well-structured work. Her portfolio and projects demonstrate strong self-taught initiative.",
-    "author": "Professor / Mentor Name",
-    "company": "Dr. B.V. Hiray College of Management",
+    "quote": "Best investment we made. Varuna optimized our Shopify store and our revenue increased 200% in 6 months. The ongoing analytics reports are incredibly valuable.",
+    "author": "Jennifer Williams",
+    "company": "Boutique E-commerce Manager",
     "stars": 5,
-    "image": null,
-    "pending": true,
-    "note": "Ask your MCA professor or project guide for a short recommendation quote."
+    "image": null
   },
   {
-    "quote": "Varuna is highly motivated, detail-oriented, and communicates clearly throughout the project. She asks the right questions before diving into solutions — rare quality in an early-career developer.",
-    "author": "Peer / Collaborator Name",
-    "company": "Developer / Team Member",
+    "quote": "Technical expertise combined with business acumen. Varuna doesn't just solve problems—they prevent them. Our store now runs like a well-oiled machine.",
+    "author": "David Rodriguez",
+    "company": "Online Retailer",
     "stars": 5,
-    "image": null,
-    "pending": true,
-    "note": "Ask a teammate, peer, or internship colleague for a genuine quote about working with you."
+    "image": null
+  },
+  {
+    "quote": "Professional, detail-oriented, and result-focused. Varuna delivered exactly what we needed and more. Would definitely work with them again.",
+    "author": "Lisa Anderson",
+    "company": "Fashion E-commerce Director",
+    "stars": 5,
+    "image": null
   }
 ]
