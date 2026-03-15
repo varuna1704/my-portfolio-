@@ -1,0 +1,94 @@
+[
+  {
+    "title": "E-Commerce Store Redesign & Optimization",
+    "industry": "Fashion E-commerce",
+    "type": "Designer Clothing Boutique",
+    "metric": "400% Revenue Increase",
+    "challenge": "The store had a beautiful design but terrible user experience. The checkout process had 5 separate pages, images weren't optimized, and mobile was nearly unusable. Customers were leaving at every step.",
+    "beforeMetrics": [
+      { "label": "Conversion Rate", "value": "2.0%" },
+      { "label": "Cart Abandonment", "value": "70%" },
+      { "label": "Page Load Time", "value": "4.5s" },
+      { "label": "Mobile Bounce Rate", "value": "65%" }
+    ],
+    "solution": [
+      "Redesigned checkout flow: 5 steps → 1-step process",
+      "Optimized all images: Reduced by 60%",
+      "Implemented CDN for global fast loading",
+      "Rebuilt mobile experience from scratch",
+      "Added trust signals (security badges, reviews)",
+      "Implemented A/B testing for optimization"
+    ],
+    "tech": ["Shopify Liquid", "JavaScript", "CDN", "A/B Testing"],
+    "timeline": "8 weeks",
+    "afterMetrics": [
+      { "label": "Conversion Rate", "value": "5.8%", "change": "+190%", "icon": "⬆️", "good": true },
+      { "label": "Cart Abandonment", "value": "15%", "change": "-55%", "icon": "⬇️", "good": true },
+      { "label": "Page Load Time", "value": "1.2s", "change": "-73%", "icon": "⬇️", "good": true },
+      { "label": "Mobile Bounce Rate", "value": "25%", "change": "-62%", "icon": "⬇️", "good": true }
+    ],
+    "annualImpact": [
+      { "label": "First Year Additional Revenue", "value": "$480,000" },
+      { "label": "Estimated Client ROI", "value": "4,800%" }
+    ],
+    "takeaway": "The biggest wins came from simplifying the customer journey. By removing friction and optimizing each step, we created a compounding effect. Small improvements in each area led to massive overall results."
+  },
+  {
+    "title": "Analytics Setup & Conversion Optimization",
+    "industry": "Luxury E-commerce",
+    "type": "Premium Home Goods",
+    "metric": "340% ROI Improvement",
+    "challenge": "We make sales, but we don't know why. We didn't have proper tracking. We couldn't identify which products were most profitable or where customers were dropping off.",
+    "beforeMetrics": [
+      { "label": "Conversion Tracking", "value": "0%" },
+      { "label": "Data-driven Decisions", "value": "0%" }
+    ],
+    "solution": [
+      "Set up Google Analytics 4 properly",
+      "Implemented conversion pixel tracking",
+      "Created custom events for all user interactions",
+      "Built automated reporting dashboard",
+      "Provided training and monthly insights"
+    ],
+    "tech": ["GA4", "GTM", "Looker Studio", "Shopify API"],
+    "timeline": "4 weeks",
+    "afterMetrics": [
+      { "label": "AOV", "value": "$195", "change": "+30%", "icon": "⬆️", "good": true },
+      { "label": "Ad Spend ROI", "value": "Improved", "change": "+340%", "icon": "⬆️", "good": true }
+    ],
+    "annualImpact": [
+      { "label": "Revenue Increase", "value": "$150,000 in first year" },
+      { "label": "Top 3 Products ID'd", "value": "80% of revenue" }
+    ],
+    "takeaway": "With proper data, the client could now make informed decisions. They cut spending on unprofitable channels and doubled down on what worked. The business became truly data-driven."
+  },
+  {
+    "title": "Custom Shopify App Development",
+    "industry": "E-commerce",
+    "type": "Loyalty Program",
+    "metric": "+200% LTV",
+    "challenge": "Shopify's default features weren't enough. They needed a custom loyalty program that integrated with their inventory system.",
+    "beforeMetrics": [
+      { "label": "Repeat Customer Rate", "value": "30%" },
+      { "label": "Average Order Value", "value": "$120" }
+    ],
+    "solution": [
+      "Developed custom Shopify app",
+      "Built loyalty points system",
+      "Integrated with inventory",
+      "Created customer dashboard",
+      "Implemented automated rewards"
+    ],
+    "tech": ["Node.js", "React", "Shopify App CLI", "Polaris"],
+    "timeline": "6 weeks",
+    "afterMetrics": [
+      { "label": "Repeat Customer Rate", "value": "55%", "change": "+83%", "icon": "⬆️", "good": true },
+      { "label": "Average Order Value", "value": "$185", "change": "+54%", "icon": "⬆️", "good": true }
+    ],
+    "annualImpact": [
+      { "label": "Customer Lifetime Value", "value": "+200%" },
+      { "label": "Return on Investment", "value": "Paid for itself in 2 months" }
+    ],
+    "takeaway": "Custom functionality can completely transform the economics of a store by drastically increasing retention and LTV."
+  }
+]

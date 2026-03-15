@@ -1,0 +1,77 @@
+[
+  {
+    "title": "Shopify Store Setup & Optimization",
+    "icon": "🛍️",
+    "shortDesc": "Complete Shopify store design, setup, and optimization to turn visitors into customers.",
+    "detailedDesc": "I'll help you launch or optimize your Shopify store from the ground up. Whether you're starting fresh or improving an existing store, I handle everything from design to conversion optimization.",
+    "included": [
+      "Shopify store setup and customization",
+      "Professional store design matching your brand",
+      "Product catalog configuration",
+      "Payment and shipping integration",
+      "Mobile optimization and testing",
+      "Initial SEO setup",
+      "Performance optimization",
+      "4 weeks of post-launch support"
+    ],
+    "timeline": "3-4 weeks",
+    "price": "Starting at $3,000",
+    "bestFor": "New stores or stores needing redesign"
+  },
+  {
+    "title": "E-Commerce Analytics & Reporting",
+    "icon": "📊",
+    "shortDesc": "Setup, tracking, and analysis to understand your customer behavior and optimize your business.",
+    "detailedDesc": "Most store owners don't have proper analytics. I'll set up comprehensive tracking and provide actionable insights to help you understand what's working and what needs improvement.",
+    "included": [
+      "Google Analytics 4 setup",
+      "Conversion tracking implementation",
+      "Custom event tracking",
+      "Custom analytics dashboard",
+      "Monthly analysis and insights report",
+      "Quarterly strategy review",
+      "Data-driven recommendations",
+      "Training for your team"
+    ],
+    "timeline": "2-3 weeks (plus ongoing)",
+    "price": "Starting at $1,500/month",
+    "bestFor": "Stores wanting data-driven decisions"
+  },
+  {
+    "title": "Conversion Rate Optimization",
+    "icon": "🚀",
+    "shortDesc": "Increase conversions through strategic optimization, testing, and data-driven improvements.",
+    "detailedDesc": "The average store converts 2% of visitors. I'll audit your store, identify friction points, and implement optimizations to increase conversions. My clients typically see 30-100% improvement in 3 months.",
+    "included": [
+      "Complete store audit",
+      "Competitor analysis",
+      "Friction point identification",
+      "A/B testing strategy",
+      "Implementation of quick wins",
+      "Advanced testing and optimization",
+      "Monthly performance reporting",
+      "Ongoing optimization"
+    ],
+    "timeline": "4-6 weeks",
+    "price": "Starting at $5,000",
+    "bestFor": "Stores wanting to increase sales"
+  },
+  {
+    "title": "Custom Development & Consulting",
+    "icon": "💻",
+    "shortDesc": "Custom solutions for unique challenges, from Shopify apps to strategic consulting.",
+    "detailedDesc": "Sometimes you need something custom. Whether it's a custom Shopify app, complex integration, or strategic guidance, I work with you to build the perfect solution.",
+    "included": [
+      "Custom Shopify app development",
+      "API integrations",
+      "Advanced customizations",
+      "Strategic business consulting",
+      "Growth strategy development",
+      "Technical architecture planning",
+      "Full support and deployment"
+    ],
+    "timeline": "Custom (2-12 weeks typically)",
+    "price": "Starting at $200/hour or fixed",
+    "bestFor": "Complex projects, strategic partnerships"
+  }
+]
