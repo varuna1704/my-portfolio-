@@ -1,42 +1,6 @@
 import { useInView, SectionLabel } from './shared';
 
-const TESTIMONIALS_DATA = [
-  {
-    quote: "Varuna took our struggling store from 1% to 8% conversion rate in just 3 months. Professional, communicative, and delivers real results. Highly recommended!",
-    author: "Sarah Johnson",
-    company: "Fashion Brand CEO",
-    stars: 5,
-    image: null
-  },
-  {
-    quote: "Working with Varuna was transformative. Their data-driven approach identified exactly what was killing our conversions. The insights and implementation were game-changing.",
-    author: "Mike Chen",
-    company: "E-commerce Store Owner",
-    stars: 5,
-    image: null
-  },
-  {
-    quote: "Best investment we made. Varuna optimized our Shopify store and our revenue increased 200% in 6 months. The ongoing analytics reports are incredibly valuable.",
-    author: "Jennifer Williams",
-    company: "Boutique E-commerce Manager",
-    stars: 5,
-    image: null
-  },
-  {
-    quote: "Technical expertise combined with business acumen. Varuna doesn't just solve problems—they prevent them. Our store now runs like a well-oiled machine.",
-    author: "David Rodriguez",
-    company: "Online Retailer",
-    stars: 5,
-    image: null
-  },
-  {
-    quote: "Professional, detail-oriented, and result-focused. Varuna delivered exactly what we needed and more. Would definitely work with them again.",
-    author: "Lisa Anderson",
-    company: "Fashion E-commerce Director",
-    stars: 5,
-    image: null
-  }
-];
+import TESTIMONIALS_DATA from '../data/testimonials.json';
 
 export default function TestimonialsSection() {
   const [ref, visible] = useInView();

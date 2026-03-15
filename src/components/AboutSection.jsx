@@ -12,7 +12,7 @@ export default function AboutSection() {
         <div style={{ width: "100%", aspectRatio: "3/4", borderRadius: "16px", overflow: "hidden", border: "1.5px solid #1e293b", position: "relative" }}
              onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 40px rgba(255,107,53,0.15)"; }}
              onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}>
-          <img src="/images/profile.png" alt="Varuna" style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+          <img src="/images/headshots/varuna-headshot-professional-dark.jpg" alt="Varuna" style={{ width: "100%", height: "100%", objectFit: "cover" }} 
             onError={e => {
               e.currentTarget.style.display = "none";
               e.currentTarget.parentElement.innerHTML = `

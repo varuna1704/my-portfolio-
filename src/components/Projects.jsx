@@ -4,76 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/projects.css';
 
-// Featured projects with custom images and metadata
-const FEATURED_PROJECTS = [
-  {
-    id: 'feat-1',
-    title: 'AI Customer Review Generator',
-    description: 'A powerful tool that generates authentic customer reviews using AI. Supports bulk processing and customization.',
-    image: '/images/review-gen.png',
-    url: 'https://github.com/varuna1704/AI-customer-reviews-generator',
-    liveLink: 'https://aicustomerreviewgenerator.netlify.app/',
-    language: 'React',
-    stars: 2,
-    topics: ['AI', 'B2C', 'Reviews'],
-    updatedAt: '2025-03',
-    isFeatured: true,
-    badge: 'Trending'
-  },
-  {
-    id: 'feat-2',
-    title: 'Precision Stock Market Analysis',
-    description: 'Advanced stock market analysis tool with real-time data visualization and predictive trends.',
-    image: null,
-    url: 'https://github.com/varuna1704/Stock_Market_Analysis',
-    liveLink: null,
-    language: 'Python',
-    stars: 1,
-    topics: ['Data Science', 'Finance', 'NLP'],
-    updatedAt: '2025-02',
-    isFeatured: true,
-    badge: 'Technical'
-  },
-  {
-    id: 'feat-3',
-    title: 'EcoFarm Management System',
-    description: 'A comprehensive solution for farm management, tracking crops, resources, and sales efficiency.',
-    image: '/images/farm-system.png',
-    url: 'https://github.com/varuna1704/online-system-for-farm',
-    liveLink: null,
-    language: 'PHP/SQL',
-    stars: 1,
-    topics: ['Agriculture', 'ERP', 'Dashboard'],
-    updatedAt: '2024-12',
-    isFeatured: true
-  },
-  {
-    id: 'feat-4',
-    title: 'Capture Studio Pro',
-    description: 'Elegant photography studio booking and management platform with client galleries.',
-    image: null,
-    url: 'https://github.com/varuna1704/photo-studio',
-    liveLink: null,
-    language: 'JavaScript',
-    stars: 0,
-    topics: ['Business', 'Booking', 'Creative'],
-    updatedAt: '2024-11',
-    isFeatured: true
-  },
-  {
-    id: 'feat-5',
-    title: 'Gym Management Pro',
-    description: 'Modern dashboard for gym owners to manage memberships, trainers, and schedules seamlessly.',
-    image: '/images/gym-system.png',
-    url: 'https://github.com/varuna1704/gym_manage_system',
-    liveLink: null,
-    language: 'Node.js',
-    stars: 1,
-    topics: ['Fitness', 'Management', 'SaaS'],
-    updatedAt: '2024-09',
-    isFeatured: true
-  }
-];
+import FEATURED_PROJECTS from '../data/projects.json';
 
 export default function Projects() {
   const [githubProjects, setGithubProjects] = useState([]);

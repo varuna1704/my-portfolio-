@@ -66,7 +66,7 @@ const PROJECTS = [
     desc: "A powerful tool that generates authentic customer reviews using AI. Supports bulk processing and customization.",
     tech: ["React", "AI", "Tailwind"],
     link: "https://aicustomerreviewgenerator.netlify.app/",
-    image: "/images/review-gen.png",
+    image: "/images/projects/review-gen.png",
     color: "#ff6b35"
   },
   {
@@ -74,7 +74,7 @@ const PROJECTS = [
     desc: "A comprehensive solution for farm management, tracking crops, resources, and sales efficiency.",
     tech: ["PHP", "MySQL", "Bootstrap"],
     link: "https://github.com/varuna1704",
-    image: "/images/farm-system.png",
+    image: "/images/projects/farm-system.png",
     color: "#00d4aa"
   },
   {
@@ -82,7 +82,7 @@ const PROJECTS = [
     desc: "Modern dashboard for gym owners to manage memberships, trainers, and schedules seamlessly.",
     tech: ["React", "Firebase", "MUI"],
     link: "https://github.com/varuna1704",
-    image: "/images/gym-system.png",
+    image: "/images/projects/gym-system.png",
     color: "#7c3aed"
   }
 ];
@@ -463,7 +463,7 @@ function Hero() {
             }}
           >
             <img
-              src="/images/profile.png"
+              src="/images/headshots/varuna-headshot-professional-dark.jpg"
               alt="Varuna Nikam"
               style={{
                 width: "100%", height: "100%",

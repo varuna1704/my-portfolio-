@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useInView, SectionLabel } from './shared';
+import { submitFormToFormspree } from '../services/emailService';
 
 export default function ContactSection() {
   const [ref, visible] = useInView();
@@ -20,25 +21,14 @@ export default function ContactSection() {
       setStatus("sending");
       
       try {
-        // NOTE: Replace YOUR_FORMSPREE_ID with your actual Formspree form ID
-        const response = await fetch("https://formspree.io/f/myknpnzn", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(form)
-        });
+        await submitFormToFormspree(form);
 
-        if (response.ok) {
-          setStatus("success");
-          setTimeout(() => {
-            setStatus("idle");
-            setForm({ name: "", email: "", phone: "", company: "", projectType: "", description: "", budget: "", terms: false });
-          }, 8000); // Give them time to click the Calendly link
-        } else {
-          throw new Error("Form submission failed");
-        }
+        setStatus("success");
+        setTimeout(() => {
+          setStatus("idle");
+          setForm({ name: "", email: "", phone: "", company: "", projectType: "", description: "", budget: "", terms: false });
+        }, 8000); // Give them time to click the Calendly link
+
       } catch (error) {
         console.error("Submission error:", error);
         setStatus("error");
