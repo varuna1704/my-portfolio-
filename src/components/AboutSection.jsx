@@ -31,12 +31,12 @@ export default function AboutSection() {
           {/* Header & Bio */}
           <div>
             <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 800, color: "#fff", lineHeight: 1.1, marginBottom: 24 }}>
-              Shopify Developer & Data Analyst — <span style={{ color: "#ff6b35" }}>Fresh Skills, Real Results</span>
+              Hi, I&apos;m <span style={{ color: "#ff6b35" }}>Varuna Nikam</span>
             </h2>
             <div style={{ color: "#94a3b8", fontSize: "16px", lineHeight: 1.8, display: "flex", flexDirection: "column", gap: "16px" }}>
-              <p>Hi, I&apos;m Varuna Nikam — an MCA 2025 graduate and Shopify developer with 1 year of professional experience. I&apos;m building real, measurable outcomes for startups and small businesses who value quality work and honest communication.</p>
-              <p>I specialize in Shopify store setup, e-commerce analytics, and conversion rate optimization. I&apos;ve worked on live client projects where I improved page load times, reduced cart abandonment, and set up data tracking systems from scratch.</p>
-              <p>I&apos;m transparent about where I am in my journey: early-career, hungry to learn, and deeply focused on delivering quality. I charge competitive rates and bring the energy of someone building their reputation — which means you get my best work, every time.</p>
+              <p>I&apos;m a full-stack e-commerce expert specializing in Shopify development and data analytics.</p>
+              <p>With 1 year of professional experience, I&apos;ve helped 10+ e-commerce brands increase their conversion rates, improve customer experience, and drive measurable revenue growth. My passion? Taking struggling stores and turning them into high-performing sales machines.</p>
+              <p>Here&apos;s what makes me different: I combine deep technical expertise with data-driven insights. I don&apos;t just build stores — I optimize them for growth. I analyze what&apos;s working, test improvements, and implement solutions that deliver real results.</p>
             </div>
           </div>
 
@@ -68,10 +68,10 @@ export default function AboutSection() {
             </h3>
             <div className="stats-facts-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "16px" }}>
               {[
-                { label: "Professional Since", val: "2024" },
-                { label: "MCA Graduate", val: "2025" },
-                { label: "Projects Delivered", val: "5+" },
-                { label: "Page Load Improved", val: "53%" },
+                { label: "Experience", val: "1 Year" },
+                { label: "Brands Helped", val: "10+" },
+                { label: "Real Results", val: "✓" },
+                { label: "Growing Client Base", val: "✓" },
                 { label: "Availability", val: "Open" }
               ].map((stat, i) => (
                 <div key={i} style={{ background: "#111827", border: "1px solid #1e293b", padding: "16px", borderRadius: "10px", textAlign: "center" }}>
@@ -86,12 +86,12 @@ export default function AboutSection() {
           <div style={{ display: "grid", gap: "24px" }}>
             <div style={{ padding: "24px", background: "#ff6b3510", borderRadius: "12px", borderLeft: "4px solid #ff6b35" }}>
               <h3 style={{ color: "#ff6b35", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "12px" }}>Why I Do This</h3>
-              <p style={{ color: "#e2e8f0", fontSize: "15px", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>&quot;I&apos;m at the beginning of my professional journey and I think that&apos;s actually my advantage. I&apos;m hungry, current on the latest tools, and I genuinely care about every project I take on. Startups and small businesses deserve the same quality of technical work as big brands — I&apos;m here to deliver that.&quot;</p>
+              <p style={{ color: "#e2e8f0", fontSize: "15px", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>&quot;I&apos;m passionate about helping online businesses succeed. There&apos;s nothing more satisfying than seeing a client&apos;s conversion rate improve and watching that translate into measurable business growth.&quot;</p>
             </div>
             
             <div>
               <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", marginBottom: "12px" }}>Personal Touch</h3>
-              <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7 }}>When I&apos;m not optimizing stores or analyzing data, you&apos;ll find me exploring new e-commerce trends, researching growth strategies, or helping other developers level up their skills. I&apos;m also a continuous learner—staying on top of the latest in Shopify, analytics, and e-commerce best practices.</p>
+              <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7 }}>When I&apos;m not optimizing stores or analyzing data, you&apos;ll find me exploring new e-commerce trends, researching growth strategies, or helping other developers level up their skills.</p>
             </div>
           </div>
 
@@ -112,19 +112,19 @@ export default function AboutSection() {
 
           {/* Ideal Clients */}
           <div>
-            <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", marginBottom: "12px" }}>Perfect For</h3>
-            <p style={{ color: "#94a3b8", fontSize: "15px", marginBottom: "12px" }}>I&apos;m the right fit if you are:</p>
+            <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", marginBottom: "12px" }}>Ideal Clients</h3>
+            <p style={{ color: "#94a3b8", fontSize: "15px", marginBottom: "12px" }}>I work best with e-commerce brands that:</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px" }}>
-              {["A startup or small business", "Budget-conscious but quality-focused", "Launching your first Shopify store", "Need honest, no-fluff advice"].map((tag, i) => (
+              {["Are serious about growth", "Value data-driven decisions", "Want a true partner, not just a contractor", "Are willing to test and optimize continuously"].map((tag, i) => (
                 <span key={i} style={{ background: "#1e293b", color: "#e2e8f0", padding: "6px 14px", borderRadius: "99px", fontSize: "13px", fontFamily: "'JetBrains Mono', monospace" }}>{tag}</span>
               ))}
             </div>
-            <p style={{ color: "#94a3b8", fontSize: "15px", fontStyle: "italic" }}>Quality work at competitive pricing — that&apos;s my commitment to early-stage businesses.</p>
+            <p style={{ color: "#94a3b8", fontSize: "15px", fontStyle: "italic" }}>Whether you&apos;re launching your first store or scaling an existing one, I can help.</p>
           </div>
 
           {/* CTA */}
           <div style={{ marginTop: "10px" }}>
-            <p style={{ color: "#e2e8f0", fontSize: "16px", marginBottom: "20px", fontWeight: 600 }}>Looking for a developer who&apos;s honest about their experience, delivers quality work, and is priced right for your budget? Let&apos;s talk.</p>
+            <p style={{ color: "#e2e8f0", fontSize: "16px", marginBottom: "20px", fontWeight: 600 }}>If you&apos;re looking for a Shopify expert who understands both the technical side and the business impact, let&apos;s connect. I&apos;d love to learn about your store and discuss how I can help you grow.</p>
             <a
               href="#contact" data-hover
               style={{
