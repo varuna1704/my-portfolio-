@@ -487,7 +487,7 @@ function Hero() {
             }}
           >
             <img
-              src="/images/headshots/varuna-headshot-professional-dark.jpg"
+              src="/images/headshots/varuna-headshot-professional-dark.png"
               alt="Varuna Nikam"
               style={{
                 width: "100%", height: "100%",
