@@ -34,30 +34,31 @@ export default function AboutSection() {
               Hi, I&apos;m <span style={{ color: "#ff6b35" }}>Varuna Nikam</span>
             </h2>
             <div style={{ color: "#94a3b8", fontSize: "16px", lineHeight: 1.8, display: "flex", flexDirection: "column", gap: "16px" }}>
-              <p>I&apos;m a full-stack e-commerce expert specializing in Shopify development and data analytics.</p>
-              <p>With 1 year of professional experience, I&apos;ve helped 10+ e-commerce brands increase their conversion rates, improve customer experience, and drive measurable revenue growth. My passion? Taking struggling stores and turning them into high-performing sales machines.</p>
-              <p>Here&apos;s what makes me different: I combine deep technical expertise with data-driven insights. I don&apos;t just build stores — I optimize them for growth. I analyze what&apos;s working, test improvements, and implement solutions that deliver real results.</p>
+              <p>I&apos;m an MCA graduate and Shopify Developer with hands-on experience managing and customizing 4 live production Shopify stores across fashion, pet care, and lifestyle niches.</p>
+              <p>I build modern e-commerce experiences, scalable web applications, and AI-powered solutions. My passion is translating design ideas into high-performing storefronts using Liquid development, custom sections, and third-party integrations like Judge.me.</p>
+              <p>I specialize in store configuration, product catalog management, product listings, optimization, and content updates, ensuring that every shop I touch runs seamlessly and converts traffic into sales.</p>
             </div>
           </div>
 
           {/* What I Do */}
           <div>
             <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "22px", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
-              <span style={{ color: "#ff6b35" }}>⚡</span> What I Do
+              <span style={{ color: "#ff6b35" }}>⚡</span> Specializations
             </h3>
-            <div className="what-i-do-grid" style={{ display: "grid", gap: "20px" }}>
-              <div style={{ background: "#0f172a", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
-                <h4 style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "10px" }}>Shopify Development & Optimization</h4>
-                <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7, margin: 0 }}>I design and develop custom Shopify stores that convert. From initial setup to advanced customization, I create stores optimized for sales that also reflect your brand perfectly.</p>
-              </div>
-              <div style={{ background: "#0f172a", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
-                <h4 style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "10px" }}>E-Commerce Analytics</h4>
-                <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7, margin: 0 }}>Most store owners don&apos;t know why they lose customers. I set up comprehensive tracking, analyze behavior patterns, and identify exactly where to optimize for maximum impact and revenue.</p>
-              </div>
-              <div style={{ background: "#0f172a", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
-                <h4 style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "10px" }}>Conversion Rate Optimization</h4>
-                <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7, margin: 0 }}>I take stores from 2% conversion to 5%+ through strategic testing, data analysis, and systematic optimization. Small improvements compound into massive, measurable results.</p>
-              </div>
+            <div className="what-i-do-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
+              {[
+                { title: "Shopify Store Management", desc: "Full administrative setup, catalog structures, navigation, and ongoing maintenance." },
+                { title: "Shopify Liquid Development", desc: "Writing custom templates, snippets, and section code to modify theme behaviour." },
+                { title: "Dawn Theme Customization", desc: "Configuring and extending Shopify's flagship theme with pixel-perfect styles." },
+                { title: "Product Management", desc: "Managing inventories, descriptions, SEO metadata, and product media streams." },
+                { title: "Frontend Development (React)", desc: "Building responsive, modern single-page applications with React and JavaScript." },
+                { title: "AI-Assisted Development", desc: "Accelerating prototyping and test runs using LLMs and prompt engineering workflows." }
+              ].map((item, idx) => (
+                <div key={idx} style={{ background: "#0f172a", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
+                  <h4 style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "10px" }}>{item.title}</h4>
+                  <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7, margin: 0 }}>{item.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -68,11 +69,11 @@ export default function AboutSection() {
             </h3>
             <div className="stats-facts-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "16px" }}>
               {[
-                { label: "Experience", val: "1 Year" },
-                { label: "Brands Helped", val: "10+" },
-                { label: "Real Results", val: "✓" },
-                { label: "Growing Client Base", val: "✓" },
-                { label: "Availability", val: "Open" }
+                { label: "Live Stores", val: "4" },
+                { label: "Experience", val: "1+ Year" },
+                { label: "Projects Built", val: "7+" },
+                { label: "Availability", val: "Open" },
+                { label: "Response Time", val: "< 24h" }
               ].map((stat, i) => (
                 <div key={i} style={{ background: "#111827", border: "1px solid #1e293b", padding: "16px", borderRadius: "10px", textAlign: "center" }}>
                   <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", fontWeight: 800 }}>{stat.val}</div>

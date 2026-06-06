@@ -92,3 +92,14 @@ body {
     grid-template-columns: 1fr !important;
   }
 }
+
+.store-card-link {
+  transition: all 0.3s ease !important;
+}
+
+.store-card-link:hover {
+  transform: translateY(-4px);
+  border-color: #ff6b35 !important;
+  box-shadow: 0 10px 20px rgba(255, 107, 53, 0.15);
+  background: #1e293b !important;
+}

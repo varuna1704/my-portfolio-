@@ -17,51 +17,92 @@ const GitHubIcon = () => (
 
 /* ─── DATA ─────────────────────────────────────────────────────────────── */
 
-const NAV_ITEMS = ["About", "Services", "Case Studies", "Projects", "Testimonials", "Skills", "Experience", "Education", "Certifications", "Resume", "Contact"];
+const NAV_ITEMS = ["About", "Services", "Case Studies", "Projects", "GitHub Showcase", "Testimonials", "Skills", "AI Development", "Experience", "Education", "Certifications", "Resume", "Contact"];
 
 const SKILLS = [
-  { name: "Shopify Development", level: 95, cat: "E-commerce" },
-  { name: "Liquid / Storefront API", level: 90, cat: "E-commerce" },
-  { name: "React.js / Next.js", level: 85, cat: "Frontend" },
-  { name: "JavaScript (ES6+)", level: 88, cat: "Frontend" },
-  { name: "Python", level: 80, cat: "Backend" },
-  { name: "Node.js / Express", level: 75, cat: "Backend" },
-  { name: "SQL (MySQL/PostgreSQL)", level: 85, cat: "Backend" },
-  { name: "Java / Core Java", level: 75, cat: "Backend" },
-  { name: "Data Analytics", level: 85, cat: "Data" },
-  { name: "Excel / Power BI", level: 82, cat: "Data" },
+  // Shopify
+  { name: "Store Management", level: 95, cat: "Shopify" },
+  { name: "Liquid Templating", level: 92, cat: "Shopify" },
+  { name: "Dawn Theme Customization", level: 94, cat: "Shopify" },
+  { name: "Sections & Snippets", level: 93, cat: "Shopify" },
+  { name: "Product Management", level: 90, cat: "Shopify" },
+  { name: "Product Listings", level: 95, cat: "Shopify" },
+  { name: "Description Writing", level: 88, cat: "Shopify" },
+  { name: "Image Management", level: 90, cat: "Shopify" },
+  { name: "Judge.me Integration", level: 92, cat: "Shopify" },
+  
+  // Frontend
+  { name: "React.js", level: 88, cat: "Frontend" },
+  { name: "JavaScript / ES6+", level: 90, cat: "Frontend" },
+  { name: "TypeScript", level: 82, cat: "Frontend" },
+  { name: "HTML5 / CSS3", level: 93, cat: "Frontend" },
+  { name: "Responsive Design", level: 94, cat: "Frontend" },
+  { name: "Cross-Browser Testing", level: 85, cat: "Frontend" },
+
+  // Programming
+  { name: "PHP", level: 80, cat: "Programming" },
+  { name: "Python", level: 85, cat: "Programming" },
+  { name: "Java", level: 78, cat: "Programming" },
+  { name: "SQL", level: 87, cat: "Programming" },
+
+  // Databases
+  { name: "MySQL", level: 88, cat: "Databases" },
+  { name: "PostgreSQL", level: 84, cat: "Databases" },
+
+  // Cloud/AWS
+  { name: "EC2 & S3", level: 82, cat: "Cloud/AWS" },
+  { name: "VPC & Route 53", level: 75, cat: "Cloud/AWS" },
+  { name: "IAM & CloudWatch", level: 78, cat: "Cloud/AWS" },
+
+  // AI & GenAI
+  { name: "Prompt Engineering", level: 94, cat: "AI & GenAI" },
+  { name: "ChatGPT & Claude", level: 95, cat: "AI & GenAI" },
+  { name: "GitHub Copilot", level: 92, cat: "AI & GenAI" },
+  { name: "AI-Assisted Development", level: 95, cat: "AI & GenAI" },
+  { name: "Vibe Coding", level: 90, cat: "AI & GenAI" },
+  { name: "LLM Workflows", level: 88, cat: "AI & GenAI" },
+
+  // Tools
+  { name: "Git & GitHub", level: 88, cat: "Tools" },
+  { name: "VS Code", level: 92, cat: "Tools" }
 ];
 
 const EXPERIENCE = [
   {
-    role: "Process Associate",
-    company: "Indigen Services",
-    location: "Pune, Maharashtra",
+    role: "Shopify Developer",
+    company: "Indigen Services & AI SaaS Development",
+    location: "Nashik, MH",
     period: "Nov 2025 – Present",
-    icon: "⚽",
+    icon: "🛍️",
     color: "#ff6b35",
     points: [
-      "Worked on structured event classification and match tagging for international basketball games.",
-      "Delivered high-quality analytics datasets for sports performance evaluation.",
-      "Maintained 98%+ accuracy in high-speed data annotation environments."
+      "Store Management: Complete administrative management, product listings, writing conversion-focused product descriptions, image asset layouts, and content updates.",
+      "Theme Development: Custom section templates using Liquid, HTML, CSS, JavaScript, and tailoring Dawn Theme parameters for clients.",
+      "Integrations: Seamless setup of review widgets (e.g. Judge.me), conversion rate enhancements, and search engine listings.",
+      "Freelance Highlight: Built complete Shopify coffee shop store from scratch on Dawn Theme (custom sections, catalogs, navigation, configurations, responsive structures)."
+    ],
+    stores: [
+      { name: "Mavena", desc: "Women's Fashion", link: "https://mavenaco.com/" },
+      { name: "MidFox", desc: "Pet Products", link: "https://midfox.com/" },
+      { name: "Pawfully", desc: "Pet Products" },
+      { name: "Retromedy", desc: "Lifestyle Products" }
     ]
   },
   {
-    role: "Sports Trader Trainee",
+    role: "Data Analyst",
     company: "Privan Sports",
-    location: "Nashik, Maharashtra",
-    period: "July 2024 – March 2025",
-    icon: "📈",
+    location: "Nashik, MH",
+    period: "Jul 2024 – Mar 2025",
+    icon: "📊",
     color: "#7c3aed",
     points: [
-      "Tagged 2.5 full matches per day using structured event classification systems.",
-      "Analyzed game patterns and provided data-driven insights for sports strategy.",
-      "Managed real-time data feeds for international cricket and football matches."
+      "SQ Project: Sports data annotation, frame-by-frame match tagging, and preparing analytics datasets with 100% accuracy.",
+      "VidSwap Platform: Event tagging for international basketball matches, play logging, possession mapping, and event classification."
     ]
   }
 ];
 
-const PROJECTS = PROJECTS_DATA.filter(p => p.isFeatured).slice(0, 3);
+const PROJECTS = PROJECTS_DATA;
 
 const EDUCATION = [
   {
@@ -85,25 +126,30 @@ const EDUCATION = [
 ];
 
 const CERTIFICATIONS = [
-  { title: "AWS re/Start Graduate", issuer: "Amazon Web Services", icon: "☁️", color: "#f59e0b" },
-  { title: "AWS Solutions Architect Simulation", issuer: "Forage / AWS", icon: "🏗", color: "#ff6b35" },
-  { title: "Introduction to Tech Apprenticeship", issuer: "Accenture UK", icon: "💼", color: "#00d4aa" },
-  { title: "Tech Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#7c3aed" },
-  { title: "GenAI Powered Data Analytics", issuer: "Tata", icon: "🤖", color: "#ec4899" }
+  { title: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services", icon: "☁️", color: "#3b82f6", status: "In Progress" },
+  { title: "AWS re/Start Graduate", issuer: "Amazon Web Services", icon: "🎓", color: "#f59e0b", status: "Completed" },
+  { title: "Shopify Developer Certification", issuer: "Shopify", icon: "🛍️", color: "#ff6b35", status: "Planned" },
+  { title: "AWS Solutions Architecture Simulation", issuer: "Amazon Web Services", icon: "🏗", color: "#ff6b35", status: "Completed" },
+  { title: "Introduction to Tech Apprenticeship", issuer: "Accenture UK", icon: "💼", color: "#00d4aa", status: "Completed" },
+  { title: "Tech Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#7c3aed", status: "Completed" },
+  { title: "GenAI Powered Data Analytics", issuer: "Tata", icon: "🤖", color: "#ec4899", status: "Completed" }
 ];
 
 const RESUME_DETAILS = [
   { icon: "📧", label: "Email", value: "nikamvaruna@gmail.com" },
-  { icon: "📞", label: "Phone", value: "+91 7768289006" },
+  { icon: "📞", label: "Phone", value: "+91 776 828 9006" },
   { icon: "📍", label: "Location", value: "Nashik, MH, India" },
   { icon: "🌐", label: "Languages", value: "English, Hindi, Marathi" }
 ];
 
 const CAT_COLORS = {
-  "E-commerce": "#ff6b35",
+  "Shopify": "#ff6b35",
   "Frontend": "#00d4aa",
-  "Backend": "#7c3aed",
-  "Data": "#f59e0b"
+  "Programming": "#7c3aed",
+  "Databases": "#f59e0b",
+  "Cloud/AWS": "#ec4899",
+  "AI & GenAI": "#10b981",
+  "Tools": "#3b82f6"
 };
 
 /* ─── HOOKS ─────────────────────────────────────────────────────────────── */
@@ -155,7 +201,7 @@ function AnimatedBar({ level, color, visible }) {
 }
 
 function TypedText() {
-  const titles = ["Shopify Developer", "E-commerce Specialist", "Data Analyst", "MCA Graduate 2025"];
+  const titles = ["Shopify Developer", "Frontend Developer", "AI-Assisted Developer", "E-commerce Specialist"];
   const [display, setDisplay] = useState("");
   const [ti, setTi] = useState(0);
   const [del, setDel] = useState(false);
@@ -348,9 +394,8 @@ function Hero() {
             color: "#94a3b8", fontSize: 16, lineHeight: 1.9,
             maxWidth: 540, marginTop: 22,
           }}>
-            Shopify Developer & Data Analyst with 1 year of professional experience.
-            MCA 2025 graduate. I help startups and small businesses build and optimize
-            their online stores — with honest pricing, real results, and no fluff.
+            Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills.
+            Building modern e-commerce experiences, scalable web apps, and AI-powered solutions.
           </p>
 
           <div style={{ display: "flex", gap: 14, marginTop: 36, flexWrap: "wrap" }}>
@@ -546,6 +591,53 @@ function Skills() {
   );
 }
 
+/* ─── AI DEVELOPMENT ─────────────────────────────────────────────────── */
+
+function AIDevelopment() {
+  const [ref, visible] = useInView();
+  const workflow = [
+    { title: "Prompt Engineering", desc: "Crafting structured system prompts, few-shot contexts, and chain-of-thought rules to get reliable output from LLMs." },
+    { title: "ChatGPT & Claude", desc: "Integrating API gateways, chat contexts, and agentic workflows to build interactive conversational applications." },
+    { title: "GitHub Copilot", desc: "Using editor-integrated tools to write boilerplate, auto-generate comments, and test scripts in real time." },
+    { title: "AI Development Workflows", desc: "Orchestrating agent frameworks, vector datastores, and Retrieval-Augmented Generation (RAG) loops." },
+    { title: "Vibe Coding", desc: "Accelerating prototype loops by describing interfaces in natural language while maintaining control of system architecture." },
+    { title: "Rapid Prototyping", desc: "Deploying production-ready sandboxes and wireframes in days rather than weeks by leveraging generative code foundations." }
+  ];
+
+  return (
+    <section id="ai-development" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
+      <SectionLabel label="03 — AI-Assisted Development" />
+      <h2 style={{
+        fontFamily: "'Syne', sans-serif",
+        fontSize: "clamp(2rem,5vw,3.2rem)",
+        fontWeight: 800, color: "#fff", margin: "12px 0 24px",
+      }}>
+        Generative <span style={{ color: "#ff6b35" }}>AI Integration</span>
+      </h2>
+      <p style={{ color: "#94a3b8", fontSize: "16px", lineHeight: 1.8, marginBottom: 48, maxWidth: "700px" }}>
+        I leverage AI tools and prompt engineering workflows to accelerate development, improve productivity, and build intelligent solutions. By incorporating LLM capabilities, I speed up prototype testing and maintain high code coverage.
+      </p>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
+        {workflow.map((item, idx) => (
+          <div
+            key={idx}
+            style={{
+              background: "#0f172a", border: "1px solid #1e293b",
+              borderRadius: 16, padding: "24px 28px", transition: "all 0.25s"
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.transform = "translateY(-5px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateY(0)"; }}
+          >
+            <h4 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 16, fontWeight: 700, marginBottom: 10 }}>{item.title}</h4>
+            <p style={{ color: "#94a3b8", fontSize: 13, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── EXPERIENCE ─────────────────────────────────────────────────────── */
 
 function Experience() {
@@ -585,7 +677,78 @@ function Experience() {
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginBottom: 6 }}>
                 <span style={{ fontSize: 22 }}>{e.icon}</span>
                 <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>{e.role}</h3>
-                <span style=function Projects() {
+                <span style={{ color: e.color, fontSize: 13, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>@ {e.company}</span>
+              </div>
+              <div style={{ color: "#475569", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginBottom: 20 }}>
+                <span>📍 {e.location}</span>
+                <span style={{ margin: "0 12px", opacity: 0.3 }}>|</span>
+                <span>📅 {e.period}</span>
+              </div>
+              <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+                {e.points.map((p, j) => (
+                  <li key={j} style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, marginBottom: 10, display: "flex", gap: 12 }}>
+                    <span style={{ color: e.color, marginTop: 4 }}>▹</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              {/* Managed stores card grid */}
+              {e.stores && (
+                <div style={{ marginTop: 24, borderTop: "1px solid #1e293b", paddingTop: 20 }}>
+                  <h4 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, marginBottom: 14 }}>
+                    Managed Production Stores
+                  </h4>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
+                    {e.stores.map((s, idx) => {
+                      const cardStyle = {
+                        background: "#111827",
+                        border: "1px solid #1e293b",
+                        borderRadius: 10,
+                        padding: 12,
+                        transition: "all 0.3s ease",
+                        textDecoration: "none",
+                        display: "block"
+                      };
+                      if (s.link) {
+                        return (
+                          <a
+                            key={idx}
+                            href={s.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="store-card-link"
+                            style={cardStyle}
+                          >
+                            <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                              <span>{s.name}</span>
+                              <span style={{ color: "#ff6b35", fontSize: 12 }}>↗</span>
+                            </div>
+                            <div style={{ color: "#64748b", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
+                          </a>
+                        );
+                      }
+                      return (
+                        <div key={idx} style={cardStyle}>
+                          <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700 }}>{s.name}</div>
+                          <div style={{ color: "#64748b", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── PROJECTS ────────────────────────────────────────────────────────── */
+
+function Projects() {
   const [ref, visible] = useInView();
   const [hovered, setHovered] = useState(null);
 
@@ -708,27 +871,6 @@ function Experience() {
           </div>
         ))}
       </div>
-x", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
-                {p.tech.map(t => (
-                  <span key={t} style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", color: p.color, background: `${p.color}15`, padding: "4px 10px", borderRadius: 99, fontWeight: 700 }}>{t}</span>
-                ))}
-              </div>
-              <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 21, fontWeight: 800, color: "#fff", margin: "0 0 12px" }}>{p.title}</h3>
-              <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, marginBottom: 24, height: 68, overflow: "hidden" }}>{p.desc}</p>
-              <Link 
-                to="/projects"
-                style={{ 
-                  color: p.color, fontFamily: "'Syne', sans-serif", 
-                  fontWeight: 700, fontSize: 13, textDecoration: "none", 
-                  display: "flex", alignItems: "center", gap: 6 
-                }}
-              >
-                View Details ↗
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
 
       <div style={{ marginTop: 60, display: "flex", justifyContent: "center" }}>
         <Link 
@@ -762,6 +904,125 @@ x", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
         >
           View All Projects <span style={{ fontSize: 18 }}>→</span>
         </Link>
+      </div>
+    </section>
+  );
+}
+
+/* ─── GITHUB SHOWCASE ────────────────────────────────────────────────── */
+
+function GithubShowcase() {
+  const [ref, visible] = useInView();
+  const [repos, setRepos] = useState([
+    {
+      name: "AI-customer-reviews-generator",
+      desc: "Generates authentic customer reviews with prompt engineering workflows and bulk URL processing options.",
+      lang: "JavaScript",
+      stars: 2,
+      url: "https://github.com/varuna1704/AI-customer-reviews-generator"
+    },
+    {
+      name: "vastra-bharat-legacy",
+      desc: "Premium frontend e-commerce web interface showcasing regional Indian textile heritage.",
+      lang: "TypeScript",
+      stars: 1,
+      url: "https://github.com/varuna1704/vastra-bharat-legacy"
+    },
+    {
+      name: "nashik-kubh-mela",
+      desc: "Highly responsive informational and guide platform designed for tourists visiting Nashik Kumbh Mela.",
+      lang: "JavaScript",
+      stars: 1,
+      url: "https://github.com/varuna1704/nashik-kubh-mela"
+    },
+    {
+      name: "online-system-for-farm",
+      desc: "An ERP farm management tool featuring crop record maintenance, sales flow monitoring, and a PostgreSQL database.",
+      lang: "PHP",
+      stars: 1,
+      url: "https://github.com/varuna1704/online-system-for-farm"
+    },
+    {
+      name: "the_photowala",
+      desc: "Elegant professional photography studio website including client gallery pre-selections and scheduling.",
+      lang: "TypeScript",
+      stars: 1,
+      url: "https://github.com/varuna1704/the_photowala"
+    }
+  ]);
+  
+  useEffect(() => {
+    fetch("https://api.github.com/users/varuna1704/repos?sort=updated&per_page=30")
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error("API error");
+      })
+      .then(data => {
+        setRepos(prev => prev.map(r => {
+          const match = data.find(m => m.name.toLowerCase() === r.name.toLowerCase() || (r.name === "AI-customer-reviews-generator" && m.name === "AI-customer-reviews-generator"));
+          if (match) {
+            return { ...r, stars: match.stargazers_count, desc: match.description || r.desc };
+          }
+          return r;
+        }));
+      })
+      .catch(err => console.warn("GitHub fetch failed, using fallback:", err));
+  }, []);
+
+  return (
+    <section id="github-showcase" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
+      <SectionLabel label="05 — GitHub Showcase" />
+      <h2 style={{
+        fontFamily: "'Syne', sans-serif",
+        fontSize: "clamp(2rem,5vw,3.2rem)",
+        fontWeight: 800, color: "#fff", margin: "12px 0 48px",
+      }}>
+        Code <span style={{ color: "#ff6b35" }}>Repositories</span>
+      </h2>
+      
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20, marginBottom: 40 }}>
+        {[
+          { label: "Total Repositories", val: "18" },
+          { label: "Contributions (Year)", val: "320+" },
+          { label: "Top Languages", val: "Liquid, React, PHP" },
+          { label: "Streak Days", val: "12" }
+        ].map((s, idx) => (
+          <div key={idx} style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 20, textAlign: "center" }}>
+            <div style={{ color: "#ff6b35", fontFamily: "'Syne', sans-serif", fontSize: 24, fontWeight: 800 }}>{s.val}</div>
+            <div style={{ color: "#64748b", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginTop: 4, textTransform: "uppercase" }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
+        {repos.map((r, i) => (
+          <a
+            key={i} href={r.url} target="_blank" rel="noreferrer" data-hover
+            style={{
+              background: "#0f172a", border: "1px solid #1e293b",
+              borderRadius: 16, padding: 24, textDecoration: "none", display: "flex", flexDirection: "column", justifyContent: "space-between",
+              transition: "all 0.25s", height: "100%"
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.transform = "translateY(-5px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateY(0)"; }}
+          >
+            <div>
+              <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, marginBottom: 8, display: "flex", justifyContent: "space-between" }}>
+                <span>{r.name}</span>
+                <span style={{ fontSize: 12 }}>↗</span>
+              </div>
+              <p style={{ color: "#94a3b8", fontSize: 13, lineHeight: 1.6, margin: "0 0 20px" }}>{r.desc}</p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", borderTop: "1px solid #1e293b", paddingTop: 12 }}>
+              <span style={{ background: "#ff6b3515", color: "#ff6b35", padding: "4px 10px", borderRadius: 99, fontSize: 10, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>
+                {r.lang}
+              </span>
+              <span style={{ color: "#64748b", fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>
+                ⭐ {r.stars}
+              </span>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   );
@@ -850,8 +1111,20 @@ function Certifications() {
               background: `${c.color}18`, borderRadius: 12,
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>{c.icon}</div>
-            <div>
-              <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, lineHeight: 1.4, marginBottom: 6 }}>{c.title}</div>
+            <div style={{ flexGrow: 1 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8, flexWrap: "wrap", width: "100%" }}>
+                <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, lineHeight: 1.4, marginBottom: 6, flex: 1 }}>{c.title}</div>
+                {c.status && (
+                  <span style={{
+                    fontSize: 9, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700,
+                    padding: "2px 6px", borderRadius: 4, textTransform: "uppercase",
+                    border: `1px solid ${c.status === 'Completed' ? '#00d4aa' : c.status === 'In Progress' ? '#f59e0b' : '#3b82f6'}`,
+                    background: `${c.status === 'Completed' ? '#00d4aa' : c.status === 'In Progress' ? '#f59e0b' : '#3b82f6'}15`,
+                    color: c.status === 'Completed' ? '#00d4aa' : c.status === 'In Progress' ? '#f59e0b' : '#3b82f6',
+                    whiteSpace: "nowrap"
+                  }}>{c.status}</span>
+                )}
+              </div>
               <div style={{ color: c.color, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 600 }}>{c.issuer}</div>
             </div>
           </div>
@@ -1083,8 +1356,10 @@ export default function Portfolio() {
         <ServicesSection />
         <CaseStudiesSection />
         <Projects />
+        <GithubShowcase />
         <TestimonialsSection />
         <Skills />
+        <AIDevelopment />
         <Experience />
         <Education />
         <Certifications />

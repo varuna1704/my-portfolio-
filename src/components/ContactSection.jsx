@@ -192,7 +192,7 @@ export default function ContactSection() {
             {[
               { icon: "✉️", label: "Email", val: "nikamvaruna@gmail.com", href: "mailto:nikamvaruna@gmail.com" },
               { icon: "📱", label: "Phone", val: "+91 7768289006", href: "tel:+917768289006" },
-              { icon: "💼", label: "LinkedIn", val: "linkedin.com/in/varunanikam", href: "https://www.linkedin.com/in/varunanikam-200255255/" },
+              { icon: "💼", label: "LinkedIn", val: "linkedin.com/in/varunanikam-200255255", href: "https://www.linkedin.com/in/varunanikam-200255255" },
               { icon: "👩‍💻", label: "GitHub", val: "github.com/varuna1704", href: "https://github.com/varuna1704" },
             ].map((c, i) => (
               <a
