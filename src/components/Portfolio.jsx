@@ -413,7 +413,10 @@ function Hero() {
               Start Your Project
             </a>
             <a
-              href="#resume" data-hover
+              href="https://drive.google.com/file/d/1_S__H96JjAN67uPp7c1F7o6wYR00hOUS/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-hover
               style={{
                 padding: "13px 32px", border: "1.5px solid #334155",
                 color: "#94a3b8", borderRadius: 10, textDecoration: "none",
@@ -1206,8 +1209,9 @@ function Resume() {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
             <a
-              href="/Varuna_Nikam_Resume.pdf"
-              download="Varuna_Nikam_Resume.pdf"
+              href="https://drive.google.com/file/d/1_S__H96JjAN67uPp7c1F7o6wYR00hOUS/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
               data-hover
               style={{
                 padding: "14px 28px", background: "#ff6b35", color: "#fff",
@@ -1219,7 +1223,23 @@ function Resume() {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px #ff6b3560"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px #ff6b3540"; }}
             >
-              <span style={{ fontSize: 16 }}>⬇</span> Download Resume (PDF)
+              <span style={{ fontSize: 16 }}>📄</span> View Resume (Google Drive) ↗
+            </a>
+            <a
+              href="/Varuna_Nikam_Resume.pdf"
+              download="Varuna_Nikam_Resume.pdf"
+              data-hover
+              style={{
+                padding: "14px 28px", border: "1.5px solid #334155", color: "#94a3b8",
+                borderRadius: 10, textDecoration: "none",
+                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
+                transition: "all 0.25s",
+                textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              <span style={{ fontSize: 16 }}>⬇</span> Download PDF Resume
             </a>
           </div>
         </div>
