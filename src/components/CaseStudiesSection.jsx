@@ -175,18 +175,18 @@ export default function CaseStudiesSection() {
           href="#contact" 
           data-hover
           style={{
-            display: "inline-block", padding: "14px 36px", background: "#ff6b35", 
+            display: "inline-block", padding: "14px 36px", background: "#d9531b", 
             color: "#FFFFFF", borderRadius: "10px", textDecoration: "none", 
-            fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "15px", 
-            transition: "all 0.3s", boxShadow: "0 8px 30px #ff6b3540"
+            fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: "15px", 
+            transition: "all 0.3s", boxShadow: "0 8px 30px rgba(217, 83, 27, 0.25)"
           }}
           onMouseEnter={e => {
             e.currentTarget.style.transform = "translateY(-3px)";
-            e.currentTarget.style.boxShadow = "0 14px 40px #ff6b3560";
+            e.currentTarget.style.boxShadow = "0 14px 40px rgba(217, 83, 27, 0.4)";
           }}
           onMouseLeave={e => {
             e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.boxShadow = "0 8px 30px #ff6b3540";
+            e.currentTarget.style.boxShadow = "0 8px 30px rgba(217, 83, 27, 0.25)";
           }}
         >
           Get Your Custom Strategy →

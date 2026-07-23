@@ -132,7 +132,7 @@ const EXPERIENCE = [
     location: "Nashik, MH",
     period: "Jul 2024 – Mar 2025",
     icon: "📊",
-    color: "#7c3aed",
+    color: "#a78bfa",
     points: [
       "SQ Project: Sports data annotation, frame-by-frame event tagging, and dataset preparation.",
       "VidSwap Project: Basketball match annotation, play tagging, possession tracking, and event classification."
@@ -159,7 +159,7 @@ const EDUCATION = [
     period: "2020 – 2023",
     focus: "Software Engineering & Database Management",
     icon: "🏫",
-    color: "#7c3aed"
+    color: "#a78bfa"
   }
 ];
 
@@ -318,14 +318,14 @@ function Nav({ active }) {
                 to="/projects"
                 data-hover
                 style={{
-                  color: active === item.toLowerCase() ? "#ff6b35" : "#94a3b8",
+                  color: active === item.toLowerCase() ? "#ff6b35" : "#cbd5e1",
                   textDecoration: "none",
                   fontFamily: "'Syne', sans-serif",
                   fontWeight: 600, fontSize: 13,
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={e => e.target.style.color = "#ff6b35"}
-                onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#94a3b8"}
+                onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#cbd5e1"}
               >
                 {item}
               </Link>
@@ -337,14 +337,14 @@ function Nav({ active }) {
               href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
               data-hover
               style={{
-                color: active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#94a3b8",
+                color: active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#cbd5e1",
                 textDecoration: "none",
                 fontFamily: "'Syne', sans-serif",
                 fontWeight: 600, fontSize: 13,
                 transition: "color 0.2s",
               }}
               onMouseEnter={e => e.target.style.color = "#ff6b35"}
-              onMouseLeave={e => e.target.style.color = active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#64748b"}
+              onMouseLeave={e => e.target.style.color = active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#cbd5e1"}
             >
               {item}
             </a>
@@ -357,7 +357,7 @@ function Nav({ active }) {
             padding: "7px 18px",
             background: "#ffffff10",
             border: "1.5px solid #ffffff20",
-            color: "#94a3b8",
+            color: "#cbd5e1",
             borderRadius: 8,
             textDecoration: "none",
             fontFamily: "'Syne', sans-serif",
@@ -366,7 +366,7 @@ function Nav({ active }) {
             display: "flex", alignItems: "center", gap: 6,
           }}
           onMouseEnter={e => { e.currentTarget.style.background = "#24292e"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#fff"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "#ffffff10"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.borderColor = "#ffffff20"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "#ffffff10"; e.currentTarget.style.color = "#cbd5e1"; e.currentTarget.style.borderColor = "#ffffff20"; }}
         >
           <GitHubIcon /> GitHub ↗
         </a>
@@ -415,6 +415,7 @@ function Hero() {
             fontSize: 12, letterSpacing: 4,
             textTransform: "uppercase",
             marginBottom: 14, opacity: 0.8,
+            fontWeight: 600,
           }}>
             &gt; Based in Nashik, Maharashtra —
           </p>
@@ -429,7 +430,7 @@ function Hero() {
           </h1>
           <TypedText />
           <p style={{
-            color: "#94a3b8", fontSize: 16, lineHeight: 1.9,
+            color: "#cbd5e1", fontSize: 16, lineHeight: 1.9,
             maxWidth: 540, marginTop: 22,
           }}>
             Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills.
@@ -440,13 +441,13 @@ function Hero() {
             <a
               href="#contact" data-hover
               style={{
-                padding: "13px 32px", background: "#ff6b35", color: "#FFFFFF",
+                padding: "13px 32px", background: "#d9531b", color: "#FFFFFF",
                 borderRadius: 10, textDecoration: "none",
                 fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-                boxShadow: "0 8px 30px #ff6b3540", transition: "all 0.25s",
+                boxShadow: "0 8px 30px rgba(217, 83, 27, 0.25)", transition: "all 0.25s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px #ff6b3560"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px #ff6b3540"; }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(217, 83, 27, 0.4)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(217, 83, 27, 0.25)"; }}
             >
               Contact Me
             </a>
@@ -454,12 +455,12 @@ function Hero() {
               href="#projects" data-hover
               style={{
                 padding: "13px 32px", border: "1.5px solid #334155",
-                color: "#94a3b8", borderRadius: 10, textDecoration: "none",
+                color: "#cbd5e1", borderRadius: 10, textDecoration: "none",
                 fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
                 transition: "all 0.25s",
               }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.transform = "translateY(0)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#cbd5e1"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
               View Projects
             </a>
@@ -470,12 +471,12 @@ function Hero() {
               data-hover
               style={{
                 padding: "13px 32px", border: "1.5px solid #334155",
-                color: "#94a3b8", borderRadius: 10, textDecoration: "none",
+                color: "#cbd5e1", borderRadius: 10, textDecoration: "none",
                 fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
                 transition: "all 0.25s", display: "flex", alignItems: "center", gap: 8,
               }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.transform = "translateY(0)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#cbd5e1"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
               📄 Download Resume
             </a>
@@ -483,10 +484,10 @@ function Hero() {
 
           {/* Social Links */}
           <div style={{ display: "flex", gap: 24, marginTop: 24, alignItems: "center" }}>
-            <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5 }}>Connect:</span>
-            <a href="https://www.linkedin.com/in/varunanikam-200255255" target="_blank" rel="noreferrer" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>LinkedIn ↗</a>
-            <a href="https://github.com/varuna1704" target="_blank" rel="noreferrer" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>GitHub ↗</a>
-            <a href="mailto:nikamvaruna@gmail.com" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>Email ↗</a>
+            <span style={{ color: "#cbd5e1", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5, fontWeight: 600 }}>Connect:</span>
+            <a href="https://www.linkedin.com/in/varunanikam-200255255" target="_blank" rel="noreferrer" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>LinkedIn ↗</a>
+            <a href="https://github.com/varuna1704" target="_blank" rel="noreferrer" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>GitHub ↗</a>
+            <a href="mailto:nikamvaruna@gmail.com" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>Email ↗</a>
           </div>
 
           <div style={{
@@ -504,7 +505,7 @@ function Hero() {
                   fontWeight: 800, color: "#fff",
                 }}>{s.val}</div>
                 <div style={{
-                  color: "#475569", fontSize: 12, marginTop: 4,
+                  color: "#cbd5e1", fontSize: 12, marginTop: 4,
                   fontFamily: "'JetBrains Mono', monospace",
                 }}>{s.label}</div>
               </div>
@@ -550,6 +551,7 @@ function Hero() {
               <img
                 src="/images/headshots/varuna-headshot-professional-dark.png"
                 alt="Varuna Nikam"
+                fetchPriority="high"
                 style={{
                   width: "100%", height: "100%",
                   objectFit: "cover", objectPosition: "center",
@@ -1089,13 +1091,13 @@ function Projects() {
                         aria-label={`View live site for ${p.title}`}
                         style={{
                           flex: 1, padding: "11px 16px", borderRadius: "10px",
-                          background: "#ff6b35", color: "#FFFFFF", textDecoration: "none",
-                          fontSize: 13, fontWeight: 700, fontFamily: "'Syne', sans-serif",
+                          background: "#d9531b", color: "#FFFFFF", textDecoration: "none",
+                          fontSize: 13, fontWeight: 600, fontFamily: "'Syne', sans-serif",
                           textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                          boxShadow: "0 4px 12px rgba(255,107,53,0.2)", transition: "all 0.25s"
+                          boxShadow: "0 4px 12px rgba(217, 83, 27, 0.15)", transition: "all 0.25s"
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(255,107,53,0.35)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(255,107,53,0.2)"; }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(217, 83, 27, 0.3)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(217, 83, 27, 0.15)"; }}
                       >
                         Live Demo ↗
                       </a>
@@ -1439,14 +1441,14 @@ function Resume() {
               rel="noopener noreferrer"
               data-hover
               style={{
-                padding: "14px 28px", background: "#ff6b35", color: "#FFFFFF",
+                padding: "14px 28px", background: "#d9531b", color: "#FFFFFF",
                 borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 14,
-                boxShadow: "0 8px 30px #ff6b3540", transition: "all 0.25s",
+                fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: 14,
+                boxShadow: "0 8px 30px rgba(217, 83, 27, 0.25)", transition: "all 0.25s",
                 textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px #ff6b3560"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px #ff6b3540"; }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(217, 83, 27, 0.4)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(217, 83, 27, 0.25)"; }}
             >
               <span style={{ fontSize: 16 }}>📄</span> View Resume (Google Drive) ↗
             </a>
@@ -1617,10 +1619,10 @@ export default function Portfolio() {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         flexWrap: "wrap", gap: 12,
       }}>
-        <span style={{ color: "#64748b", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
+        <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
           © 2025 Varuna Nikam · Nashik, Maharashtra
         </span>
-        <span style={{ color: "#64748b", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
+        <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
           Built with React ⚡
         </span>
       </footer>

@@ -105,17 +105,17 @@ export default function ServicesSection() {
                     <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.8, marginBottom: "24px" }}>{srv.detailedDesc}</p>
                     
                     <div style={{ background: "#0f172a", padding: "16px", borderRadius: "8px", border: "1px solid #1e293b", marginBottom: "24px" }}>
-                      <span style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>Best For</span>
+                      <span style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>Best For</span>
                       <span style={{ color: "#00d4aa", fontSize: "14px", fontFamily: "'Syne', sans-serif", fontWeight: 700 }}>{srv.bestFor}</span>
                     </div>
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                       <div style={{ borderLeft: "2px solid #ff6b35", paddingLeft: "12px" }}>
-                        <span style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>Timeline</span>
+                        <span style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>Timeline</span>
                         <span style={{ color: "#e2e8f0", fontSize: "15px", fontFamily: "'Syne', sans-serif", fontWeight: 700 }}>{srv.timeline}</span>
                       </div>
                       <div style={{ borderLeft: "2px solid #ff6b35", paddingLeft: "12px" }}>
-                        <span style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>Investment</span>
+                        <span style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>Investment</span>
                         <span style={{ color: "#e2e8f0", fontSize: "15px", fontFamily: "'Syne', sans-serif", fontWeight: 700 }}>{srv.price}</span>
                       </div>
                     </div>
@@ -164,9 +164,9 @@ export default function ServicesSection() {
         
         <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
           <a href="#contact" data-hover style={{
-            padding: "14px 32px", background: "#ff6b35", color: "#FFFFFF", 
+            padding: "14px 32px", background: "#d9531b", color: "#FFFFFF", 
             borderRadius: "10px", textDecoration: "none", fontFamily: "'Syne', sans-serif", 
-            fontWeight: 800, fontSize: "15px", boxShadow: "0 8px 30px #ff6b3540", transition: "all 0.3s"
+            fontWeight: 600, fontSize: "15px", boxShadow: "0 8px 30px rgba(217, 83, 27, 0.25)", transition: "all 0.3s"
           }}>
             Schedule Free Consultation
           </a>

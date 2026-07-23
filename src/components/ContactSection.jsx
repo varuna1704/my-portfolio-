@@ -159,10 +159,10 @@ export default function ContactSection() {
               )}
 
               <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginTop: "12px" }}>
-                <button type="submit" disabled={status === "sending"} style={{
-                  padding: "16px 36px", background: status === "sending" ? "#475569" : "#ff6b35", color: "#FFFFFF", border: "none", borderRadius: "10px",
-                  fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "16px", cursor: status === "sending" ? "not-allowed" : "pointer",
-                  transition: "all 0.3s", boxShadow: status === "sending" ? "none" : "0 8px 30px #ff6b3540", flex: 1, minWidth: "200px"
+                 <button type="submit" disabled={status === "sending"} style={{
+                  padding: "16px 36px", background: status === "sending" ? "#475569" : "#d9531b", color: "#FFFFFF", border: "none", borderRadius: "10px",
+                  fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: "16px", cursor: status === "sending" ? "not-allowed" : "pointer",
+                  transition: "all 0.3s", boxShadow: status === "sending" ? "none" : "0 8px 30px rgba(217, 83, 27, 0.25)", flex: 1, minWidth: "200px"
                 }}>
                   {status === "sending" ? (
                     <span style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
@@ -242,11 +242,11 @@ export default function ContactSection() {
               <input type="text" placeholder="First Name" style={inputStyle} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"} />
               <input type="email" placeholder="Email Address" style={inputStyle} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"} />
               <button data-hover style={{
-                padding: "12px", background: "#ff6b3515", border: "1px solid #ff6b35", color: "#ff6b35", borderRadius: "8px",
-                fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "14px", cursor: "pointer", transition: "all 0.3s"
+                padding: "12px", background: "rgba(217, 83, 27, 0.08)", border: "1px solid #d9531b", color: "#d9531b", borderRadius: "8px",
+                fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: "14px", cursor: "pointer", transition: "all 0.3s"
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#ff6b35"; e.currentTarget.style.color = "#FFFFFF"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#ff6b3515"; e.currentTarget.style.color = "#ff6b35"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#d9531b"; e.currentTarget.style.color = "#FFFFFF"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(217, 83, 27, 0.08)"; e.currentTarget.style.color = "#d9531b"; }}
               >
                 Get Free Checklist
               </button>
