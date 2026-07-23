@@ -47,9 +47,9 @@ Structured progress indicators divided into 7 distinct categories with color-cod
 *   **AI & GenAI:** Prompt Engineering, ChatGPT API, Claude, Agent Frameworks
 *   **Tools:** Git & GitHub, VS Code, Postman, Vercel
 
-### 5. Live GitHub API Showcase
-*   Queries the GitHub REST API on load to fetch live contribution metrics, repository lists, star ratings, and main development languages.
-*   Gracefully falls back to high-fidelity static placeholders if the API rate limit is exceeded or offline.
+### 5. Build-Time GitHub Showcase
+*   Queries the GitHub REST API during production builds (`npm run build`) using `scripts/fetch-repos.js` and writes the results to a static database file (`src/data/repos.json`).
+*   Eliminates client-side runtime API calls and rate-limiting issues for search crawlers, with automated fallback recovery if the build-time call fails.
 
 ### 6. Generative AI Integration Workflow
 *   Highlights prompt design patterns, context boundary management, code interpreter workflows, and rapid prototyping processes.
@@ -69,13 +69,31 @@ Provides visual badges dynamically colored based on progress states:
 
 ## 🛠️ Technology Stack & Architecture
 
-This application is built with vanilla inline layouts and custom styling to maintain the original look, theme, and custom cursors exactly:
-
-*   **Core:** React (JS) + Vite (Superfast HMR and optimized production assets).
-*   **Styling:** Clean Vanilla CSS inline-styling system combined with `src/index.css` global animations and media queries.
+*   **Core:** React (JS) + Vite (Superfast HMR, code-splitting, and optimized production assets).
+*   **Styling:** Custom Vanilla CSS inline styling system combined with `src/index.css` global animations, custom scrollbars, and media queries.
 *   **Animations:** Framer Motion (page transitions, scroll reveals, and hover responses).
 *   **Icons:** Lucide React (clean, lightweight vector icons).
-*   **Backend Services:** Formspree API (for contact submissions), GitHub API (for live repository data).
+*   **Data Generation:** Custom Node.js HTTPS build script (`scripts/fetch-repos.js`) executing during `prebuild`.
+
+---
+
+## ⚡ Performance, SEO & Accessibility Upgrades
+
+This project implements modern web standards to maximize search engine indexing and ensure high-speed delivery on slow connections:
+
+### 1. Accessibility (WCAG 2.1 AA Compliant)
+*   **Color Contrast Enhancements**: Darkened primary orange buttons to `#d9531b` (`rgb(217, 83, 27)`) with white text and `fontWeight: 600`. Adjusted purple links/metadata headers to `#a78bfa`, and slate/grays to `#cbd5e1` / `#94a3b8` to pass contrast checks.
+*   **Screen Reader Labels**: Added descriptive `aria-label` labels to all live links and GitHub repository code links, distinguishing them for screen reader users.
+
+### 2. SEO & Pre-Rendering
+*   **Build-time Pre-rendering**: Injected static HTML structures directly into the output `index.html` file using `vite-plugin-prerender` to display content instantly to crawlers without requiring JS execution.
+*   **Static Search Helpers**: Integrated dynamic XML sitemap generation, structured `robots.txt`, Google Site Console verification head tags, and `vercel.json` SPA configurations.
+*   **llms.txt**: Provided a standard `/public/llms.txt` file listing essential page directories, portfolios, and details for LLM-based crawlers.
+
+### 3. Loading Speed & LCP (Largest Contentful Paint)
+*   **Code Splitting**: Implemented route-based lazy loading inside `App.jsx` utilizing `React.lazy` and `Suspense` to split bundle sizes and prevent non-critical assets from delaying home page renders.
+*   **Fetch Priority**: Appended `fetchPriority="high"` to the professional headshot image to instruct browsers to load above-the-fold media elements first.
+*   **System Fonts Fallback**: Applied system font lists in CSS (`system-ui`, `-apple-system`, etc.) to prevent text flicker during font downloads.
 
 ---
 
@@ -84,7 +102,12 @@ This application is built with vanilla inline layouts and custom styling to main
 ```text
 my-portfolio/
 ├── public/
-│   └── images/               # Optimized local assets and project thumbnails
+│   ├── images/               # Optimized WebP assets and project thumbnails
+│   ├── llms.txt              # LLM crawler directory/index file
+│   ├── sitemap.xml           # SEO Sitemap
+│   └── robots.txt            # Search engine directives
+├── scripts/
+│   └── fetch-repos.js        # Build-time GitHub API fetch script
 ├── src/
 │   ├── components/           # Modular React components
 │   │   ├── Cursor.jsx        # Dual-ring cursor tracker
@@ -93,14 +116,16 @@ my-portfolio/
 │   │   ├── ContactSection.jsx# Contact form and Formspree integration
 │   │   └── ServicesSection.jsx# Shopify development services catalog
 │   ├── data/
-│   │   └── projects.json     # Content database for the 7 projects
+│   │   ├── projects.json     # Content database for the 7 projects
+│   │   └── repos.json        # Static GitHub repository cache (built pre-compilation)
 │   ├── styles/
 │   │   └── projects.css      # Core grid styles for projects
-│   ├── App.jsx               # Navigation bar, Footer, and page composition
+│   ├── App.jsx               # Route lazy-loading, Navigation bar, and page composition
 │   ├── main.jsx              # Application mount and rendering bootstrap
-│   └── index.css             # Base styles, global animations, and media overrides
+│   └── index.css             # Base styles, global animations, system font fallbacks
+├── vercel.json               # SPA routing rewrite rule configs
 ├── vite.config.js            # Vite bundler options
-├── package.json              # Project dependencies and script declarations
+├── package.json              # Project dependencies, prebuild script declarations
 └── README.md                 # Detailed documentation
 ```
 
