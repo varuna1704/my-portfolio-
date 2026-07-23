@@ -75,5 +75,16 @@
     "language": "HTML/JS",
     "isFeatured": true,
     "topics": ["HTML", "JavaScript"]
+  },
+  {
+    "id": "proj-8",
+    "title": "Railway Mock Test Platform",
+    "description": "Interactive online preparation portal with real-time test simulations.",
+    "image": null,
+    "url": "https://github.com/varuna1704/Exam-railway",
+    "liveLink": "https://rail-exam.vercel.app/",
+    "language": "React.js",
+    "isFeatured": true,
+    "topics": ["React.js", "JavaScript", "Vite"]
   }
 ]

@@ -90,7 +90,7 @@ export default function AboutSection() {
           <div style={{ display: "grid", gap: "24px" }}>
             <div style={{ padding: "24px", background: "#ff6b3510", borderRadius: "12px", borderLeft: "4px solid #ff6b35" }}>
               <h3 style={{ color: "#ff6b35", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "12px" }}>Why I Do This</h3>
-              <p style={{ color: "#e2e8f0", fontSize: "15px", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>&quot;I&apos;m passionate about helping online businesses succeed. There&apos;s nothing more satisfying than seeing a client&apos;s conversion rate improve and watching that translate into measurable business growth.&quot;</p>
+              <p style={{ color: "#e2e8f0", fontSize: "15px", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>&quot;I became a developer because I love solving complex puzzles and building tools that make a difference. There&apos;s nothing more satisfying than turning a blank screen into a functional, user-friendly application that works flawlessly.&quot;</p>
             </div>
             
             <div>
@@ -106,24 +106,12 @@ export default function AboutSection() {
             </h3>
             <p style={{ color: "#94a3b8", fontSize: "15px", marginBottom: "20px" }}>I believe in transparency, communication, and data-driven decisions. Here&apos;s how I work:</p>
             <ul style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.8, paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "12px", margin: 0 }}>
-              <li><strong style={{ color: "#fff" }}>Listen First:</strong> I start by understanding your business goals, challenges, and unique situation. No cookie-cutter solutions.</li>
-              <li><strong style={{ color: "#fff" }}>Analyze Deeply:</strong> I dig into your data, competition, and user behavior to identify real opportunities (not just surface-level fixes).</li>
-              <li><strong style={{ color: "#fff" }}>Test & Iterate:</strong> I don&apos;t guess. I test improvements, measure results, and double down on what works.</li>
-              <li><strong style={{ color: "#fff" }}>Communicate Clearly:</strong> I explain technical concepts in business terms. You&apos;ll always know what I&apos;m doing and why.</li>
-              <li><strong style={{ color: "#fff" }}>Focus on Impact:</strong> My goal isn&apos;t technical complexity. It&apos;s to increase your revenue and grow your business.</li>
+              <li><strong style={{ color: "#fff" }}>Collaborate First:</strong> I thrive on cross-functional alignment, actively listening to team goals, product requirements, and engineering constraints.</li>
+              <li><strong style={{ color: "#fff" }}>Analyze Deeply:</strong> I dig into the root causes of issues, reviewing performance bottlenecks and analyzing system design to implement robust, clean code.</li>
+              <li><strong style={{ color: "#fff" }}>Test & Verify:</strong> I prioritize writing clean, maintainable code backed by solid testing and verification to ensure reliability and minimize regressions.</li>
+              <li><strong style={{ color: "#fff" }}>Communicate Clearly:</strong> I keep developers, designers, and project managers aligned with clear technical documentation, code comments, and project updates.</li>
+              <li><strong style={{ color: "#fff" }}>Focus on Quality:</strong> I balance technical excellence with product delivery, focusing on stable, scalable systems that create real value for users.</li>
             </ul>
-          </div>
-
-          {/* Ideal Clients */}
-          <div>
-            <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", marginBottom: "12px" }}>Ideal Clients</h3>
-            <p style={{ color: "#94a3b8", fontSize: "15px", marginBottom: "12px" }}>I work best with e-commerce brands that:</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px" }}>
-              {["Are serious about growth", "Value data-driven decisions", "Want a true partner, not just a contractor", "Are willing to test and optimize continuously"].map((tag, i) => (
-                <span key={i} style={{ background: "#1e293b", color: "#e2e8f0", padding: "6px 14px", borderRadius: "99px", fontSize: "13px", fontFamily: "'JetBrains Mono', monospace" }}>{tag}</span>
-              ))}
-            </div>
-            <p style={{ color: "#94a3b8", fontSize: "15px", fontStyle: "italic" }}>Whether you&apos;re launching your first store or scaling an existing one, I can help.</p>
           </div>
 
           {/* CTA */}

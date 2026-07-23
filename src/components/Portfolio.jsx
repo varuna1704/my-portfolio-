@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import AboutSection from "./AboutSection";
-import ServicesSection from "./ServicesSection";
-import CaseStudiesSection from "./CaseStudiesSection";
-import TestimonialsSection from "./TestimonialsSection";
 import ContactSection from "./ContactSection";
 import PROJECTS_DATA from "../data/projects.json";
 import REPOS from "../data/repos.json";
@@ -19,7 +16,7 @@ const GitHubIcon = () => (
 
 /* ─── DATA ─────────────────────────────────────────────────────────────── */
 
-const NAV_ITEMS = ["About", "Services", "Case Studies", "Projects", "GitHub Showcase", "Testimonials", "Skills", "AI Development", "Experience", "Education", "Certifications", "Resume", "Contact"];
+const NAV_ITEMS = ["About", "Projects", "GitHub Showcase", "Skills", "AI Development", "Experience", "Education", "Certifications", "Resume", "Contact"];
 
 const SKILLS = [
   {
@@ -74,12 +71,7 @@ const SKILLS = [
     icon: "☁️",
     skills: [
       "AWS",
-      "EC2",
-      "VPC",
-      "Route 53",
-      "IAM",
-      "S3",
-      "CloudWatch (Basic)"
+      "AWS re/Start Program (EC2, S3, IAM fundamentals)"
     ]
   },
   {
@@ -110,7 +102,7 @@ const EXPERIENCE = [
     role: "Shopify Developer",
     company: "Indigen Services & AI SaaS Development",
     location: "Nashik, MH",
-    period: "Nov 2025 – Present",
+    period: "Nov 2025 – May 2026",
     icon: "🛍️",
     color: "#ff6b35",
     points: [
@@ -169,7 +161,7 @@ const CERTIFICATIONS = [
   { title: "Shopify Developer Certification", issuer: "Shopify", icon: "🛍️", color: "#ff6b35", status: "Planned" },
   { title: "AWS Solutions Architecture Simulation", issuer: "Amazon Web Services", icon: "🏗", color: "#ff6b35", status: "Completed" },
   { title: "Introduction to Tech Apprenticeship", issuer: "Accenture UK", icon: "💼", color: "#00d4aa", status: "Completed" },
-  { title: "Tech Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#7c3aed", status: "Completed" },
+  { title: "Deloitte Australia Technology Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#a78bfa", status: "Completed" },
   { title: "GenAI Powered Data Analytics", issuer: "Tata", icon: "🤖", color: "#ec4899", status: "Completed" }
 ];
 
@@ -580,7 +572,7 @@ function Hero() {
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#00d4aa", animation: "blink 2s infinite" }} />
               <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>
-                Available for hire
+                Open to full-time opportunities
               </span>
             </div>
           </div>
@@ -1151,6 +1143,7 @@ function Projects() {
 
 function GithubShowcase() {
   const [ref, visible] = useInView();
+  /* TODO: confirm these 3 repos are set to Public on GitHub, they will 404 otherwise */
   const [repos] = useState(() => {
     const fallbackRepos = [
       {
@@ -1600,11 +1593,8 @@ export default function Portfolio() {
       <main>
         <Hero />
         <AboutSection />
-        <ServicesSection />
-        <CaseStudiesSection />
         <Projects />
         <GithubShowcase />
-        <TestimonialsSection />
         <Skills />
         <AIDevelopment />
         <Experience />

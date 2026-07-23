@@ -5,8 +5,7 @@ import { submitFormToFormspree } from '../services/emailService';
 export default function ContactSection() {
   const [ref, visible] = useInView();
   const [form, setForm] = useState({ 
-    name: "", email: "", phone: "", company: "", 
-    projectType: "", description: "", budget: "", terms: false 
+    name: "", email: "", phone: "", description: "", terms: false 
   });
   const [status, setStatus] = useState("idle");
 
@@ -17,7 +16,7 @@ export default function ContactSection() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (form.name && form.email && form.projectType && form.description && form.terms) {
+    if (form.name && form.email && form.description && form.terms) {
       setStatus("sending");
       
       try {
@@ -26,8 +25,8 @@ export default function ContactSection() {
         setStatus("success");
         setTimeout(() => {
           setStatus("idle");
-          setForm({ name: "", email: "", phone: "", company: "", projectType: "", description: "", budget: "", terms: false });
-        }, 8000); // Give them time to click the Calendly link
+          setForm({ name: "", email: "", phone: "", description: "", terms: false });
+        }, 8000);
 
       } catch (error) {
         console.error("Submission error:", error);
@@ -78,21 +77,7 @@ export default function ContactSection() {
             <div style={{ textAlign: "center", padding: "40px 0", animation: "fade-in-up 0.5s ease" }}>
               <div style={{ fontSize: "60px", marginBottom: "20px" }}>🎉</div>
               <h3 style={{ color: "#00d4aa", fontFamily: "'Syne', sans-serif", fontSize: "24px", marginBottom: "16px" }}>Thanks for reaching out!</h3>
-              <p style={{ color: "#94a3b8", fontSize: "16px", marginBottom: "32px" }}>I'll get back to you within 24 hours.</p>
-              
-              <div style={{ background: "#111827", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
-                <p style={{ color: "#e2e8f0", fontSize: "15px", marginBottom: "16px", fontWeight: 600 }}>Or book a free consultation directly:</p>
-                <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" style={{
-                  display: "inline-flex", padding: "12px 24px", background: "transparent", color: "#fff", border: "2px solid #334155", 
-                  borderRadius: "8px", textDecoration: "none", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "14px", 
-                  transition: "all 0.3s", alignItems: "center", justifyContent: "center", gap: "8px"
-                }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#ff6b35"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#fff"; }}
-                >
-                  📅 Schedule with Calendly
-                </a>
-              </div>
+              <p style={{ color: "#94a3b8", fontSize: "16px", marginBottom: "0px" }}>I'll get back to you within 24 hours.</p>
             </div>
           ) : (
             <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
@@ -107,41 +92,9 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "24px" }}>
-                <div>
-                  <label style={labelStyle}>Phone (Optional)</label>
-                  <input name="phone" type="tel" placeholder="+1 (234) 567-8900" value={form.phone} onChange={handleChange} style={inputStyle} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"} />
-                </div>
-                <div>
-                  <label style={labelStyle}>Company (Optional)</label>
-                  <input name="company" type="text" placeholder="Your Brand" value={form.company} onChange={handleChange} style={inputStyle} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"} />
-                </div>
-              </div>
-
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "24px" }}>
-                <div>
-                  <label htmlFor="projectType" style={labelStyle}>Project Type *</label>
-                  <select id="projectType" required name="projectType" value={form.projectType} onChange={handleChange} style={{ ...inputStyle, appearance: "none", cursor: "pointer" }} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"}>
-                    <option value="" disabled>Select a service...</option>
-                    <option value="Shopify Store Setup">Shopify Store Setup</option>
-                    <option value="Analytics & Optimization">Analytics & Optimization</option>
-                    <option value="Conversion Rate Optimization">Conversion Rate Optimization</option>
-                    <option value="Custom Development">Custom Development</option>
-                    <option value="Consulting">Consulting</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="budget" style={labelStyle}>Budget</label>
-                  <select id="budget" name="budget" value={form.budget} onChange={handleChange} style={{ ...inputStyle, appearance: "none", cursor: "pointer" }} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"}>
-                    <option value="" disabled>Select range...</option>
-                    <option value="Under $2,500">Under $2,500</option>
-                    <option value="$2,500 - $5,000">$2,500 - $5,000</option>
-                    <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                    <option value="$10,000+">$10,000+</option>
-                    <option value="Not sure">Not sure</option>
-                  </select>
-                </div>
+              <div>
+                <label style={labelStyle}>Phone (Optional)</label>
+                <input name="phone" type="tel" placeholder="+1 (234) 567-8900" value={form.phone} onChange={handleChange} style={inputStyle} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"} />
               </div>
 
               <div>
@@ -171,14 +124,6 @@ export default function ContactSection() {
                     </span>
                   ) : "Send Message"}
                 </button>
-                <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" style={{
-                  padding: "16px 36px", background: "transparent", color: "#fff", border: "2px solid #334155", 
-                  borderRadius: "10px", textDecoration: "none", fontFamily: "'Syne', sans-serif", 
-                  fontWeight: 800, fontSize: "16px", cursor: "pointer", transition: "all 0.3s", flex: 1, minWidth: "200px",
-                  textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px"
-                }}>
-                  📅 Book a Time
-                </a>
               </div>
             </form>
           )}
@@ -225,31 +170,6 @@ export default function ContactSection() {
                 <div style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase" }}>Response Time</div>
                 <div style={{ color: "#e2e8f0", fontSize: "14px", fontFamily: "'Syne', sans-serif" }}>Within 24 hours</div>
               </div>
-            </div>
-          </div>
-
-          <div style={{ 
-            background: "linear-gradient(135deg, rgba(26,31,58,0.7), rgba(15,23,42,1))", 
-            padding: "32px", borderRadius: "16px", border: "1px solid #1e293b" 
-          }}>
-            <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
-              🎁 Free E-Commerce Checklist
-            </h3>
-            <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.6, marginBottom: "20px" }}>
-              Get the 15-point optimization checklist top stores use to increase conversion rates.
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <input type="text" placeholder="First Name" style={inputStyle} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"} />
-              <input type="email" placeholder="Email Address" style={inputStyle} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"} />
-              <button data-hover style={{
-                padding: "12px", background: "rgba(217, 83, 27, 0.08)", border: "1px solid #d9531b", color: "#d9531b", borderRadius: "8px",
-                fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: "14px", cursor: "pointer", transition: "all 0.3s"
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#d9531b"; e.currentTarget.style.color = "#FFFFFF"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(217, 83, 27, 0.08)"; e.currentTarget.style.color = "#d9531b"; }}
-              >
-                Get Free Checklist
-              </button>
             </div>
           </div>
 
