@@ -160,7 +160,7 @@ export default function ContactSection() {
 
               <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginTop: "12px" }}>
                 <button type="submit" disabled={status === "sending"} style={{
-                  padding: "16px 36px", background: status === "sending" ? "#475569" : "#ff6b35", color: "#fff", border: "none", borderRadius: "10px",
+                  padding: "16px 36px", background: status === "sending" ? "#475569" : "#ff6b35", color: "#FFFFFF", border: "none", borderRadius: "10px",
                   fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "16px", cursor: status === "sending" ? "not-allowed" : "pointer",
                   transition: "all 0.3s", boxShadow: status === "sending" ? "none" : "0 8px 30px #ff6b3540", flex: 1, minWidth: "200px"
                 }}>
@@ -245,7 +245,7 @@ export default function ContactSection() {
                 padding: "12px", background: "#ff6b3515", border: "1px solid #ff6b35", color: "#ff6b35", borderRadius: "8px",
                 fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "14px", cursor: "pointer", transition: "all 0.3s"
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#ff6b35"; e.currentTarget.style.color = "#fff"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#ff6b35"; e.currentTarget.style.color = "#FFFFFF"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "#ff6b3515"; e.currentTarget.style.color = "#ff6b35"; }}
               >
                 Get Free Checklist

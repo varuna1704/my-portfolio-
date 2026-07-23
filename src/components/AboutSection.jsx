@@ -20,7 +20,7 @@ export default function AboutSection() {
                 e.currentTarget.parentElement.innerHTML = `
                   <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);gap:16px;">
                     <div style="font-size:80px">👩‍💻</div>
-                    <div style="color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
+                    <div style="color:#94a3b8;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
                   </div>
                 `;
               }}
@@ -132,7 +132,7 @@ export default function AboutSection() {
             <a
               href="#contact" data-hover
               style={{
-                display: "inline-flex", alignItems: "center", gap: "10px", padding: "16px 40px", background: "#ff6b35", color: "#fff",
+                display: "inline-flex", alignItems: "center", gap: "10px", padding: "16px 40px", background: "#ff6b35", color: "#FFFFFF",
                 borderRadius: "10px", textDecoration: "none", fontFamily: "'Syne', sans-serif",
                 fontWeight: 800, fontSize: "16px", transition: "all 0.3s",
                 boxShadow: "0 8px 30px #ff6b3540"

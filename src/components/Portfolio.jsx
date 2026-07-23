@@ -211,7 +211,7 @@ function useInView(threshold = 0.1) {
 function SectionLabel({ label }) {
   return (
     <p style={{
-      color: "#334155",
+      color: "#94a3b8",
       fontFamily: "'JetBrains Mono', monospace",
       fontSize: 11,
       letterSpacing: 3,
@@ -440,7 +440,7 @@ function Hero() {
             <a
               href="#contact" data-hover
               style={{
-                padding: "13px 32px", background: "#ff6b35", color: "#fff",
+                padding: "13px 32px", background: "#ff6b35", color: "#FFFFFF",
                 borderRadius: 10, textDecoration: "none",
                 fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
                 boxShadow: "0 8px 30px #ff6b3540", transition: "all 0.25s",
@@ -483,7 +483,7 @@ function Hero() {
 
           {/* Social Links */}
           <div style={{ display: "flex", gap: 24, marginTop: 24, alignItems: "center" }}>
-            <span style={{ color: "#475569", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5 }}>Connect:</span>
+            <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5 }}>Connect:</span>
             <a href="https://www.linkedin.com/in/varunanikam-200255255" target="_blank" rel="noreferrer" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>LinkedIn ↗</a>
             <a href="https://github.com/varuna1704" target="_blank" rel="noreferrer" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>GitHub ↗</a>
             <a href="mailto:nikamvaruna@gmail.com" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>Email ↗</a>
@@ -751,7 +751,7 @@ function Experience() {
                 <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>{e.role}</h3>
                 <span style={{ color: e.color, fontSize: 13, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>@ {e.company}</span>
               </div>
-              <div style={{ color: "#475569", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginBottom: 20 }}>
+              <div style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginBottom: 20 }}>
                 <span>📍 {e.location}</span>
                 <span style={{ margin: "0 12px", opacity: 0.3 }}>|</span>
                 <span>📅 {e.period}</span>
@@ -1086,9 +1086,10 @@ function Projects() {
                       <a
                         href={p.liveLink}
                         target="_blank" rel="noreferrer" data-hover
+                        aria-label={`View live site for ${p.title}`}
                         style={{
                           flex: 1, padding: "11px 16px", borderRadius: "10px",
-                          background: "#ff6b35", color: "#fff", textDecoration: "none",
+                          background: "#ff6b35", color: "#FFFFFF", textDecoration: "none",
                           fontSize: 13, fontWeight: 700, fontFamily: "'Syne', sans-serif",
                           textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                           boxShadow: "0 4px 12px rgba(255,107,53,0.2)", transition: "all 0.25s"
@@ -1438,7 +1439,7 @@ function Resume() {
               rel="noopener noreferrer"
               data-hover
               style={{
-                padding: "14px 28px", background: "#ff6b35", color: "#fff",
+                padding: "14px 28px", background: "#ff6b35", color: "#FFFFFF",
                 borderRadius: 10, textDecoration: "none",
                 fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 14,
                 boxShadow: "0 8px 30px #ff6b3540", transition: "all 0.25s",
@@ -1616,10 +1617,10 @@ export default function Portfolio() {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         flexWrap: "wrap", gap: 12,
       }}>
-        <span style={{ color: "#1e293b", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
+        <span style={{ color: "#64748b", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
           © 2025 Varuna Nikam · Nashik, Maharashtra
         </span>
-        <span style={{ color: "#1e293b", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
+        <span style={{ color: "#64748b", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
           Built with React ⚡
         </span>
       </footer>

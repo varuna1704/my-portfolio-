@@ -175,7 +175,7 @@ export default function Projects() {
                       <GitHubIcon /> Code
                     </a>
                     {project.liveLink && (
-                      <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn btn-live">
+                      <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn btn-live" aria-label={`View live site for ${project.title}`}>
                         Live ↗
                       </a>
                     )}

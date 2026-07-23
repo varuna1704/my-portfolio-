@@ -1,0 +1,18 @@
+# Varuna Nikam
+
+> Shopify Developer and Frontend Engineer based in Nashik, Maharashtra, 
+> specializing in Shopify Liquid, React, AI-assisted development, and AWS.
+
+## Pages
+
+- [Portfolio](https://varuna-nikam.vercel.app/): Main portfolio site with 
+  projects, experience, and contact information
+- [Projects](https://varuna-nikam.vercel.app/projects): Detailed project showcase
+- [Resume](https://drive.google.com/file/d/1_S__H96JjAN67uPp7c1F7o6wYR00hOUS/view): 
+  Full resume PDF
+
+## Contact
+
+- Email: nikamvaruna@gmail.com
+- LinkedIn: https://www.linkedin.com/in/varunanikam-200255255
+- GitHub: https://github.com/varuna1704

@@ -164,7 +164,7 @@ export default function ServicesSection() {
         
         <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
           <a href="#contact" data-hover style={{
-            padding: "14px 32px", background: "#ff6b35", color: "#fff", 
+            padding: "14px 32px", background: "#ff6b35", color: "#FFFFFF", 
             borderRadius: "10px", textDecoration: "none", fontFamily: "'Syne', sans-serif", 
             fontWeight: 800, fontSize: "15px", boxShadow: "0 8px 30px #ff6b3540", transition: "all 0.3s"
           }}>

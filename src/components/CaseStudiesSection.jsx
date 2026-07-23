@@ -71,7 +71,7 @@ export default function CaseStudiesSection() {
                 <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
                   <div style={{ textAlign: "right", display: "flex", flexDirection: "column" }}>
                     <span style={{ color: "#00d4aa", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "20px" }}>{study.metric}</span>
-                    <span style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase" }}>Key Result</span>
+                    <span style={{ color: "#cbd5e1", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase" }}>Key Result</span>
                   </div>
                   <button style={{ 
                     background: "transparent", border: "1px solid #334155", width: "40px", height: "40px", 
@@ -101,7 +101,7 @@ export default function CaseStudiesSection() {
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                         {study.beforeMetrics.map((m, idx) => (
                           <div key={idx} style={{ background: "#111827", padding: "16px", borderRadius: "8px", border: "1px solid #1e293b" }}>
-                            <div style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", marginBottom: "4px" }}>Before {m.label}</div>
+                            <div style={{ color: "#cbd5e1", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", marginBottom: "4px" }}>Before {m.label}</div>
                             <div style={{ color: "#ef4444", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "20px" }}>{m.value}</div>
                           </div>
                         ))}
@@ -135,7 +135,7 @@ export default function CaseStudiesSection() {
                       {study.afterMetrics.map((m, idx) => (
                         <div key={idx} style={{ background: "#0f172a", padding: "20px", borderRadius: "8px", textAlign: "center", position: "relative", overflow: "hidden" }}>
                           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: m.good ? "#00d4aa" : "#ff6b35" }}></div>
-                          <div style={{ color: "#94a3b8", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", marginBottom: "8px", textTransform: "uppercase" }}>{m.label}</div>
+                          <div style={{ color: "#cbd5e1", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", marginBottom: "8px", textTransform: "uppercase" }}>{m.label}</div>
                           <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "32px", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
                             {m.value}
                           </div>
@@ -149,7 +149,7 @@ export default function CaseStudiesSection() {
                     <div style={{ display: "flex", justifyContent: "center", gap: "32px", flexWrap: "wrap", paddingTop: "24px", borderTop: "1px solid #1e293b" }}>
                       {study.annualImpact.map((ai, idx) => (
                         <div key={idx} style={{ textAlign: "center" }}>
-                          <span style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>{ai.label}</span>
+                          <span style={{ color: "#cbd5e1", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>{ai.label}</span>
                           <span style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "18px" }}>{ai.value}</span>
                         </div>
                       ))}
@@ -176,7 +176,7 @@ export default function CaseStudiesSection() {
           data-hover
           style={{
             display: "inline-block", padding: "14px 36px", background: "#ff6b35", 
-            color: "#fff", borderRadius: "10px", textDecoration: "none", 
+            color: "#FFFFFF", borderRadius: "10px", textDecoration: "none", 
             fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "15px", 
             transition: "all 0.3s", boxShadow: "0 8px 30px #ff6b3540"
           }}
