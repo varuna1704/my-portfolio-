@@ -88,20 +88,23 @@ export default function Projects() {
                 borderBottom: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
                 {project.image ? (
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    style={{
-                      width: '100%', height: '100%', objectFit: 'cover',
-                      transform: hoveredId === project.id ? 'scale(1.05)' : 'scale(1)',
-                      transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                      opacity: 0.9, filter: hoveredId === project.id ? 'brightness(1.1)' : 'brightness(0.95)'
-                    }}
-                    onError={e => {
-                      e.target.style.display = 'none';
-                      e.target.parentElement.innerHTML = `<span style="font-size:40px;opacity:0.5">📂</span>`;
-                    }}
-                  />
+                  <picture>
+                    <source srcSet={project.image.replace(/\.(png|jpg|jpeg)$/, '.webp')} type="image/webp" />
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      style={{
+                        width: '100%', height: '100%', objectFit: 'cover',
+                        transform: hoveredId === project.id ? 'scale(1.05)' : 'scale(1)',
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        opacity: 0.9, filter: hoveredId === project.id ? 'brightness(1.1)' : 'brightness(0.95)'
+                      }}
+                      onError={e => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.innerHTML = `<span style="font-size:40px;opacity:0.5">📂</span>`;
+                      }}
+                    />
+                  </picture>
                 ) : (
                   <span style={{ 
                     fontSize: '60px', opacity: 0.15,
@@ -168,7 +171,7 @@ export default function Projects() {
                   </div>
 
                   <div className="card-actions">
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-github">
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-github" aria-label={`View code for ${project.title} on GitHub`}>
                       <GitHubIcon /> Code
                     </a>
                     {project.liveLink && (

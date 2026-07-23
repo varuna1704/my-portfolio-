@@ -12,17 +12,20 @@ export default function AboutSection() {
         <div style={{ width: "100%", aspectRatio: "3/4", borderRadius: "16px", overflow: "hidden", border: "1.5px solid #1e293b", position: "relative" }}
              onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 40px rgba(255,107,53,0.15)"; }}
              onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}>
-          <img src="/images/headshots/varuna-headshot-professional-dark.png" alt="Varuna" style={{ width: "100%", height: "100%", objectFit: "cover" }} 
-            onError={e => {
-              e.currentTarget.style.display = "none";
-              e.currentTarget.parentElement.innerHTML = `
-                <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);gap:16px;">
-                  <div style="font-size:80px">👩‍💻</div>
-                  <div style="color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
-                </div>
-              `;
-            }}
-          />
+          <picture style={{ width: "100%", height: "100%" }}>
+            <source srcSet="/images/headshots/varuna-headshot-professional-dark.webp" type="image/webp" />
+            <img src="/images/headshots/varuna-headshot-professional-dark.png" alt="Varuna" style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+              onError={e => {
+                e.currentTarget.style.display = "none";
+                e.currentTarget.parentElement.innerHTML = `
+                  <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);gap:16px;">
+                    <div style="font-size:80px">👩‍💻</div>
+                    <div style="color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
+                  </div>
+                `;
+              }}
+            />
+          </picture>
         </div>
 
         {/* Right: Content */}
@@ -77,7 +80,7 @@ export default function AboutSection() {
               ].map((stat, i) => (
                 <div key={i} style={{ background: "#111827", border: "1px solid #1e293b", padding: "16px", borderRadius: "10px", textAlign: "center" }}>
                   <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", fontWeight: 800 }}>{stat.val}</div>
-                  <div style={{ color: "#64748b", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", marginTop: "4px" }}>{stat.label}</div>
+                  <div style={{ color: "#94a3b8", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", marginTop: "4px" }}>{stat.label}</div>
                 </div>
               ))}
             </div>

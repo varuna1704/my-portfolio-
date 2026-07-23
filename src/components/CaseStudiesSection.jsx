@@ -135,7 +135,7 @@ export default function CaseStudiesSection() {
                       {study.afterMetrics.map((m, idx) => (
                         <div key={idx} style={{ background: "#0f172a", padding: "20px", borderRadius: "8px", textAlign: "center", position: "relative", overflow: "hidden" }}>
                           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: m.good ? "#00d4aa" : "#ff6b35" }}></div>
-                          <div style={{ color: "#64748b", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", marginBottom: "8px", textTransform: "uppercase" }}>{m.label}</div>
+                          <div style={{ color: "#94a3b8", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", marginBottom: "8px", textTransform: "uppercase" }}>{m.label}</div>
                           <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: "32px", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
                             {m.value}
                           </div>
@@ -149,7 +149,7 @@ export default function CaseStudiesSection() {
                     <div style={{ display: "flex", justifyContent: "center", gap: "32px", flexWrap: "wrap", paddingTop: "24px", borderTop: "1px solid #1e293b" }}>
                       {study.annualImpact.map((ai, idx) => (
                         <div key={idx} style={{ textAlign: "center" }}>
-                          <span style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>{ai.label}</span>
+                          <span style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>{ai.label}</span>
                           <span style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "18px" }}>{ai.value}</span>
                         </div>
                       ))}

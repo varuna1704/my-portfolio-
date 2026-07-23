@@ -17,7 +17,7 @@ export function useInView(threshold = 0.1) {
 export function SectionLabel({ label }) {
   return (
     <p style={{
-      color: "#334155",
+      color: "#94a3b8",
       fontFamily: "'JetBrains Mono', monospace",
       fontSize: 11,
       letterSpacing: 3,

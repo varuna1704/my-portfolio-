@@ -62,7 +62,7 @@ export default function ContactSection() {
       }}>
         Let's <span style={{ color: "#ff6b35" }}>Work Together</span>
       </h2>
-      <p style={{ color: "#64748b", fontSize: "16px", marginBottom: "48px", maxWidth: "600px", lineHeight: 1.6 }}>
+      <p style={{ color: "#94a3b8", fontSize: "16px", marginBottom: "48px", maxWidth: "600px", lineHeight: 1.6 }}>
         Have a project in mind? I'd love to hear about it. Let's chat about how I can help your business grow.
       </p>
 
@@ -120,8 +120,8 @@ export default function ContactSection() {
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "24px" }}>
                 <div>
-                  <label style={labelStyle}>Project Type *</label>
-                  <select required name="projectType" value={form.projectType} onChange={handleChange} style={{ ...inputStyle, appearance: "none", cursor: "pointer" }} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"}>
+                  <label htmlFor="projectType" style={labelStyle}>Project Type *</label>
+                  <select id="projectType" required name="projectType" value={form.projectType} onChange={handleChange} style={{ ...inputStyle, appearance: "none", cursor: "pointer" }} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"}>
                     <option value="" disabled>Select a service...</option>
                     <option value="Shopify Store Setup">Shopify Store Setup</option>
                     <option value="Analytics & Optimization">Analytics & Optimization</option>
@@ -132,8 +132,8 @@ export default function ContactSection() {
                   </select>
                 </div>
                 <div>
-                  <label style={labelStyle}>Budget</label>
-                  <select name="budget" value={form.budget} onChange={handleChange} style={{ ...inputStyle, appearance: "none", cursor: "pointer" }} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"}>
+                  <label htmlFor="budget" style={labelStyle}>Budget</label>
+                  <select id="budget" name="budget" value={form.budget} onChange={handleChange} style={{ ...inputStyle, appearance: "none", cursor: "pointer" }} onFocus={e => e.target.style.borderColor = "#ff6b35"} onBlur={e => e.target.style.borderColor = "#1e293b"}>
                     <option value="" disabled>Select range...</option>
                     <option value="Under $2,500">Under $2,500</option>
                     <option value="$2,500 - $5,000">$2,500 - $5,000</option>
@@ -210,7 +210,7 @@ export default function ContactSection() {
               >
                 <span style={{ fontSize: "24px" }}>{c.icon}</span>
                 <div>
-                  <div style={{ color: "#334155", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: "1px" }}>{c.label}</div>
+                  <div style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: "1px" }}>{c.label}</div>
                   <div style={{ color: "#e2e8f0", fontSize: "15px", fontFamily: "'Syne', sans-serif", marginTop: "4px", fontWeight: 600 }}>{c.val}</div>
                 </div>
               </a>
@@ -218,11 +218,11 @@ export default function ContactSection() {
             
             <div style={{ padding: "0 16px", display: "flex", gap: "20px", marginTop: "10px" }}>
               <div style={{ borderLeft: "2px solid #00d4aa", paddingLeft: "10px" }}>
-                <div style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase" }}>Current Status</div>
+                <div style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase" }}>Current Status</div>
                 <div style={{ color: "#e2e8f0", fontSize: "14px", fontFamily: "'Syne', sans-serif" }}>Available for new projects</div>
               </div>
               <div style={{ borderLeft: "2px solid #f59e0b", paddingLeft: "10px" }}>
-                <div style={{ color: "#475569", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase" }}>Response Time</div>
+                <div style={{ color: "#94a3b8", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase" }}>Response Time</div>
                 <div style={{ color: "#e2e8f0", fontSize: "14px", fontFamily: "'Syne', sans-serif" }}>Within 24 hours</div>
               </div>
             </div>

@@ -302,7 +302,7 @@ function Nav({ active }) {
       borderBottom: scrolled ? "1px solid #1e293b" : "none",
       transition: "all 0.3s",
     }}>
-      <a href="#about" style={{
+      <a href="#about" aria-label="Home" style={{
         fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 22,
         color: "#fff", textDecoration: "none", letterSpacing: -1,
       }}>
@@ -318,14 +318,14 @@ function Nav({ active }) {
                 to="/projects"
                 data-hover
                 style={{
-                  color: active === item.toLowerCase() ? "#ff6b35" : "#64748b",
+                  color: active === item.toLowerCase() ? "#ff6b35" : "#94a3b8",
                   textDecoration: "none",
                   fontFamily: "'Syne', sans-serif",
                   fontWeight: 600, fontSize: 13,
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={e => e.target.style.color = "#ff6b35"}
-                onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#64748b"}
+                onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#94a3b8"}
               >
                 {item}
               </Link>
@@ -337,7 +337,7 @@ function Nav({ active }) {
               href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
               data-hover
               style={{
-                color: active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#64748b",
+                color: active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#94a3b8",
                 textDecoration: "none",
                 fontFamily: "'Syne', sans-serif",
                 fontWeight: 600, fontSize: 13,
@@ -545,24 +545,27 @@ function Hero() {
               e.currentTarget.style.boxShadow = "0 25px 50px rgba(255,107,53,0.18), 0 0 1px rgba(255,107,53,0.1)";
             }}
           >
-            <img
-              src="/images/headshots/varuna-headshot-professional-dark.png"
-              alt="Varuna Nikam"
-              style={{
-                width: "100%", height: "100%",
-                objectFit: "cover", objectPosition: "center",
-                display: "block",
-              }}
-              onError={e => {
-                e.currentTarget.style.display = "none";
-                e.currentTarget.parentElement.innerHTML = `
-                  <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);gap:16px;">
-                    <div style="font-size:80px">👩‍💻</div>
-                    <div style="color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
-                  </div>
-                `;
-              }}
-            />
+            <picture style={{ width: "100%", height: "100%", display: "block" }}>
+              <source srcSet="/images/headshots/varuna-headshot-professional-dark.webp" type="image/webp" />
+              <img
+                src="/images/headshots/varuna-headshot-professional-dark.png"
+                alt="Varuna Nikam"
+                style={{
+                  width: "100%", height: "100%",
+                  objectFit: "cover", objectPosition: "center",
+                  display: "block",
+                }}
+                onError={e => {
+                  e.currentTarget.style.display = "none";
+                  e.currentTarget.parentElement.innerHTML = `
+                    <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);gap:16px;">
+                      <div style="font-size:80px">👩‍💻</div>
+                      <div style="color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
+                    </div>
+                  `;
+                }}
+              />
+            </picture>
           </div>
 
           {/* Badge */}
@@ -698,7 +701,7 @@ function AIDevelopment() {
             onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.transform = "translateY(-5px)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateY(0)"; }}
           >
-            <h4 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 16, fontWeight: 700, marginBottom: 10 }}>{item.title}</h4>
+            <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 16, fontWeight: 700, marginBottom: 10 }}>{item.title}</h3>
             <p style={{ color: "#94a3b8", fontSize: 13, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
           </div>
         ))}
@@ -793,14 +796,14 @@ function Experience() {
                               <span>{s.name}</span>
                               <span style={{ color: e.color, fontSize: 11 }}>↗</span>
                             </div>
-                            <div style={{ color: "#64748b", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
+                            <div style={{ color: "#94a3b8", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
                           </a>
                         );
                       }
                       return (
                         <div key={idx} style={cardStyle}>
                           <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700 }}>{s.name}</div>
-                          <div style={{ color: "#64748b", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
+                          <div style={{ color: "#94a3b8", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
                         </div>
                       );
                     })}
@@ -985,21 +988,24 @@ function Projects() {
                     width: "100%", height: "100%", overflow: "hidden",
                     transform: `translateX(${parallaxX}px)`,
                   }}>
-                    <img 
-                      src={p.image} 
-                      alt={p.title} 
-                      style={{ 
-                        width: "125%", height: "100%", objectFit: "cover", 
-                        marginLeft: "-12.5%",
-                        opacity: hovered === i ? 1 : 0.85,
-                        transform: hovered === i ? "scale(1.06)" : "scale(1)",
-                        transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" 
-                      }}
-                      onError={e => {
-                        e.target.style.display = 'none';
-                        e.target.parentElement.innerHTML = `<span style="font-size:60px;opacity:0.15">💻</span>`;
-                      }}
-                    />
+                    <picture>
+                      <source srcSet={p.image.replace(/\.(png|jpg|jpeg)$/, '.webp')} type="image/webp" />
+                      <img 
+                        src={p.image} 
+                        alt={p.title} 
+                        style={{ 
+                          width: "125%", height: "100%", objectFit: "cover", 
+                          marginLeft: "-12.5%",
+                          opacity: hovered === i ? 1 : 0.85,
+                          transform: hovered === i ? "scale(1.06)" : "scale(1)",
+                          transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" 
+                        }}
+                        onError={e => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = `<span style="font-size:60px;opacity:0.15">💻</span>`;
+                        }}
+                      />
+                    </picture>
                   </div>
                 ) : (
                   <span style={{ 
@@ -1063,6 +1069,7 @@ function Projects() {
                     <a
                       href={p.url}
                       target="_blank" rel="noreferrer" data-hover
+                      aria-label={`View code for ${p.title} on GitHub`}
                       style={{
                         flex: 1, padding: "11px 16px", borderRadius: "10px",
                         border: "1.5px solid #1e293b", color: "#94a3b8", textDecoration: "none",
@@ -1209,7 +1216,7 @@ function GithubShowcase() {
         ].map((s, idx) => (
           <div key={idx} style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 20, textAlign: "center" }}>
             <div style={{ color: "#ff6b35", fontFamily: "'Syne', sans-serif", fontSize: 24, fontWeight: 800 }}>{s.val}</div>
-            <div style={{ color: "#64748b", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginTop: 4, textTransform: "uppercase" }}>{s.label}</div>
+            <div style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginTop: 4, textTransform: "uppercase" }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -1237,7 +1244,7 @@ function GithubShowcase() {
               <span style={{ background: "#ff6b3515", color: "#ff6b35", padding: "4px 10px", borderRadius: 99, fontSize: 10, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>
                 {r.lang}
               </span>
-              <span style={{ color: "#64748b", fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>
+              <span style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>
                 ⭐ {r.stars}
               </span>
             </div>
@@ -1281,8 +1288,8 @@ function Education() {
             <span style={{ fontSize: 38, display: "block", marginBottom: 18 }}>{e.icon}</span>
             <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 17, fontWeight: 800, color: "#fff", margin: "0 0 8px", lineHeight: 1.4 }}>{e.degree}</h3>
             <p style={{ color: e.color, fontSize: 13, fontFamily: "'Syne', sans-serif", fontWeight: 700, margin: "0 0 8px" }}>{e.school}</p>
-            <p style={{ color: "#475569", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 6px" }}>📍 {e.location}</p>
-            <p style={{ color: "#334155", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 16px" }}>📅 {e.period}</p>
+            <p style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 6px" }}>📍 {e.location}</p>
+            <p style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 16px" }}>📅 {e.period}</p>
             <span style={{
               padding: "5px 14px", borderRadius: 99,
               background: `${e.color}18`, color: e.color,
@@ -1367,7 +1374,7 @@ function Resume() {
       }}>
         My <span style={{ color: "#ff6b35" }}>Resume</span>
       </h2>
-      <p style={{ color: "#64748b", fontSize: 15, marginBottom: 48 }}>
+      <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 48 }}>
         A snapshot of my professional background — download the full PDF below.
       </p>
 
@@ -1384,7 +1391,7 @@ function Resume() {
             <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff6b35" }} />
             <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }} />
             <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#00d4aa" }} />
-            <span style={{ color: "#334155", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginLeft: 8 }}>
+            <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginLeft: 8 }}>
               Varuna_Nikam_Resume.pdf
             </span>
           </div>
@@ -1406,7 +1413,7 @@ function Resume() {
               <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
                 <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{d.icon}</span>
                 <div>
-                  <div style={{ color: "#334155", fontFamily: "'JetBrains Mono', monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: 1 }}>{d.label}</div>
+                  <div style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: 1 }}>{d.label}</div>
                   <div style={{ color: "#94a3b8", fontFamily: "'Syne', sans-serif", fontSize: 12, fontWeight: 600, marginTop: 2 }}>{d.value}</div>
                 </div>
               </div>
@@ -1419,7 +1426,7 @@ function Resume() {
             <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 22, color: "#fff", margin: "0 0 12px" }}>
               Professional Resume
             </h3>
-            <p style={{ color: "#64748b", fontSize: 14, lineHeight: 1.8 }}>
+            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.8 }}>
               My resume includes my full work history, educational background, technical skills,
               and all 5 professional certifications — ready for any recruiter or job portal.
             </p>
@@ -1497,7 +1504,7 @@ function Contact() {
       }}>
         Let&apos;s <span style={{ color: "#ff6b35" }}>Work Together</span>
       </h2>
-      <p style={{ color: "#64748b", fontSize: 15, marginBottom: 48 }}>
+      <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 48 }}>
         Open to freelance projects, full-time roles, and collaborations!
       </p>
 
@@ -1559,7 +1566,7 @@ function Contact() {
             >
               <span style={{ fontSize: 20 }}>{c.icon}</span>
               <div>
-                <div style={{ color: "#334155", fontSize: 10, fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: 1 }}>{c.label}</div>
+                <div style={{ color: "#94a3b8", fontSize: 10, fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: 1 }}>{c.label}</div>
                 <div style={{ color: "#e2e8f0", fontSize: 13, fontFamily: "'Syne', sans-serif", marginTop: 2, fontWeight: 600 }}>{c.val}</div>
               </div>
             </a>
