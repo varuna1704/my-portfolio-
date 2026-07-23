@@ -103,3 +103,13 @@ body {
   box-shadow: 0 10px 20px rgba(255, 107, 53, 0.15);
   background: #1e293b !important;
 }
+
+/* Hide scrollbar for Projects Horizontal Scroll Container */
+.projects-scroll-container {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.projects-scroll-container::-webkit-scrollbar {
+  display: none; /* WebKit/Chrome/Safari */
+}

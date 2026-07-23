@@ -34,9 +34,8 @@ export default function AboutSection() {
               Hi, I&apos;m <span style={{ color: "#ff6b35" }}>Varuna Nikam</span>
             </h2>
             <div style={{ color: "#94a3b8", fontSize: "16px", lineHeight: 1.8, display: "flex", flexDirection: "column", gap: "16px" }}>
-              <p>I&apos;m an MCA graduate and Shopify Developer with hands-on experience managing and customizing 4 live production Shopify stores across fashion, pet care, and lifestyle niches.</p>
-              <p>I build modern e-commerce experiences, scalable web applications, and AI-powered solutions. My passion is translating design ideas into high-performing storefronts using Liquid development, custom sections, and third-party integrations like Judge.me.</p>
-              <p>I specialize in store configuration, product catalog management, product listings, optimization, and content updates, ensuring that every shop I touch runs seamlessly and converts traffic into sales.</p>
+              <p>I am an MCA graduate and Shopify Developer with hands-on experience managing and customizing 4 live Shopify stores across fashion, pet care, and lifestyle niches.</p>
+              <p>I specialize in translating design ideas into high-performing storefronts using Liquid development, custom sections, and third-party integrations. I have experience building complete Shopify stores from scratch, managing large product catalogs, customizing themes, and delivering responsive user experiences.</p>
             </div>
           </div>
 
@@ -47,12 +46,13 @@ export default function AboutSection() {
             </h3>
             <div className="what-i-do-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
               {[
-                { title: "Shopify Store Management", desc: "Full administrative setup, catalog structures, navigation, and ongoing maintenance." },
+                { title: "Shopify Store Management", desc: "Full administrative setup, catalog structures, navigation, and ongoing store maintenance." },
                 { title: "Shopify Liquid Development", desc: "Writing custom templates, snippets, and section code to modify theme behaviour." },
                 { title: "Dawn Theme Customization", desc: "Configuring and extending Shopify's flagship theme with pixel-perfect styles." },
-                { title: "Product Management", desc: "Managing inventories, descriptions, SEO metadata, and product media streams." },
-                { title: "Frontend Development (React)", desc: "Building responsive, modern single-page applications with React and JavaScript." },
-                { title: "AI-Assisted Development", desc: "Accelerating prototyping and test runs using LLMs and prompt engineering workflows." }
+                { title: "Product Management", desc: "Managing catalogs, conversion-focused product descriptions, image layouts, and listings." },
+                { title: "Frontend Development", desc: "Designing responsive, accessible user interfaces using HTML5, CSS3, and JavaScript." },
+                { title: "React Applications", desc: "Building scalable e-commerce showcases and single-page applications with React and TypeScript." },
+                { title: "AI-Assisted Development", desc: "Leveraging LLMs, prompt engineering workflows, and vibe coding for rapid prototyping." }
               ].map((item, idx) => (
                 <div key={idx} style={{ background: "#0f172a", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
                   <h4 style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "10px" }}>{item.title}</h4>

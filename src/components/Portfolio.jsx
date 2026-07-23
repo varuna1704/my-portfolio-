@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import AboutSection from "./AboutSection";
 import ServicesSection from "./ServicesSection";
@@ -7,6 +8,7 @@ import CaseStudiesSection from "./CaseStudiesSection";
 import TestimonialsSection from "./TestimonialsSection";
 import ContactSection from "./ContactSection";
 import PROJECTS_DATA from "../data/projects.json";
+import REPOS from "../data/repos.json";
 
 // GitHub SVG Icon
 const GitHubIcon = () => (
@@ -20,51 +22,87 @@ const GitHubIcon = () => (
 const NAV_ITEMS = ["About", "Services", "Case Studies", "Projects", "GitHub Showcase", "Testimonials", "Skills", "AI Development", "Experience", "Education", "Certifications", "Resume", "Contact"];
 
 const SKILLS = [
-  // Shopify
-  { name: "Store Management", level: 95, cat: "Shopify" },
-  { name: "Liquid Templating", level: 92, cat: "Shopify" },
-  { name: "Dawn Theme Customization", level: 94, cat: "Shopify" },
-  { name: "Sections & Snippets", level: 93, cat: "Shopify" },
-  { name: "Product Management", level: 90, cat: "Shopify" },
-  { name: "Product Listings", level: 95, cat: "Shopify" },
-  { name: "Description Writing", level: 88, cat: "Shopify" },
-  { name: "Image Management", level: 90, cat: "Shopify" },
-  { name: "Judge.me Integration", level: 92, cat: "Shopify" },
-  
-  // Frontend
-  { name: "React.js", level: 88, cat: "Frontend" },
-  { name: "JavaScript / ES6+", level: 90, cat: "Frontend" },
-  { name: "TypeScript", level: 82, cat: "Frontend" },
-  { name: "HTML5 / CSS3", level: 93, cat: "Frontend" },
-  { name: "Responsive Design", level: 94, cat: "Frontend" },
-  { name: "Cross-Browser Testing", level: 85, cat: "Frontend" },
-
-  // Programming
-  { name: "PHP", level: 80, cat: "Programming" },
-  { name: "Python", level: 85, cat: "Programming" },
-  { name: "Java", level: 78, cat: "Programming" },
-  { name: "SQL", level: 87, cat: "Programming" },
-
-  // Databases
-  { name: "MySQL", level: 88, cat: "Databases" },
-  { name: "PostgreSQL", level: 84, cat: "Databases" },
-
-  // Cloud/AWS
-  { name: "EC2 & S3", level: 82, cat: "Cloud/AWS" },
-  { name: "VPC & Route 53", level: 75, cat: "Cloud/AWS" },
-  { name: "IAM & CloudWatch", level: 78, cat: "Cloud/AWS" },
-
-  // AI & GenAI
-  { name: "Prompt Engineering", level: 94, cat: "AI & GenAI" },
-  { name: "ChatGPT & Claude", level: 95, cat: "AI & GenAI" },
-  { name: "GitHub Copilot", level: 92, cat: "AI & GenAI" },
-  { name: "AI-Assisted Development", level: 95, cat: "AI & GenAI" },
-  { name: "Vibe Coding", level: 90, cat: "AI & GenAI" },
-  { name: "LLM Workflows", level: 88, cat: "AI & GenAI" },
-
-  // Tools
-  { name: "Git & GitHub", level: 88, cat: "Tools" },
-  { name: "VS Code", level: 92, cat: "Tools" }
+  {
+    category: "Shopify",
+    icon: "🛍️",
+    skills: [
+      "Shopify Store Management",
+      "Shopify Liquid",
+      "Dawn Theme",
+      "Sections & Snippets",
+      "Theme Customization",
+      "Product Management",
+      "Product Listings",
+      "Product Description Writing",
+      "Product Image Management",
+      "Judge.me Integration"
+    ]
+  },
+  {
+    category: "Frontend",
+    icon: "⚛️",
+    skills: [
+      "React",
+      "JavaScript",
+      "TypeScript",
+      "HTML5",
+      "CSS3",
+      "Responsive Design",
+      "Cross Browser Testing"
+    ]
+  },
+  {
+    category: "Programming",
+    icon: "💻",
+    skills: [
+      "PHP",
+      "Python",
+      "Java",
+      "SQL"
+    ]
+  },
+  {
+    category: "Databases",
+    icon: "🗄️",
+    skills: [
+      "MySQL",
+      "PostgreSQL"
+    ]
+  },
+  {
+    category: "Cloud",
+    icon: "☁️",
+    skills: [
+      "AWS",
+      "EC2",
+      "VPC",
+      "Route 53",
+      "IAM",
+      "S3",
+      "CloudWatch (Basic)"
+    ]
+  },
+  {
+    category: "AI & GenAI",
+    icon: "🤖",
+    skills: [
+      "Prompt Engineering",
+      "ChatGPT",
+      "GitHub Copilot",
+      "AI-Assisted Development",
+      "Vibe Coding",
+      "LLM Workflows"
+    ]
+  },
+  {
+    category: "Tools",
+    icon: "🛠️",
+    skills: [
+      "Git",
+      "GitHub",
+      "VS Code"
+    ]
+  }
 ];
 
 const EXPERIENCE = [
@@ -76,10 +114,10 @@ const EXPERIENCE = [
     icon: "🛍️",
     color: "#ff6b35",
     points: [
-      "Store Management: Complete administrative management, product listings, writing conversion-focused product descriptions, image asset layouts, and content updates.",
-      "Theme Development: Custom section templates using Liquid, HTML, CSS, JavaScript, and tailoring Dawn Theme parameters for clients.",
-      "Integrations: Seamless setup of review widgets (e.g. Judge.me), conversion rate enhancements, and search engine listings.",
-      "Freelance Highlight: Built complete Shopify coffee shop store from scratch on Dawn Theme (custom sections, catalogs, navigation, configurations, responsive structures)."
+      "Managing and maintaining 4 live Shopify stores: Mavena (Women's Fashion), MidFox (Pet Products), Pawfully (Pet Products), and Retromedy (Lifestyle Products).",
+      "Full store administration including catalog architecture, product listing setup, content syncs, and review widgets integration.",
+      "Developing theme sections and snippet templates in custom Liquid, HTML, CSS, and JS to expand Dawn Theme features.",
+      "Built a complete Shopify store for a coffee shop client from scratch, configuring custom sections, catalogs, navigation, and fully responsive layouts."
     ],
     stores: [
       { name: "Mavena", desc: "Women's Fashion", link: "https://mavenaco.com/" },
@@ -96,8 +134,8 @@ const EXPERIENCE = [
     icon: "📊",
     color: "#7c3aed",
     points: [
-      "SQ Project: Sports data annotation, frame-by-frame match tagging, and preparing analytics datasets with 100% accuracy.",
-      "VidSwap Platform: Event tagging for international basketball matches, play logging, possession mapping, and event classification."
+      "SQ Project: Sports data annotation, frame-by-frame event tagging, and dataset preparation.",
+      "VidSwap Project: Basketball match annotation, play tagging, possession tracking, and event classification."
     ]
   }
 ];
@@ -410,7 +448,20 @@ function Hero() {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px #ff6b3560"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px #ff6b3540"; }}
             >
-              Start Your Project
+              Contact Me
+            </a>
+            <a
+              href="#projects" data-hover
+              style={{
+                padding: "13px 32px", border: "1.5px solid #334155",
+                color: "#94a3b8", borderRadius: 10, textDecoration: "none",
+                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
+                transition: "all 0.25s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              View Projects
             </a>
             <a
               href="https://drive.google.com/file/d/1_S__H96JjAN67uPp7c1F7o6wYR00hOUS/view?usp=drive_link"
@@ -423,11 +474,19 @@ function Hero() {
                 fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
                 transition: "all 0.25s", display: "flex", alignItems: "center", gap: 8,
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
-              📄 View Resume
+              📄 Download Resume
             </a>
+          </div>
+
+          {/* Social Links */}
+          <div style={{ display: "flex", gap: 24, marginTop: 24, alignItems: "center" }}>
+            <span style={{ color: "#475569", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5 }}>Connect:</span>
+            <a href="https://www.linkedin.com/in/varunanikam-200255255" target="_blank" rel="noreferrer" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>LinkedIn ↗</a>
+            <a href="https://github.com/varuna1704" target="_blank" rel="noreferrer" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>GitHub ↗</a>
+            <a href="mailto:nikamvaruna@gmail.com" data-hover style={{ color: "#94a3b8", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>Email ↗</a>
           </div>
 
           <div style={{
@@ -530,63 +589,70 @@ function Hero() {
 
 function Skills() {
   const [ref, visible] = useInView();
-  const [active, setActive] = useState("All");
-  const cats = ["All", ...new Set(SKILLS.map(s => s.cat))];
-  const filtered = active === "All" ? SKILLS : SKILLS.filter(s => s.cat === active);
+  const [hovered, setHovered] = useState(null);
 
   return (
-    <section id="skills" ref={ref} style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="02 — Skills" />
+    <section id="skills" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.6s ease" }}>
+      <SectionLabel label="06 — Skills" />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
         fontWeight: 800, color: "#fff",
-        margin: "12px 0 36px",
+        margin: "12px 0 48px",
       }}>
         My <span style={{ color: "#ff6b35" }}>Toolkit</span>
       </h2>
 
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 36 }}>
-        {cats.map(c => (
-          <button
-            key={c} data-hover
-            onClick={() => setActive(c)}
-            style={{
-              padding: "7px 20px", borderRadius: 99,
-              border: `1.5px solid ${active === c ? "#ff6b35" : "#1e293b"}`,
-              background: active === c ? "#ff6b3520" : "transparent",
-              color: active === c ? "#ff6b35" : "#64748b",
-              cursor: "pointer",
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 700, fontSize: 12,
-              transition: "all 0.2s",
-            }}
-          >
-            {c}
-          </button>
-        ))}
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px,1fr))", gap: 18 }}>
-        {filtered.map(s => (
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
+        {SKILLS.map((cat, i) => (
           <div
-            key={s.name}
+            key={i}
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
             style={{
-              background: "#0f172a", border: "1px solid #1e293b",
-              borderRadius: 14, padding: "22px 24px", transition: "all 0.2s",
+              background: "#0f172a", border: "1.5px solid #1e293b",
+              borderRadius: 20, padding: 30, transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              transform: hovered === i ? "translateY(-5px)" : "translateY(0)",
+              borderColor: hovered === i ? "#ff6b35" : "#1e293b",
+              boxShadow: hovered === i ? "0 20px 40px rgba(255,107,53,0.08)" : "none",
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = CAT_COLORS[s.cat]; e.currentTarget.style.transform = "translateY(-3px)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateY(0)"; }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <span style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14 }}>{s.name}</span>
-              <span style={{ color: CAT_COLORS[s.cat], fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 700 }}>{s.level}%</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+              <span style={{ fontSize: 24 }}>{cat.icon}</span>
+              <h3 style={{
+                fontFamily: "'Syne', sans-serif", fontSize: 20,
+                fontWeight: 800, color: "#fff", margin: 0
+              }}>{cat.category}</h3>
             </div>
-            <AnimatedBar level={s.level} color={CAT_COLORS[s.cat]} visible={visible} />
-            <span style={{
-              color: "#334155", fontSize: 10, marginTop: 10, display: "block",
-              fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: 1,
-            }}>{s.cat}</span>
+            
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              {cat.skills.map(skill => (
+                <span
+                  key={skill}
+                  style={{
+                    fontSize: 12,
+                    fontFamily: "'JetBrains Mono', monospace",
+                    color: "#ff6b35",
+                    background: "#ff6b3512",
+                    border: "1px solid #ff6b3524",
+                    padding: "6px 12px",
+                    borderRadius: 8,
+                    fontWeight: 600,
+                    transition: "all 0.2s"
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = "#ff6b35";
+                    e.currentTarget.style.color = "#fff";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = "#ff6b3512";
+                    e.currentTarget.style.color = "#ff6b35";
+                  }}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -725,7 +791,7 @@ function Experience() {
                           >
                             <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                               <span>{s.name}</span>
-                              <span style={{ color: "#ff6b35", fontSize: 12 }}>↗</span>
+                              <span style={{ color: e.color, fontSize: 11 }}>↗</span>
                             </div>
                             <div style={{ color: "#64748b", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
                           </a>
@@ -754,128 +820,287 @@ function Experience() {
 function Projects() {
   const [ref, visible] = useInView();
   const [hovered, setHovered] = useState(null);
+  const scrollRef = useRef(null);
+
+  // Track horizontal scroll position for parallax effect
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setContainerWidth(el.clientWidth);
+
+    const onScroll = () => {
+      setScrollLeft(el.scrollLeft);
+    };
+    const onResize = () => {
+      setContainerWidth(el.clientWidth);
+    };
+
+    el.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  // Convert vertical mouse wheel scrolling into horizontal scrolling
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onWheel = (e) => {
+      if (e.deltaY === 0) return;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      
+      const isScrollingRight = e.deltaY > 0;
+      const isAtEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 10;
+      const isAtStart = el.scrollLeft <= 10;
+
+      if ((isScrollingRight && !isAtEnd) || (!isScrollingRight && !isAtStart)) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const glowColors = [
+    "#3b82f6", // Blue
+    "#a855f7", // Purple
+    "#ec4899", // Pink
+    "#ff6b35", // Orange
+    "#06b6d4", // Cyan
+    "#10b981"  // Green
+  ];
+
+  const glowRgb = [
+    "59, 130, 246",
+    "168, 85, 247",
+    "236, 72, 153",
+    "255, 107, 53",
+    "6, 182, 212",
+    "16, 185, 129"
+  ];
+
+  const tilts = [-3.5, 4, -4.5, 3, -3, 4.5, -4];
 
   return (
-    <section id="projects" ref={ref} style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="04 — Projects" />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 48px",
-      }}>
-        Selected <span style={{ color: "#ff6b35" }}>Works</span>
-      </h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 32 }}>
-        {PROJECTS.map((p, i) => (
-          <div
-            key={i}
-            onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
-            style={{
-              background: "#0f172a", border: "1px solid #1e293b",
-              borderRadius: 24, overflow: "hidden",
-              transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-              opacity: visible ? 1 : 0,
-              transform: visible ? (hovered === i ? "translateY(-10px)" : "translateY(0)") : "translateY(40px)",
-              transitionDelay: `${i * 150}ms`,
-              boxShadow: hovered === i ? `0 30px 60px ${p.color || '#ff6b35'}15` : "none",
-              borderColor: hovered === i ? (p.color || '#ff6b35') : "#1e293b",
-            }}
-          >
-            <div style={{ height: 200, overflow: "hidden", position: "relative", background: p.image ? "#111827" : "linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              {p.image ? (
-                <img 
-                  src={p.image} 
-                  alt={p.title} 
-                  style={{ 
-                    width: "100%", height: "100%", objectFit: "cover", 
-                    opacity: hovered === i ? 1 : 0.8,
-                    transform: hovered === i ? "scale(1.05)" : "scale(1)",
-                    transition: "all 0.4s ease" 
-                  }}
-                  onError={e => {
-                     e.target.style.display = 'none';
-                     e.target.parentElement.innerHTML = `<span style="font-size:60px;opacity:0.15">💻</span>`;
-                  }}
-                />
-              ) : (
-                <span style={{ 
-                  fontSize: '60px', opacity: 0.15, color: '#fff',
-                  transform: hovered === i ? 'scale(1.1)' : 'scale(1)',
-                  transition: 'transform 0.4s ease'
-                }}>💻</span>
-              )}
-              
-              {/* Overlay on hover */}
-              <div style={{
-                position: 'absolute', inset: 0, background: 'rgba(10,14,39,0.4)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                opacity: hovered === i ? 1 : 0, transition: 'opacity 0.3s ease',
-                backdropFilter: 'blur(2px)'
-              }}>
-                <span style={{ 
-                  background: p.color || '#ff6b35', color: '#fff', padding: '8px 16px', 
-                  borderRadius: '8px', fontSize: '13px', fontWeight: 700, 
-                  fontFamily: "'Syne', sans-serif", transform: hovered === i ? 'translateY(0)' : 'translateY(10px)',
-                  transition: 'transform 0.3s ease', boxShadow: `0 8px 16px ${(p.color || '#ff6b35')}30`
-                }}>View Project</span>
-              </div>
-
-              <div style={{ position: "absolute", top: 12, right: 12 }}>
-                <a 
-                  href={p.url} 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  style={{ 
-                    width: 38, height: 38, borderRadius: "50%", 
-                    background: p.color || "#ff6b35", display: "flex", 
-                    alignItems: "center", justifyContent: "center", 
-                    color: "#fff", textDecoration: "none",
-                    boxShadow: `0 4px 12px ${(p.color || "#ff6b35")}30`
-                  }}
-                >↗</a>
-              </div>
-            </div>
-            <div style={{ padding: 28 }}>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
-                {(p.tech || p.topics || []).map(t => (
-                  <span key={t} style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", color: p.color || "#ff6b35", background: `${p.color || "#ff6b35"}15`, padding: "4px 10px", borderRadius: 99, fontWeight: 700 }}>{t}</span>
-                ))}
-              </div>
-              <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 21, fontWeight: 800, color: "#fff", margin: "0 0 12px" }}>{p.title}</h3>
-              <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, marginBottom: 24, height: 68, overflow: "hidden" }}>{p.description || p.desc}</p>
-              <div style={{ display: "flex", gap: 16 }}>
-                <Link 
-                  to="/projects"
-                  style={{ 
-                    color: p.color || "#ff6b35", fontFamily: "'Syne', sans-serif", 
-                    fontWeight: 700, fontSize: 13, textDecoration: "none", 
-                    display: "flex", alignItems: "center", gap: 6 
-                  }}
-                >
-                  View Details ↗
-                </Link>
-                {p.liveLink && (
-                  <a 
-                    href={p.liveLink}
-                    target="_blank" 
-                    rel="noreferrer"
-                    style={{ 
-                      color: "#94a3b8", fontFamily: "'Syne', sans-serif", 
-                      fontWeight: 700, fontSize: 13, textDecoration: "none", 
-                      display: "flex", alignItems: "center", gap: 6 
-                    }}
-                  >
-                    Live Preview ↗
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
+    <section id="projects" ref={ref} style={{ padding: "100px 0", overflow: "hidden" }}>
+      <div style={{ padding: "0 8vw" }}>
+        <SectionLabel label="04 — Projects" />
+        <h2 style={{
+          fontFamily: "'Syne', sans-serif",
+          fontSize: "clamp(2rem,5vw,3.2rem)",
+          fontWeight: 800, color: "#fff", margin: "12px 0 48px",
+        }}>
+          Selected <span style={{ color: "#ff6b35" }}>Works</span>
+        </h2>
       </div>
 
-      <div style={{ marginTop: 60, display: "flex", justifyContent: "center" }}>
+      {/* Horizontal Carousel Container */}
+      <div
+        ref={scrollRef}
+        className="projects-scroll-container"
+        style={{
+          display: "flex",
+          overflowX: "auto",
+          gap: "40px",
+          padding: "40px 8vw 60px",
+          scrollBehavior: "smooth",
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+        }}
+      >
+        {PROJECTS.map((p, i) => {
+          const tilt = tilts[i % tilts.length];
+          const glowColor = glowColors[i % glowColors.length];
+          const glowColorRgb = glowRgb[i % glowRgb.length];
+
+          // Calculate relative position within the container viewport (-1 to 1)
+          const cardWidth = 380;
+          const gap = 40;
+          const cardLeft = i * (cardWidth + gap);
+          const relativePos = containerWidth ? (cardLeft - scrollLeft) / containerWidth : 0;
+          // Map relative position to horizontal parallax offset (-25px to +25px)
+          const parallaxX = relativePos * -25;
+
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 50, rotate: tilt, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, rotate: tilt, scale: 1 }}
+              viewport={{ root: scrollRef, once: true, amount: 0.1 }}
+              transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{
+                y: -15,
+                rotate: tilt * 1.15,
+                scale: 1.01,
+                transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
+              }}
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
+              style={{
+                background: "#0f172a",
+                border: "1.5px solid #1e293b",
+                borderRadius: 24,
+                width: "clamp(300px, 85vw, 380px)",
+                flexShrink: 0,
+                scrollSnapAlign: "center",
+                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                overflow: "visible",
+                boxShadow: hovered === i 
+                  ? `0 10px 30px rgba(${glowColorRgb}, 0.15), 0 30px 60px rgba(${glowColorRgb}, 0.1), 0 0 100px rgba(${glowColorRgb}, 0.08)`
+                  : "0 10px 30px rgba(0,0,0,0.5)",
+                borderColor: hovered === i ? glowColor : "#1e293b",
+                transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+              }}
+            >
+              {/* Soft Radial Ambient Backplate Glow */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: "-15px",
+                  background: `radial-gradient(circle, rgba(${glowColorRgb}, 0.2) 0%, transparent 70%)`,
+                  filter: "blur(35px)",
+                  zIndex: -1,
+                  pointerEvents: "none",
+                  opacity: hovered === i ? 1 : 0.5,
+                  transform: hovered === i ? "scale(1.05)" : "scale(1)",
+                  transition: "opacity 0.4s ease, transform 0.4s ease"
+                }}
+              />
+
+              {/* Top: Project Image */}
+              <div style={{ height: 210, overflow: "hidden", position: "relative", borderTopLeftRadius: 22, borderTopRightRadius: 22, background: p.image ? "#111827" : "linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {p.image ? (
+                  <div style={{ 
+                    width: "100%", height: "100%", overflow: "hidden",
+                    transform: `translateX(${parallaxX}px)`,
+                  }}>
+                    <img 
+                      src={p.image} 
+                      alt={p.title} 
+                      style={{ 
+                        width: "125%", height: "100%", objectFit: "cover", 
+                        marginLeft: "-12.5%",
+                        opacity: hovered === i ? 1 : 0.85,
+                        transform: hovered === i ? "scale(1.06)" : "scale(1)",
+                        transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" 
+                      }}
+                      onError={e => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.innerHTML = `<span style="font-size:60px;opacity:0.15">💻</span>`;
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <span style={{ 
+                    fontSize: '60px', opacity: 0.15, color: '#fff',
+                    transform: hovered === i ? 'scale(1.06)' : 'scale(1)',
+                    transition: 'transform 0.5s ease'
+                  }}>💻</span>
+                )}
+                
+                {/* Tech Type Badge */}
+                <div style={{
+                  position: "absolute",
+                  top: 16,
+                  left: 16,
+                  background: "rgba(15, 23, 42, 0.85)",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  backdropFilter: "blur(8px)",
+                  padding: "4px 12px",
+                  borderRadius: 99,
+                  fontSize: 10,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: "#fff",
+                  fontWeight: 600,
+                  zIndex: 2
+                }}>
+                  {p.language || "Project"}
+                </div>
+              </div>
+
+              {/* Middle: Content */}
+              <div style={{ padding: 28, flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div>
+                  <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 22, fontWeight: 800, color: "#fff", margin: "0 0 12px" }}>{p.title}</h3>
+                  <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.7, margin: "0 0 24px", height: 72, overflow: "hidden" }}>{p.description || p.desc}</p>
+                </div>
+
+                {/* Bottom: Tech Badges */}
+                <div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24 }}>
+                    {(p.tech || p.topics || []).map(t => (
+                      <span
+                        key={t}
+                        style={{
+                          fontSize: 10,
+                          fontFamily: "'JetBrains Mono', monospace",
+                          color: "#ff6b35",
+                          background: "#ff6b3512",
+                          border: "1px solid #ff6b3524",
+                          padding: "4px 10px",
+                          borderRadius: 99,
+                          fontWeight: 700
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Footer Action Buttons */}
+                  <div style={{ display: "flex", gap: 14 }}>
+                    <a
+                      href={p.url}
+                      target="_blank" rel="noreferrer" data-hover
+                      style={{
+                        flex: 1, padding: "11px 16px", borderRadius: "10px",
+                        border: "1.5px solid #1e293b", color: "#94a3b8", textDecoration: "none",
+                        fontSize: 13, fontWeight: 700, fontFamily: "'Syne', sans-serif",
+                        textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                        transition: "all 0.25s"
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.color = "#94a3b8"; }}
+                    >
+                      <GitHubIcon /> Code
+                    </a>
+                    {p.liveLink && (
+                      <a
+                        href={p.liveLink}
+                        target="_blank" rel="noreferrer" data-hover
+                        style={{
+                          flex: 1, padding: "11px 16px", borderRadius: "10px",
+                          background: "#ff6b35", color: "#fff", textDecoration: "none",
+                          fontSize: 13, fontWeight: 700, fontFamily: "'Syne', sans-serif",
+                          textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                          boxShadow: "0 4px 12px rgba(255,107,53,0.2)", transition: "all 0.25s"
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(255,107,53,0.35)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(255,107,53,0.2)"; }}
+                      >
+                        Live Demo ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: 20, display: "flex", justifyContent: "center", padding: "0 8vw" }}>
         <Link 
           to="/projects"
           data-hover
@@ -916,61 +1141,53 @@ function Projects() {
 
 function GithubShowcase() {
   const [ref, visible] = useInView();
-  const [repos, setRepos] = useState([
-    {
-      name: "AI-customer-reviews-generator",
-      desc: "Generates authentic customer reviews with prompt engineering workflows and bulk URL processing options.",
-      lang: "JavaScript",
-      stars: 2,
-      url: "https://github.com/varuna1704/AI-customer-reviews-generator"
-    },
-    {
-      name: "vastra-bharat-legacy",
-      desc: "Premium frontend e-commerce web interface showcasing regional Indian textile heritage.",
-      lang: "TypeScript",
-      stars: 1,
-      url: "https://github.com/varuna1704/vastra-bharat-legacy"
-    },
-    {
-      name: "nashik-kubh-mela",
-      desc: "Highly responsive informational and guide platform designed for tourists visiting Nashik Kumbh Mela.",
-      lang: "JavaScript",
-      stars: 1,
-      url: "https://github.com/varuna1704/nashik-kubh-mela"
-    },
-    {
-      name: "online-system-for-farm",
-      desc: "An ERP farm management tool featuring crop record maintenance, sales flow monitoring, and a PostgreSQL database.",
-      lang: "PHP",
-      stars: 1,
-      url: "https://github.com/varuna1704/online-system-for-farm"
-    },
-    {
-      name: "the_photowala",
-      desc: "Elegant professional photography studio website including client gallery pre-selections and scheduling.",
-      lang: "TypeScript",
-      stars: 1,
-      url: "https://github.com/varuna1704/the_photowala"
-    }
-  ]);
-  
-  useEffect(() => {
-    fetch("https://api.github.com/users/varuna1704/repos?sort=updated&per_page=30")
-      .then(res => {
-        if (res.ok) return res.json();
-        throw new Error("API error");
-      })
-      .then(data => {
-        setRepos(prev => prev.map(r => {
-          const match = data.find(m => m.name.toLowerCase() === r.name.toLowerCase() || (r.name === "AI-customer-reviews-generator" && m.name === "AI-customer-reviews-generator"));
-          if (match) {
-            return { ...r, stars: match.stargazers_count, desc: match.description || r.desc };
-          }
-          return r;
-        }));
-      })
-      .catch(err => console.warn("GitHub fetch failed, using fallback:", err));
-  }, []);
+  const [repos] = useState(() => {
+    const fallbackRepos = [
+      {
+        name: "AI-customer-reviews-generator",
+        desc: "Generates authentic customer reviews with prompt engineering workflows and bulk URL processing options.",
+        lang: "JavaScript",
+        stars: 2,
+        url: "https://github.com/varuna1704/AI-customer-reviews-generator"
+      },
+      {
+        name: "vastra-bharat-legacy",
+        desc: "Premium frontend e-commerce web interface showcasing regional Indian textile heritage.",
+        lang: "TypeScript",
+        stars: 1,
+        url: "https://github.com/varuna1704/vastra-bharat-legacy"
+      },
+      {
+        name: "nashik-kubh-mela",
+        desc: "Highly responsive informational and guide platform designed for tourists visiting Nashik Kumbh Mela.",
+        lang: "JavaScript",
+        stars: 1,
+        url: "https://github.com/varuna1704/nashik-kubh-mela"
+      },
+      {
+        name: "online-system-for-farm",
+        desc: "An ERP farm management tool featuring crop record maintenance, sales flow monitoring, and a PostgreSQL database.",
+        lang: "PHP",
+        stars: 1,
+        url: "https://github.com/varuna1704/online-system-for-farm"
+      },
+      {
+        name: "the_photowala",
+        desc: "Elegant professional photography studio website including client gallery pre-selections and scheduling.",
+        lang: "TypeScript",
+        stars: 1,
+        url: "https://github.com/varuna1704/the_photowala"
+      }
+    ];
+
+    return fallbackRepos.map(r => {
+      const match = REPOS.find(m => m.name.toLowerCase() === r.name.toLowerCase() || (r.name === "AI-customer-reviews-generator" && m.name === "AI-customer-reviews-generator"));
+      if (match) {
+        return { ...r, stars: match.stargazers_count, desc: match.description || r.desc };
+      }
+      return r;
+    });
+  });
 
   return (
     <section id="github-showcase" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>

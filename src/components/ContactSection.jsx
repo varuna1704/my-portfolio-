@@ -191,9 +191,10 @@ export default function ContactSection() {
             <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", margin: 0 }}>Contact Info</h3>
             {[
               { icon: "✉️", label: "Email", val: "nikamvaruna@gmail.com", href: "mailto:nikamvaruna@gmail.com" },
-              { icon: "📱", label: "Phone", val: "+91 7768289006", href: "tel:+917768289006" },
               { icon: "💼", label: "LinkedIn", val: "linkedin.com/in/varunanikam-200255255", href: "https://www.linkedin.com/in/varunanikam-200255255" },
               { icon: "👩‍💻", label: "GitHub", val: "github.com/varuna1704", href: "https://github.com/varuna1704" },
+              { icon: "📍", label: "Location", val: "Nashik, Maharashtra, India", href: "https://maps.google.com/?q=Nashik,+Maharashtra,+India" },
+              { icon: "📱", label: "Phone", val: "+91 7768289006", href: "tel:+917768289006" },
             ].map((c, i) => (
               <a
                 key={i} href={c.href || "#"} data-hover

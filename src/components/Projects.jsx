@@ -5,49 +5,35 @@ import { Link } from 'react-router-dom';
 import '../styles/projects.css';
 
 import FEATURED_PROJECTS from '../data/projects.json';
+import REPOS from '../data/repos.json';
 
 export default function Projects() {
   const [githubProjects, setGithubProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
-    const fetchGithubData = async () => {
-      try {
-        const username = 'varuna1704';
-        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=12`);
-        const data = await response.json();
+    // Filter out repos that are featured or shouldn't be shown
+    const filtered = REPOS
+      .filter(repo => 
+        !repo.fork && 
+        repo.name.toLowerCase() !== 'varuna' && 
+        !FEATURED_PROJECTS.some(f => f.title.toLowerCase().includes(repo.name.toLowerCase().replace(/-/g, ' ')))
+      )
+      .map(repo => ({
+        id: repo.id,
+        title: repo.name.replace(/-/g, ' '),
+        description: repo.description || 'Professional development repository showcased for technical assessment.',
+        image: null,
+        url: repo.html_url,
+        liveLink: repo.homepage || null,
+        language: repo.language || 'Code',
+        stars: repo.stargazers_count,
+        topics: repo.topics || [],
+        updatedAt: new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }),
+        isFeatured: false
+      }));
 
-        // Filter out repos that are featured or shouldn't be shown
-        const filtered = data
-          .filter(repo => 
-            !repo.fork && 
-            repo.name.toLowerCase() !== 'varuna' && 
-            !FEATURED_PROJECTS.some(f => f.title.toLowerCase().includes(repo.name.toLowerCase().replace(/-/g, ' ')))
-          )
-          .map(repo => ({
-            id: repo.id,
-            title: repo.name.replace(/-/g, ' '),
-            description: repo.description || 'Professional development repository showcased for technical assessment.',
-            image: null,
-            url: repo.html_url,
-            liveLink: repo.homepage || null,
-            language: repo.language || 'Code',
-            stars: repo.stargazers_count,
-            topics: repo.topics || [],
-            updatedAt: new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }),
-            isFeatured: false
-          }));
-
-        setGithubProjects(filtered);
-      } catch (err) {
-        console.error('GitHub fetch error:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGithubData();
+    setGithubProjects(filtered);
     window.scrollTo(0, 0);
   }, []);
 
@@ -78,134 +64,124 @@ export default function Projects() {
           <div className="header-line"></div>
         </div>
 
-        {/* Loading Overlay */}
-        {loading && (
-          <div className="loading-state">
-            <div className="spinner"></div>
-            <p>Gathering repositories...</p>
-          </div>
-        )}
-
         {/* Projects Grid */}
-        {!loading && (
-          <div className="projects-grid">
-            {allProjects.map((project, index) => (
-              <div
-                key={project.id}
-                className={`project-card ${project.isFeatured ? 'featured' : ''}`}
-                data-hover
-                style={{
-                  animationDelay: `${index * 0.1}s`,
-                }}
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                {/* Visual Flair */}
-                <div className="card-accent" style={{ background: project.isFeatured ? '#ff6b35' : '#ffffff' }}></div>
-                <div className="card-depth" style={{ opacity: hoveredId === project.id ? 1 : 0 }}></div>
+        <div className="projects-grid">
+          {allProjects.map((project, index) => (
+            <div
+              key={project.id}
+              className={`project-card ${project.isFeatured ? 'featured' : ''}`}
+              data-hover
+              style={{
+                animationDelay: `${index * 0.1}s`,
+              }}
+              onMouseEnter={() => setHoveredId(project.id)}
+              onMouseLeave={() => setHoveredId(null)}
+            >
+              {/* Visual Flair */}
+              <div className="card-accent" style={{ background: project.isFeatured ? '#ff6b35' : '#ffffff' }}></div>
+              <div className="card-depth" style={{ opacity: hoveredId === project.id ? 1 : 0 }}></div>
 
-                {/* Project Image */}
-                <div style={{
-                  width: '100%', height: '190px', position: 'relative', overflow: 'hidden',
-                  background: project.image ? '#0f172a' : 'linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)',
-                  borderBottom: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}>
-                  {project.image ? (
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
-                      style={{
-                        width: '100%', height: '100%', objectFit: 'cover',
-                        transform: hoveredId === project.id ? 'scale(1.05)' : 'scale(1)',
-                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                        opacity: 0.9, filter: hoveredId === project.id ? 'brightness(1.1)' : 'brightness(0.95)'
-                      }}
-                      onError={e => {
-                        e.target.style.display = 'none';
-                        e.target.parentElement.innerHTML = `<span style="font-size:40px;opacity:0.5">📂</span>`;
-                      }}
-                    />
-                  ) : (
-                    <span style={{ 
-                      fontSize: '60px', opacity: 0.15,
-                      transform: hoveredId === project.id ? 'scale(1.1)' : 'scale(1)',
-                      transition: 'transform 0.4s ease', color: '#fff'
-                    }}>
-                      {project.language === 'React' ? '⚛️' : project.language === 'Python' ? '🐍' : '💻'}
-                    </span>
-                  )}
-                  {/* Hover Overlay Hint */}
-                  <div style={{
-                    position: 'absolute', inset: 0, background: 'rgba(10,14,39,0.4)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    opacity: hoveredId === project.id ? 1 : 0, transition: 'opacity 0.3s ease',
-                    backdropFilter: 'blur(2px)'
+              {/* Project Image */}
+              <div style={{
+                width: '100%', height: '190px', position: 'relative', overflow: 'hidden',
+                background: project.image ? '#0f172a' : 'linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)',
+                borderBottom: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+                {project.image ? (
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    style={{
+                      width: '100%', height: '100%', objectFit: 'cover',
+                      transform: hoveredId === project.id ? 'scale(1.05)' : 'scale(1)',
+                      transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      opacity: 0.9, filter: hoveredId === project.id ? 'brightness(1.1)' : 'brightness(0.95)'
+                    }}
+                    onError={e => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.innerHTML = `<span style="font-size:40px;opacity:0.5">📂</span>`;
+                    }}
+                  />
+                ) : (
+                  <span style={{ 
+                    fontSize: '60px', opacity: 0.15,
+                    transform: hoveredId === project.id ? 'scale(1.1)' : 'scale(1)',
+                    transition: 'transform 0.4s ease', color: '#fff'
                   }}>
-                    <span style={{ 
-                      background: '#ff6b35', color: '#fff', padding: '8px 16px', 
-                      borderRadius: '8px', fontSize: '13px', fontWeight: 700, 
-                      fontFamily: "'Syne', sans-serif", transform: hoveredId === project.id ? 'translateY(0)' : 'translateY(10px)',
-                      transition: 'transform 0.3s ease', boxShadow: '0 8px 16px rgba(255,107,53,0.3)'
-                    }}>View Project</span>
+                    {project.language === 'React' ? '⚛️' : project.language === 'Python' ? '🐍' : '💻'}
+                  </span>
+                )}
+                {/* Hover Overlay Hint */}
+                <div style={{
+                  position: 'absolute', inset: 0, background: 'rgba(10,14,39,0.4)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  opacity: hoveredId === project.id ? 1 : 0, transition: 'opacity 0.3s ease',
+                  backdropFilter: 'blur(2px)'
+                }}>
+                  <span style={{ 
+                    background: '#ff6b35', color: '#fff', padding: '8px 16px', 
+                    borderRadius: '8px', fontSize: '13px', fontWeight: 700, 
+                    fontFamily: "'Syne', sans-serif", transform: hoveredId === project.id ? 'translateY(0)' : 'translateY(10px)',
+                    transition: 'transform 0.3s ease', boxShadow: '0 8px 16px rgba(255,107,53,0.3)'
+                  }}>View Project</span>
+                </div>
+              </div>
+
+              {/* Card Content */}
+              <div className="card-content">
+                {/* Top: Badges & Info */}
+                <div className="card-header">
+                  <div className="header-left">
+                    <h3 className="card-title">{project.title}</h3>
+                    {project.badge && <span className="featured-badge">{project.badge}</span>}
                   </div>
+                  {project.language && (
+                    <span className="language-badge">{project.language}</span>
+                  )}
                 </div>
 
-                {/* Card Content */}
-                <div className="card-content">
-                  {/* Top: Badges & Info */}
-                  <div className="card-header">
-                    <div className="header-left">
-                      <h3 className="card-title">{project.title}</h3>
-                      {project.badge && <span className="featured-badge">{project.badge}</span>}
-                    </div>
-                    {project.language && (
-                      <span className="language-badge">{project.language}</span>
+                {/* Body: Description */}
+                <p className="card-description">{project.description}</p>
+
+                {/* Topics: Tags */}
+                {project.topics.length > 0 && (
+                  <div className="card-topics">
+                    {project.topics.slice(0, 4).map(topic => (
+                      <span key={topic} className="topic-tag">{topic}</span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Footer: Stats & Actions */}
+                <div className="card-footer">
+                  <div className="card-stats">
+                    {project.stars > 0 && (
+                      <span className="stat">
+                        <span className="stat-icon">⭐</span>
+                        {project.stars}
+                      </span>
                     )}
+                    <span className="stat">
+                      <span className="stat-icon">📅</span>
+                      {project.updatedAt}
+                    </span>
                   </div>
 
-                  {/* Body: Description */}
-                  <p className="card-description">{project.description}</p>
-
-                  {/* Topics: Tags */}
-                  {project.topics.length > 0 && (
-                    <div className="card-topics">
-                      {project.topics.slice(0, 4).map(topic => (
-                        <span key={topic} className="topic-tag">{topic}</span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Footer: Stats & Actions */}
-                  <div className="card-footer">
-                    <div className="card-stats">
-                      {project.stars > 0 && (
-                        <span className="stat">
-                          <span className="stat-icon">⭐</span>
-                          {project.stars}
-                        </span>
-                      )}
-                      <span className="stat">
-                        <span className="stat-icon">📅</span>
-                        {project.updatedAt}
-                      </span>
-                    </div>
-
-                    <div className="card-actions">
-                      <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-github">
-                        <GitHubIcon /> Code
+                  <div className="card-actions">
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-github">
+                      <GitHubIcon /> Code
+                    </a>
+                    {project.liveLink && (
+                      <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn btn-live">
+                        Live ↗
                       </a>
-                      {project.liveLink && (
-                        <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn btn-live">
-                          Live ↗
-                        </a>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
 
         {/* CTA Section */}
         <div className="projects-cta">

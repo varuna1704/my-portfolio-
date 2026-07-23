@@ -2,78 +2,78 @@
   {
     "id": "proj-1",
     "title": "AI Powered Review Generator",
-    "description": "Generates authentic customer reviews with prompt engineering workflows and bulk URL processing options.",
-    "image": null,
+    "description": "AI-powered review generation system using modern AI workflows.",
+    "image": "/images/projects/review-gen.png",
     "url": "https://github.com/varuna1704/AI-customer-reviews-generator",
     "liveLink": "https://aicustomerreviewgenerator.netlify.app/",
     "language": "JavaScript",
     "isFeatured": true,
-    "topics": ["JS", "AI", "Prompt Engineering"]
+    "topics": ["JavaScript", "AI", "Prompt Engineering"]
   },
   {
     "id": "proj-2",
     "title": "Vastra Bharat Legacy",
-    "description": "Premium frontend e-commerce web interface showcasing regional Indian textile heritage.",
+    "description": "Traditional Indian clothing showcase platform with modern UI.",
     "image": null,
     "url": "https://github.com/varuna1704/vastra-bharat-legacy",
     "liveLink": "https://vastra-bharat-legacy.netlify.app/",
     "language": "React/TS",
     "isFeatured": true,
-    "topics": ["React", "TypeScript", "CSS"]
+    "topics": ["React", "TypeScript"]
   },
   {
     "id": "proj-3",
     "title": "Nashik Kumbh Mela Website",
-    "description": "Highly responsive informational and guide platform designed for tourists visiting Nashik Kumbh Mela.",
+    "description": "Responsive event information portal.",
     "image": null,
     "url": "https://github.com/varuna1704/nashik-kubh-mela",
     "liveLink": "https://nashik-kumbhmela.netlify.app/",
     "language": "React/JS",
     "isFeatured": true,
-    "topics": ["React", "JavaScript", "CSS"]
+    "topics": ["React", "JavaScript"]
   },
   {
     "id": "proj-4",
     "title": "Online System For Farm",
-    "description": "An ERP farm management tool featuring crop record maintenance, sales flow monitoring, and a PostgreSQL database.",
-    "image": null,
+    "description": "Farm management platform for inventory and crop management.",
+    "image": "/images/projects/farm-system.png",
     "url": "https://github.com/varuna1704/online-system-for-farm",
     "liveLink": null,
     "language": "PHP/SQL",
     "isFeatured": true,
-    "topics": ["PHP", "PostgreSQL", "HTML/CSS"]
+    "topics": ["PHP", "PostgreSQL"]
   },
   {
     "id": "proj-5",
     "title": "The Photowala",
-    "description": "Elegant professional photography studio website including client gallery pre-selections and scheduling.",
-    "image": null,
+    "description": "Photography showcase platform.",
+    "image": "/images/projects/photo-studio.png",
     "url": "https://github.com/varuna1704/the_photowala",
     "liveLink": null,
     "language": "React/TS",
     "isFeatured": true,
-    "topics": ["React", "TypeScript", "Framer Motion"]
+    "topics": ["React", "TypeScript"]
   },
   {
     "id": "proj-6",
     "title": "Sales Dashboard",
-    "description": "Dynamic business sales tracking and metrics dashboard with custom charts using HTML and JS.",
+    "description": "Interactive dashboard with analytics visualization.",
     "image": null,
     "url": "https://github.com/varuna1704/sales-dashboard",
     "liveLink": null,
     "language": "HTML/JS",
     "isFeatured": true,
-    "topics": ["HTML", "JavaScript", "Charts"]
+    "topics": ["HTML", "JavaScript"]
   },
   {
     "id": "proj-7",
     "title": "Stock Predictor",
-    "description": "Interactive visual stock tracking and historical market trend chart analyzer.",
-    "image": null,
+    "description": "Stock prediction and visualization application.",
+    "image": "/images/projects/stock-market.png",
     "url": "https://github.com/varuna1704/Stock_Market_Analysis",
     "liveLink": null,
     "language": "HTML/JS",
     "isFeatured": true,
-    "topics": ["HTML", "JavaScript", "ChartJS"]
+    "topics": ["HTML", "JavaScript"]
   }
 ]
