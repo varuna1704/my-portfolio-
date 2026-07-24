@@ -21,3 +21,7 @@ npm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Test scripts
+index.mjs
+
