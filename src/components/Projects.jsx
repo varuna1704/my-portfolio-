@@ -12,26 +12,46 @@ export default function Projects() {
   const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
+    const duplicateRepos = ['exam-railway', 'nashik-kubh-mela', 'online-system-for-farm', 'online_farm_system-1'];
     // Filter out repos that are featured or shouldn't be shown
     const filtered = REPOS
       .filter(repo => 
         !repo.fork && 
         repo.name.toLowerCase() !== 'varuna' && 
-        !FEATURED_PROJECTS.some(f => f.title.toLowerCase().includes(repo.name.toLowerCase().replace(/-/g, ' ')))
+        !duplicateRepos.includes(repo.name.toLowerCase()) &&
+        !FEATURED_PROJECTS.some(f => 
+          f.title.toLowerCase().includes(repo.name.toLowerCase().replace(/-/g, ' ')) ||
+          f.url.toLowerCase().replace(/\/$/, '') === repo.html_url.toLowerCase().replace(/\/$/, '')
+        )
       )
-      .map(repo => ({
-        id: repo.id,
-        title: repo.name.replace(/-/g, ' '),
-        description: repo.description || 'Professional development repository showcased for technical assessment.',
-        image: null,
-        url: repo.html_url,
-        liveLink: repo.homepage || null,
-        language: repo.language || 'Code',
-        stars: repo.stargazers_count,
-        topics: repo.topics || [],
-        updatedAt: new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }),
-        isFeatured: false
-      }));
+      .map(repo => {
+        let description = repo.description || 'Professional development repository showcased for technical assessment.';
+        const nameLower = repo.name.toLowerCase();
+        
+        if (nameLower === 'my-portfolio-') {
+          description = "Personal developer portfolio built with React, showcasing project architecture and UI design decisions.";
+        } else if (nameLower === 'llm-learining-models') {
+          description = "Experiments with LLM fine-tuning workflows and prompt engineering techniques using TypeScript.";
+        } else if (nameLower === 'examination-system-') {
+          description = "PHP-based examination management system with question banks, timed tests, and result tracking.";
+        } else if (nameLower === 'bharat-vrindavan') {
+          description = "Cultural heritage showcase website built with vanilla JavaScript, featuring responsive layouts and interactive galleries.";
+        }
+
+        return {
+          id: repo.id,
+          title: repo.name.replace(/-/g, ' '),
+          description: description,
+          image: null,
+          url: repo.html_url,
+          liveLink: repo.homepage || null,
+          language: repo.language || 'Code',
+          stars: repo.stargazers_count,
+          topics: repo.topics || [],
+          updatedAt: new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }),
+          isFeatured: false
+        };
+      });
 
     setGithubProjects(filtered);
     window.scrollTo(0, 0);
@@ -43,7 +63,7 @@ export default function Projects() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Varuna Nikam's Projects",
-    "description": "A curated collection of my technical work, from e-commerce solutions to data analytics systems.",
+    "description": "My developer portfolio — a curated collection of Shopify stores, React apps, and AI-powered projects.",
     "url": "https://varuna-nikam.vercel.app/projects",
     "numberOfItems": allProjects.length,
     "itemListElement": allProjects.map((project, idx) => ({
@@ -87,7 +107,7 @@ export default function Projects() {
               <span className="title-highlight">Projects</span>
             </h2>
             <p className="projects-subtitle">
-              A curated collection of my technical work, from e-commerce solutions to data analytics systems.
+              My developer portfolio — a curated collection of Shopify stores, React apps, and AI-powered projects.
             </p>
           </div>
           <div className="header-line"></div>

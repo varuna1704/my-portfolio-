@@ -319,7 +319,7 @@ function Nav({ active }) {
                 onMouseEnter={e => e.target.style.color = "#ff6b35"}
                 onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#cbd5e1"}
               >
-                {item}
+                Portfolio
               </Link>
             );
           }
@@ -427,6 +427,7 @@ function Hero() {
           }}>
             Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills.
             Building modern e-commerce experiences, scalable web apps, and AI-powered solutions.
+            Welcome to my developer portfolio — a showcase of Shopify stores, React applications, and AI-powered tools I've built.
           </p>
 
           <div style={{ display: "flex", gap: 14, marginTop: 36, flexWrap: "wrap" }}>
