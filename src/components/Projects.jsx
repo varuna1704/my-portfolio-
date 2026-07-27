@@ -39,8 +39,37 @@ export default function Projects() {
 
   const allProjects = [...FEATURED_PROJECTS, ...githubProjects];
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Varuna Nikam's Projects",
+    "description": "A curated collection of my technical work, from e-commerce solutions to data analytics systems.",
+    "url": "https://varuna-nikam.vercel.app/projects",
+    "numberOfItems": allProjects.length,
+    "itemListElement": allProjects.map((project, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "item": {
+        "@type": "CreativeWork",
+        "name": project.title,
+        "description": project.description,
+        "url": project.url,
+        "programmingLanguage": project.language,
+        "creator": {
+          "@type": "Person",
+          "name": "Varuna Nikam"
+        }
+      }
+    }))
+  };
+
   return (
     <section className="projects-section">
+      {/* JSON-LD Structured Data Schema */}
+      <script 
+        type="application/ld+json" 
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       {/* Background Flow */}
       <div className="projects-bg-flow"></div>
 
