@@ -139,7 +139,7 @@ export default function ContactSection() {
               { icon: "💼", label: "LinkedIn", val: "linkedin.com/in/varunanikam-200255255", href: "https://www.linkedin.com/in/varunanikam-200255255" },
               { icon: "👩‍💻", label: "GitHub", val: "github.com/varuna1704", href: "https://github.com/varuna1704" },
               { icon: "📍", label: "Location", val: "Nashik, Maharashtra, India", href: "https://maps.google.com/?q=Nashik,+Maharashtra,+India" },
-              { icon: "📱", label: "Phone", val: "+91 7768289006", href: "tel:+917768289006" },
+              { icon: "📱", label: "Phone", val: "+91 7768028906", href: "tel:+917768028906" },
             ].map((c, i) => (
               <a
                 key={i} href={c.href || "#"} data-hover

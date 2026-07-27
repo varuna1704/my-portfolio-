@@ -167,7 +167,7 @@ const CERTIFICATIONS = [
 
 const RESUME_DETAILS = [
   { icon: "📧", label: "Email", value: "nikamvaruna@gmail.com" },
-  { icon: "📞", label: "Phone", value: "+91 776 828 9006" },
+  { icon: "📞", label: "Phone", value: "+91 776 802 8906" },
   { icon: "📍", label: "Location", value: "Nashik, MH, India" },
   { icon: "🌐", label: "Languages", value: "English, Hindi, Marathi" }
 ];
@@ -1543,7 +1543,7 @@ function Contact() {
         <div style={{ display: "flex", flexDirection: "column", gap: 14, justifyContent: "center" }}>
           {[
             { icon: "✉️", label: "Email", val: "nikamvaruna@gmail.com", href: "mailto:nikamvaruna@gmail.com" },
-            { icon: "📱", label: "Mobile", val: "+91 7768289006", href: "tel:+917768289006" },
+            { icon: "📱", label: "Mobile", val: "+91 7768028906", href: "tel:+917768028906" },
             { icon: "💼", label: "LinkedIn", val: "linkedin.com/in/varunanikam-200255255", href: "https://www.linkedin.com/in/varunanikam-200255255" },
             { icon: "📍", label: "Location", val: "Nashik, Maharashtra, India", href: null },
           ].map(c => (
