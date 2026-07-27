@@ -7,7 +7,7 @@ A high-performance, modern, and conversion-focused professional portfolio websit
 ## 🎯 Positioning Mandate & Primary Identity
 
 Unlike generic software engineering portfolios, this site is engineered from the ground up to project a strong **Shopify-first** and **E-commerce optimization** identity:
-*   **Core Message:** *"Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills."*
+*   **Core Message:** *"Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills. Welcome to my developer portfolio — a showcase of Shopify stores, React applications, and AI-powered tools I've built."*
 *   **Tagline:** *"Building modern e-commerce experiences, scalable web apps, and AI-powered solutions."*
 
 ---
@@ -16,6 +16,7 @@ Unlike generic software engineering portfolios, this site is engineered from the
 
 ### 1. Dynamic Hero & Typewriter Intro
 *   **Liquid-smooth Typewriter:** Transitions dynamically through core titles: `Shopify Developer`, `Frontend Developer`, `AI-Assisted Developer`, and `E-commerce Specialist`.
+*   **Welcome Sentence:** Custom positioning near the H1 ("Varuna Nikam") introducing the developer portfolio context.
 *   **Quick Action Navigation:** Instantly scrolls users to `#contact` or `#resume` sections with smooth interactive button indicators.
 
 ### 2. Shopify Experience & Production Stores
@@ -27,23 +28,24 @@ Unlike generic software engineering portfolios, this site is engineered from the
     *   **Retromedy** - Lifestyle Products
 *   **Freelance Custom Build:** Highlights building custom Liquid sections, catalogs, responsive layout structures, and navigation flows.
 
-### 3. Detailed Projects Grid (7 Active Projects)
-Displays a full, responsive grid showing all 7 featured projects without pagination or truncation:
+### 3. Detailed Portfolio Grid
+Displays a full, responsive grid showing all featured projects without pagination or duplication:
 1.  **AI Powered Review Generator** - Node.js & React app translating reviews into analytics.
-2.  **Vastra Bharat Legacy** - High-conversion Shopify store showcase.
-3.  **Nashik Kumbh Mela Website** - Informational hub with high concurrent user capacity.
-4.  **Online System For Farm** - Agri-tech tool for listing crops and checking real-time demand.
-5.  **The Photowala** - Digital photographer portfolio and service portal.
-6.  **Sales Dashboard** - Visualized metrics, customer retention graphs, and cohort charts.
-7.  **Stock Predictor** - Historical dataset modeling using custom prediction lines.
+2.  **Vastra Bharat Legacy** - Traditional Indian clothing showcase platform.
+3.  **Nashik Kumbh Mela Website** - Responsive event information portal.
+4.  **Online System For Farm** - Farm management platform for inventory and crop management.
+5.  **The Photowala** - Photography showcase platform.
+6.  **Sales Dashboard** - Interactive dashboard with analytics visualization.
+7.  **Stock Predictor** - Stock prediction and visualization application.
+8.  **RailExam Mastery** - A full-stack RRB/RRC railway prep portal featuring mock test simulations.
 
 ### 4. Categorized Skills Toolkit
-Structured progress indicators divided into 7 distinct categories with color-coded theme tags:
+Structured progress indicators divided into distinct categories with color-coded theme tags:
 *   **Shopify:** Dawn Theme, Custom Liquid, Store Setup, Admin Management
 *   **Frontend:** React, HTML5/CSS3, JavaScript (ES6+), Responsive Design
 *   **Programming:** Java, Python, C++, Data Structures & Algorithms
-*   **Databases:** MySQL, MongoDB, Firebase Firestore
-*   **Cloud/AWS:** EC2, S3, IAM, CloudWatch, AWS Systems Manager
+*   **Databases:** MySQL, MongoDB, PostgreSQL
+*   **Cloud/AWS:** AWS, AWS re/Start Program (EC2, S3, IAM fundamentals)
 *   **AI & GenAI:** Prompt Engineering, ChatGPT API, Claude, Agent Frameworks
 *   **Tools:** Git & GitHub, VS Code, Postman, Vercel
 
@@ -57,7 +59,7 @@ Structured progress indicators divided into 7 distinct categories with color-cod
 ### 7. Status-Aware Certification Dashboard
 Provides visual badges dynamically colored based on progress states:
 *   `In Progress` (Amber) - *AWS Certified Cloud Practitioner*
-*   `Completed` (Emerald) - *AWS re/Start Graduate*, *AWS Solutions Architecture Simulation*, *Accenture UK Tech Apprenticeship*, *Deloitte Australia Tech Job Simulation*, *Tata GenAI Powered Data Analytics*
+*   `Completed` (Emerald) - *AWS re/Start Graduate*, *AWS Solutions Architecture Simulation*, *Accenture UK Tech Apprenticeship*, *Deloitte Australia Technology Job Simulation*, *Tata GenAI Powered Data Analytics*
 *   `Planned` (Blue) - *Shopify Developer Certification*
 
 ### 8. Custom Interactions & Navigation
@@ -86,8 +88,9 @@ This project implements modern web standards to maximize search engine indexing 
 *   **Screen Reader Labels**: Added descriptive `aria-label` labels to all live links and GitHub repository code links, distinguishing them for screen reader users.
 
 ### 2. SEO & Pre-Rendering
-*   **Build-time Pre-rendering**: Injected static HTML structures directly into the output `index.html` file using `vite-plugin-prerender` to display content instantly to crawlers without requiring JS execution.
 *   **Static Search Helpers**: Integrated dynamic XML sitemap generation, structured `robots.txt`, Google Site Console verification head tags, and `vercel.json` SPA configurations.
+*   **Vercel Routing Rewrites**: Configured `vercel.json` to exclude dot-extensions from fallback rewrites (`/:path((?!.*\\.).*)`), ensuring `/sitemap.xml` and `/robots.txt` load correctly as raw static assets.
+*   **Structured Metadata**: Injected schema.org JSON-LD `Person` markup in `index.html` and dynamic `ItemList`/`CreativeWork` markup in `/projects` page for optimal indexing.
 *   **llms.txt**: Provided a standard `/public/llms.txt` file listing essential page directories, portfolios, and details for LLM-based crawlers.
 
 ### 3. Loading Speed & LCP (Largest Contentful Paint)
@@ -114,9 +117,9 @@ my-portfolio/
 │   │   ├── AboutSection.jsx  # Personal bio, stats, and What I Do cards
 │   │   ├── Portfolio.jsx     # Experience, Stores, Projects, Skills, Certifications
 │   │   ├── ContactSection.jsx# Contact form and Formspree integration
-│   │   └── ServicesSection.jsx# Shopify development services catalog
+│   │   └── shared.jsx        # Shared layout helper wrappers
 │   ├── data/
-│   │   ├── projects.json     # Content database for the 7 projects
+│   │   ├── projects.json     # Content database for the 8 projects
 │   │   └── repos.json        # Static GitHub repository cache (built pre-compilation)
 │   ├── styles/
 │   │   └── projects.css      # Core grid styles for projects
@@ -151,9 +154,11 @@ my-portfolio/
     ```
 
 3.  **Configure Environment Variables:**
-    Create a `.env.local` file in the root directory and add your Formspree ID:
+    Create a `.env.local` file in the root directory and add your Formspree ID and Vercel AI Gateway keys:
     ```env
     VITE_FORMSPREE_ID=your_formspree_endpoint_id
+    VERCEL_OIDC_TOKEN=your_vercel_ai_gateway_key
+    AI_GATEWAY_API_KEY=your_vercel_ai_gateway_key
     ```
 
 4.  **Start Development Server:**
@@ -181,6 +186,7 @@ The output build files will be generated in the `dist/` directory. These assets 
 For project collaboration or e-commerce development requests, reach out via the contact form on the website or directly at:
 *   **Email:** nikamvaruna@gmail.com
 *   **LinkedIn:** [linkedin.com/in/varunanikam-200255255](https://linkedin.com/in/varunanikam-200255255)
+*   **Phone:** +91 776 802 8906
 
 ---
 *Developed with focus and precision by Varuna Nikam*
