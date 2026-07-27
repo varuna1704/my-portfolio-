@@ -78,13 +78,13 @@
   },
   {
     "id": "proj-8",
-    "title": "Railway Mock Test Platform",
-    "description": "Interactive online preparation portal with real-time test simulations.",
+    "title": "RailExam Mastery",
+    "description": "A full-stack exam prep platform for RRB/RRC railway recruitment exams, featuring timed mock tests, subject-wise practice banks, and animated performance analytics.",
     "image": null,
     "url": "https://github.com/varuna1704/Exam-railway",
     "liveLink": "https://rail-exam.vercel.app/",
     "language": "React.js",
     "isFeatured": true,
-    "topics": ["React.js", "JavaScript", "Vite"]
+    "topics": ["React 19", "TypeScript", "Vite", "Tailwind CSS", "Recharts", "Framer Motion"]
   }
 ]

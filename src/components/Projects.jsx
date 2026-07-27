@@ -26,28 +26,37 @@ export default function Projects() {
       )
       .map(repo => {
         let description = repo.description || 'Professional development repository showcased for technical assessment.';
+        let title = repo.name.replace(/-/g, ' ');
+        let liveLink = repo.homepage || null;
+        let topics = repo.topics || [];
         const nameLower = repo.name.toLowerCase();
         
         if (nameLower === 'my-portfolio-') {
           description = "Personal developer portfolio built with React, showcasing project architecture and UI design decisions.";
         } else if (nameLower === 'llm-learining-models') {
-          description = "Experiments with LLM fine-tuning workflows and prompt engineering techniques using TypeScript.";
+          title = "ModelMap — AI & LLM Visual Learning Platform";
+          description = "An interactive AI/LLM learning platform with click-to-explore flowcharts, a searchable model comparison directory, and an in-app AI tutor to teach concepts like RAG and AI agents.";
+          liveLink = "https://llm-learining-models.vercel.app/";
+          topics = ["React 19", "TypeScript", "Vite"];
         } else if (nameLower === 'examination-system-') {
           description = "PHP-based examination management system with question banks, timed tests, and result tracking.";
         } else if (nameLower === 'bharat-vrindavan') {
-          description = "Cultural heritage showcase website built with vanilla JavaScript, featuring responsive layouts and interactive galleries.";
+          title = "Bharat Vrindavan";
+          description = "An immersive cultural heritage gallery showcasing India's traditional clothing, artifacts, and festivals, with 3D item viewers, state-wise browsing, and animated story modals.";
+          liveLink = "https://bharat-vrindavan.vercel.app/";
+          topics = ["React 18", "Three.js", "React Three Fiber", "Framer Motion", "Zustand", "Tailwind CSS"];
         }
 
         return {
           id: repo.id,
-          title: repo.name.replace(/-/g, ' '),
+          title: title,
           description: description,
           image: null,
           url: repo.html_url,
-          liveLink: repo.homepage || null,
+          liveLink: liveLink,
           language: repo.language || 'Code',
           stars: repo.stargazers_count,
-          topics: repo.topics || [],
+          topics: topics,
           updatedAt: new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }),
           isFeatured: false
         };
