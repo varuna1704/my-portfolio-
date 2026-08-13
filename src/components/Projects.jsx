@@ -12,7 +12,7 @@ export default function Projects() {
   const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
-    const duplicateRepos = ['my-portfolio-', 'exam-railway', 'nashik-kubh-mela', 'online-system-for-farm', 'online_farm_system-1'];
+    const duplicateRepos = ['my-portfolio-', 'exam-railway', 'nashik-kubh-mela', 'online-system-for-farm', 'online-system-for-farm-', 'online_farm_system-1'];
     // Filter out repos that are featured or shouldn't be shown
     const filtered = REPOS
       .filter(repo => 
