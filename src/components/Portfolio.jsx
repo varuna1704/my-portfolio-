@@ -592,12 +592,12 @@ export default function Portfolio() {
                     }}
                   >
                     <img
-                      src="/images/headshots/varuna-headshot-professional-dark.webp"
+                      src="/images/headshots/varuna-headshot-professional-dark.jpg"
                       alt="Varuna Nikam - Shopify and Frontend Developer based in Nashik, Maharashtra"
                       loading="eager"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = "/images/headshots/varuna-headshot-professional-dark.png";
+                        e.currentTarget.src = "/images/headshots/varuna-headshot-professional-dark.jpg";
                       }}
                       style={{
                         width: '100%',
