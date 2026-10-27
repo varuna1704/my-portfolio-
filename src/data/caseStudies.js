@@ -11,24 +11,24 @@ export const FEATURED_WORK = [
     category: "Shopify Storefront",
     badge: "Client Build",
     badgeType: "client",
-    image: "/images/projects/photo-studio.png", // Crisp high-res showcase frame
+    image: null, // Interactive demonstration concept rendered below
+    interactiveConcept: true,
     tagline: "Tailor-made Liquid sections, roast level visual guides, and responsive collection architecture built from scratch.",
     contribution: "Architected complete store theme from scratch on Shopify Dawn. Built custom Liquid sections for roast flavor profiles and bean origin stories, configured collection filters, drawer cart, and mobile-first checkout navigation.",
-    outcome: "Replaced an unbranded generic template with a distinctive, fast-loading storefront that empowered the client to launch seasonal single-origin drops independently.",
+    outcome: "Replaced an unbranded generic template with a distinctive storefront that empowered the client to launch seasonal single-origin drops independently.",
     technologies: ["Shopify Liquid", "Dawn Theme", "JavaScript", "CSS3", "Shopify Admin API"],
     stats: [
       { label: "Scope", value: "Complete Build" },
       { label: "Architecture", value: "Liquid & Dawn" },
-      { label: "Target", value: "100% Mobile Ready" }
+      { label: "Layout", value: "Responsive Dawn" }
     ],
     links: {
       caseStudy: true,
-      live: null, // Private client staging / launch
+      live: null,
       github: "https://github.com/varuna1704"
     },
-    // Case Study In-Depth Content
     overview: "A specialty coffee merchant required a bespoke e-commerce presence to sell single-origin beans, brewing equipment, and subscription packs with distinct visual storytelling.",
-    problem: "The client was struggling with rigid off-the-shelf Shopify templates that either required expensive monthly apps for simple layout adjustments or bogged down page load speed with unoptimized scripts.",
+    problem: "The client was struggling with rigid off-the-shelf Shopify templates that required expensive monthly apps for simple layout adjustments or bogged down page speed with unoptimized scripts.",
     roleScope: "Sole theme developer. Responsible for custom Liquid section architecture, responsive CSS styling, catalog navigation setup, and checkout process testing.",
     featuresDelivered: [
       "Custom Origin Map & Roast Profile section highlighting tasting notes (acidity, body, roast depth).",
@@ -38,7 +38,7 @@ export const FEATURED_WORK = [
     ],
     technicalDecisions: "Adopted Shopify's reference Dawn architecture to ensure strict adherence to Online Store 2.0 standards. Avoided jQuery and bloated third-party plugins in favor of vanilla JavaScript and CSS Grid.",
     validation: "Verified across Chrome, Safari iOS, and Android Viewport profiles. Passed Shopify theme check linting with zero critical errors.",
-    results: "Delivered a clean, maintainable theme codebase that reduced the client's monthly app costs to zero for basic presentation features.",
+    results: "Delivered a modular Liquid theme codebase that handled custom presentation and roast profiles natively within theme settings.",
     tradeoffs: "Opted for native Liquid section schemas rather than headless Hydrogen to allow the non-technical store owner to customize copy and banners directly from the native Shopify visual customizer."
   },
   {
@@ -48,15 +48,16 @@ export const FEATURED_WORK = [
     category: "Shopify Operations",
     badge: "Production Fleet",
     badgeType: "client",
-    image: "/images/projects/farm-system.png",
+    image: null,
+    isFleetArchitecture: true,
     tagline: "Ongoing maintenance, Liquid snippets, and review widget integrations across 4 commercial stores.",
     contribution: "Managed and maintained 4 live commercial Shopify stores: Mavena (Women's Fashion), MidFox (Pet Products), Pawfully (Pet Products), and Retromedy (Lifestyle Products). Developed custom Liquid theme snippets, product catalog structures, and review integrations.",
-    outcome: "Eliminated app bloat by writing lightweight custom Liquid alternatives, kept storefront inventories synchronized, and ensured zero downtime during flash sales.",
+    outcome: "Eliminated app bloat by writing lightweight custom Liquid alternatives, kept storefront inventories synchronized, and supported ongoing seasonal campaigns.",
     technologies: ["Shopify Liquid", "Dawn Theme", "Theme Architecture", "Review Widgets", "Store Operations"],
     stats: [
-      { label: "Stores", value: "4 Live Brands" },
-      { label: "Focus", value: "Theme Optimization" },
-      { label: "Uptime", value: "Zero Downtime" }
+      { label: "Fleet", value: "4 Commercial Stores" },
+      { label: "Focus", value: "Theme Customization" },
+      { label: "Architecture", value: "Modular Snippets" }
     ],
     stores: [
       { name: "Mavena", niche: "Women's Fashion", url: "https://mavenaco.com/" },
@@ -80,7 +81,7 @@ export const FEATURED_WORK = [
     ],
     technicalDecisions: "Standardized all reusable components into modular snippets (`snippets/custom-promo-banner.liquid`, `snippets/review-stars-compact.liquid`) to ensure consistent updates across storefronts.",
     validation: "Conducted weekly cross-browser sanity checks and speed tests on mobile networks.",
-    results: "Maintained seamless operations for all 4 stores, supporting continuous marketing campaigns and product launches without technical disruptions.",
+    results: "Maintained consistent operations for all 4 stores, supporting marketing campaigns and product launches without technical disruptions.",
     tradeoffs: "Balancing client brand requests with strict page-weight limits by actively auditing third-party tracking scripts and recommending native Liquid solutions."
   },
   {
@@ -187,7 +188,7 @@ export const ALL_PROJECTS = [
     image: "/images/projects/photo-studio.png",
     tagline: "Visual gallery and client inquiry system tailored for wedding and commercial photographers.",
     contribution: "Developed masonry grid image layout with lightbox previews and smooth section transitions.",
-    outcome: "High-contrast visual portfolio emphasizing high-resolution imagery and client lead capture.",
+    outcome: "Visual portfolio emphasizing high-resolution imagery and client lead capture.",
     technologies: ["React", "TypeScript", "CSS Grid", "Vite"],
     links: {
       caseStudy: false,

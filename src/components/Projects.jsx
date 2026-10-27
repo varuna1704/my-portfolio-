@@ -193,11 +193,16 @@ export default function Projects() {
                         color: 'var(--text-tertiary)',
                         fontFamily: 'var(--font-mono)',
                         fontSize: '0.8125rem',
-                        gap: '8px'
+                        gap: '6px',
+                        padding: '12px',
+                        textAlign: 'center',
+                        backgroundColor: '#0E1217'
                       }}
                     >
-                      <span>[ INTERFACE PREVIEW ]</span>
-                      <span style={{ color: 'var(--text-secondary)', fontSize: '0.75rem' }}>{p.category}</span>
+                      <span style={{ color: 'var(--text-primary)', fontWeight: '600' }}>[ {p.category.toUpperCase()} ]</span>
+                      <span style={{ color: 'var(--accent-orange)', fontSize: '0.75rem' }}>
+                        {p.interactiveConcept ? 'Interactive Concept — Not a client project' : 'Theme Architecture & Liquid Snippets'}
+                      </span>
                     </div>
                   )}
                 </div>

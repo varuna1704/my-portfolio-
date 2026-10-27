@@ -7,6 +7,7 @@ import {
   IconArrowUpRight
 } from './Icons';
 import { UtilityButton, ClippedButton } from './Buttons';
+import ResponsivePreview from './ResponsivePreview';
 
 export default function CaseStudyModal({ study, onClose }) {
   const modalRef = useRef(null);
@@ -17,9 +18,11 @@ export default function CaseStudyModal({ study, onClose }) {
     // Save previous active element to restore focus on close
     const prevActive = document.activeElement;
 
-    // Prevent body scroll when modal is open
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    // Prevent body scroll when modal is open and remember scroll position
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
 
     // Focus close button inside modal
     const closeBtn = modalRef.current?.querySelector('.modal-close-btn');
@@ -28,12 +31,34 @@ export default function CaseStudyModal({ study, onClose }) {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         onClose();
+        return;
+      }
+
+      // Simple focus trap
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
       window.removeEventListener('keydown', handleKeyDown);
       prevActive?.focus?.();
     };
@@ -73,10 +98,10 @@ export default function CaseStudyModal({ study, onClose }) {
           width: '100%',
           maxHeight: '90vh',
           overflowY: 'auto',
-          borderRadius: '4px',
-          padding: 'clamp(24px, 4vw, 48px)',
+          borderRadius: '2px',
+          padding: 'clamp(24px, 4vw, 44px)',
           position: 'relative',
-          boxShadow: '0 24px 64px rgba(0, 0, 0, 0.6)'
+          boxShadow: '0 24px 64px rgba(0, 0, 0, 0.7)'
         }}
       >
         {/* Top Header Row with Category, Badge & Close Button */}
@@ -295,7 +320,7 @@ export default function CaseStudyModal({ study, onClose }) {
           </p>
         </div>
 
-        {/* Technologies Badge Group */}
+        {/* Stack Badges */}
         <div style={{ marginBottom: '32px' }}>
           <h4 style={{
             fontSize: '0.85rem',
@@ -327,7 +352,23 @@ export default function CaseStudyModal({ study, onClose }) {
           </div>
         </div>
 
-        {/* 6. Validation & Testing */}
+        {/* 6. ANIMATION 3: RESPONSIVE WINDOW ADAPTATION */}
+        <div style={{ marginBottom: '36px' }}>
+          <h3 style={{
+            fontSize: '1.2rem',
+            color: 'var(--text-primary)',
+            marginBottom: '6px',
+            fontFamily: 'var(--font-display)'
+          }}>
+            6. Viewport Adaptation & Breakpoints
+          </h3>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.65' }}>
+            Explore how the Liquid template sections adapt dynamically across Desktop, Tablet, and Mobile viewports without layout shifts.
+          </p>
+          <ResponsivePreview />
+        </div>
+
+        {/* 7. Validation & Testing */}
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{
             fontSize: '1.2rem',
@@ -335,14 +376,14 @@ export default function CaseStudyModal({ study, onClose }) {
             marginBottom: '10px',
             fontFamily: 'var(--font-display)'
           }}>
-            6. Validation & Testing
+            7. Validation & Testing
           </h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.7' }}>
             {study.validation}
           </p>
         </div>
 
-        {/* 7. Verified Results & Outcomes */}
+        {/* 8. Verified Results & Outcomes */}
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{
             fontSize: '1.2rem',
@@ -350,14 +391,14 @@ export default function CaseStudyModal({ study, onClose }) {
             marginBottom: '10px',
             fontFamily: 'var(--font-display)'
           }}>
-            7. Verified Outcomes
+            8. Verified Outcomes
           </h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.7' }}>
             {study.results}
           </p>
         </div>
 
-        {/* 8. Tradeoffs & Lessons */}
+        {/* 9. Tradeoffs & Lessons */}
         <div style={{ marginBottom: '36px' }}>
           <h3 style={{
             fontSize: '1.2rem',
@@ -365,7 +406,7 @@ export default function CaseStudyModal({ study, onClose }) {
             marginBottom: '10px',
             fontFamily: 'var(--font-display)'
           }}>
-            8. Tradeoffs & Lessons
+            9. Tradeoffs & Lessons
           </h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.7' }}>
             {study.tradeoffs}

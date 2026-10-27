@@ -116,8 +116,12 @@
   border-left: 1px solid var(--border-default);
   background: var(--bg-input);
   color: var(--text-secondary);
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, border-left-color 0.25s ease;
   flex-shrink: 0;
+}
+
+.btn-split-arrow .arrow-compartment svg {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-split-arrow:hover {
@@ -129,6 +133,11 @@
   background: var(--accent-orange);
   border-left-color: var(--accent-orange);
   color: #0B0D10;
+}
+
+.btn-split-arrow:hover .arrow-compartment svg,
+.btn-split-arrow:focus-visible .arrow-compartment svg {
+  transform: translate(2px, -2px);
 }
 
 .btn-split-arrow:focus-visible {

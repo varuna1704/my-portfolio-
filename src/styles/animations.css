@@ -1,10 +1,248 @@
-/* Animations placeholder */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* ─── SHARED MOTION TOKENS ─────────────────────────────────────────────── */
+:root {
+  --motion-fast: 180ms;
+  --motion-normal: 360ms;
+  --motion-slow: 600ms;
+  --motion-assembly: 2.1s;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes fade-in-up {
-  0% { transform: translateY(20px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+/* ─── ANIMATION 1: STOREFRONT ASSEMBLY KEYFRAMES ─────────────────────── */
+@keyframes assembly-frame-in {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes assembly-product-settle {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes assembly-text-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes assembly-controls-align {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes assembly-caption-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Classes applied during assembly playback */
+.storefront-assembly {
+  position: relative;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.storefront-assembly.is-assembling .assembly-browser-bar {
+  animation: assembly-frame-in var(--motion-normal) var(--motion-ease) forwards;
+}
+
+.storefront-assembly.is-assembling .assembly-image-card {
+  animation: assembly-product-settle var(--motion-slow) var(--motion-ease) 0.28s both;
+}
+
+.storefront-assembly.is-assembling .assembly-details {
+  animation: assembly-text-reveal var(--motion-normal) var(--motion-ease) 0.65s both;
+}
+
+.storefront-assembly.is-assembling .assembly-options {
+  animation: assembly-controls-align var(--motion-normal) var(--motion-ease) 1.05s both;
+}
+
+.storefront-assembly.is-assembling .assembly-action-row {
+  animation: assembly-controls-align var(--motion-normal) var(--motion-ease) 1.35s both;
+}
+
+.storefront-assembly.is-assembling .assembly-caption {
+  animation: assembly-caption-fade var(--motion-normal) var(--motion-ease) 1.75s both;
+}
+
+/* Static assembled state (after animation or when reduced motion is preferred) */
+.storefront-assembly.is-assembled .assembly-browser-bar,
+.storefront-assembly.is-assembled .assembly-image-card,
+.storefront-assembly.is-assembled .assembly-details,
+.storefront-assembly.is-assembled .assembly-options,
+.storefront-assembly.is-assembled .assembly-action-row,
+.storefront-assembly.is-assembled .assembly-caption {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+/* ─── ANIMATION 2: BLUEPRINT COMPARISON ──────────────────────────────── */
+.blueprint-comparison-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  background: var(--bg-input);
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.blueprint-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.blueprint-layer-structure {
+  background-color: #0A0D11;
+  background-image: 
+    linear-gradient(to right, rgba(242, 118, 69, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 118, 69, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.blueprint-divider-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--accent-orange);
+  z-index: 10;
+  cursor: ew-resize;
+  pointer-events: none;
+}
+
+.blueprint-handle-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: #0B0D10;
+  border: 1.5px solid var(--accent-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-orange);
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.blueprint-handle-button:active {
+  cursor: grabbing;
+  background: var(--accent-orange);
+  color: #0B0D10;
+}
+
+/* Hidden native range slider stretched over container for full accessibility */
+.blueprint-range-slider {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 20;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── ANIMATION 3: RESPONSIVE PREVIEW WINDOW ──────────────────────────── */
+.responsive-preview-viewport {
+  margin: 0 auto;
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: max-width var(--motion-normal) var(--motion-ease);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── MODAL DIALOG TRANSITIONS ────────────────────────────────────────── */
+@keyframes modal-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.case-study-overlay {
+  animation: modal-backdrop-in var(--motion-fast) var(--motion-ease) forwards;
+}
+
+.case-study-content {
+  animation: modal-content-in var(--motion-normal) var(--motion-ease) forwards;
+}
+
+/* ─── REDUCED MOTION OVERRIDES ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .storefront-assembly * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .case-study-overlay,
+  .case-study-content {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .responsive-preview-viewport {
+    transition: none !important;
+  }
 }

@@ -14,7 +14,9 @@ import {
   IconArrowRight,
   IconArrowUpRight,
   IconCheck,
-  IconSparkles
+  IconSparkles,
+  IconBlueprint,
+  IconCart
 } from './Icons';
 import {
   EditorialAction,
@@ -24,6 +26,8 @@ import {
   OffsetShadowButton
 } from './Buttons';
 import CaseStudyModal from './CaseStudyModal';
+import StorefrontAssembly from './StorefrontAssembly';
+import BlueprintComparison from './BlueprintComparison';
 import { FEATURED_WORK } from '../data/caseStudies';
 import { submitFormToFormspree } from '../services/emailService';
 
@@ -196,6 +200,7 @@ const CREDENTIALS = {
 export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeCaseStudy, setActiveCaseStudy] = useState(null);
+  const [showBlueprint, setShowBlueprint] = useState(false);
 
   // Contact Form State
   const [formData, setFormData] = useState({
@@ -468,6 +473,7 @@ export default function Portfolio() {
           }}
         >
           <div className="container">
+            {/* Top Row: Intro, Headline, Copy, Actions & Portrait */}
             <div
               style={{
                 display: 'grid',
@@ -478,14 +484,12 @@ export default function Portfolio() {
             >
               {/* Left Column: Intro, Headline, Copy, Actions */}
               <div>
-                {/* Small Introduction */}
                 <div style={{ marginBottom: '16px' }}>
                   <span className="mono-label">
                     Hi, I’m Varuna Nikam
                   </span>
                 </div>
 
-                {/* Primary Headline */}
                 <h1
                   style={{
                     fontSize: 'clamp(2.5rem, 5.5vw, 4rem)',
@@ -500,7 +504,6 @@ export default function Portfolio() {
                   <span style={{ color: 'var(--accent-orange)' }}>Thoughtful</span> web experiences.
                 </h1>
 
-                {/* Supporting Text */}
                 <p
                   style={{
                     fontSize: 'clamp(1rem, 1.8vw, 1.15rem)',
@@ -606,7 +609,6 @@ export default function Portfolio() {
                     />
                   </div>
 
-                  {/* Subtle Caption Plate */}
                   <div
                     style={{
                       marginTop: '12px',
@@ -626,6 +628,48 @@ export default function Portfolio() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* ─── ANIMATION 1: STOREFRONT ASSEMBLY COMPOSITION ─── */}
+            <div
+              style={{
+                marginTop: 'clamp(40px, 6vw, 64px)',
+                paddingTop: '36px',
+                borderTop: '1px solid var(--border-subtle)'
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '12px',
+                  marginBottom: '20px'
+                }}
+              >
+                <div>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                    01 — Storefront Assembly Demonstration
+                  </span>
+                  <h2
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontWeight: '700',
+                      fontSize: '1.3rem',
+                      color: 'var(--text-primary)',
+                      marginTop: '4px'
+                    }}
+                  >
+                    Interactive Storefront Architecture
+                  </h2>
+                </div>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0, maxWidth: '440px' }}>
+                  Watch how Liquid sections, product metadata, and responsive option selectors assemble into a cohesive shopping experience.
+                </p>
+              </div>
+
+              <StorefrontAssembly />
             </div>
           </div>
         </section>
@@ -657,7 +701,7 @@ export default function Portfolio() {
               </p>
             </div>
 
-            {/* Layout: 1 Large Primary Featured Project */}
+            {/* Layout: 1 Large Primary Featured Project (Artisan Coffee House) */}
             {FEATURED_WORK.length > 0 && (() => {
               const main = FEATURED_WORK[0];
               return (
@@ -725,12 +769,36 @@ export default function Portfolio() {
                       ))}
                     </div>
 
-                    {/* Actions */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+                    {/* Actions Row with "See the Build" Toggle */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
                       <SplitArrowButton
                         label="View Case Study"
                         onClick={() => setActiveCaseStudy(main)}
                       />
+
+                      {/* ─── ANIMATION 2 TOGGLE: BLUEPRINT COMPARISON ─── */}
+                      <button
+                        onClick={() => setShowBlueprint(!showBlueprint)}
+                        aria-pressed={showBlueprint}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '10px 16px',
+                          backgroundColor: showBlueprint ? 'var(--bg-input)' : 'var(--bg-card)',
+                          color: showBlueprint ? 'var(--accent-orange)' : 'var(--text-primary)',
+                          border: `1px solid ${showBlueprint ? 'var(--accent-orange)' : 'var(--border-default)'}`,
+                          borderRadius: '2px',
+                          fontFamily: 'var(--font-mono)',
+                          fontSize: '0.8125rem',
+                          cursor: 'pointer',
+                          transition: 'all var(--motion-fast)'
+                        }}
+                      >
+                        <IconBlueprint size={16} />
+                        <span>{showBlueprint ? 'Show Finished UI' : 'See the Build (Slider)'}</span>
+                      </button>
+
                       {main.links?.live && (
                         <UtilityButton
                           type="live"
@@ -748,49 +816,113 @@ export default function Portfolio() {
                     </div>
                   </div>
 
-                  {/* Right Column: 16:10 Frame Preview */}
+                  {/* Right Column: Interactive Blueprint Comparison or Finished Frame Preview */}
                   <div>
-                    <div
-                      style={{
-                        width: '100%',
-                        aspectRatio: '16 / 10',
-                        backgroundColor: 'var(--bg-input)',
-                        border: '1px solid var(--border-default)',
-                        overflow: 'hidden',
-                        position: 'relative'
-                      }}
-                    >
-                      <img
-                        src={main.image}
-                        alt={`${main.title} screenshot`}
-                        loading="lazy"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover'
-                        }}
-                      />
+                    {showBlueprint ? (
+                      <BlueprintComparison />
+                    ) : (
                       <div
                         style={{
-                          position: 'absolute',
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          backgroundColor: 'rgba(11, 13, 16, 0.85)',
-                          padding: '10px 16px',
-                          borderTop: '1px solid var(--border-default)',
+                          width: '100%',
+                          aspectRatio: '16 / 10',
+                          backgroundColor: 'var(--bg-input)',
+                          border: '1px solid var(--border-default)',
+                          overflow: 'hidden',
+                          position: 'relative',
                           display: 'flex',
+                          flexDirection: 'column',
                           alignItems: 'center',
-                          justifyContent: 'space-between',
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: '0.75rem',
-                          color: 'var(--text-tertiary)'
+                          justifyContent: 'center',
+                          padding: '24px'
                         }}
                       >
-                        <span>SHOPIFY · DAWN 2.0</span>
-                        <span style={{ color: 'var(--accent-orange)' }}>FEATURED BUILD</span>
+                        {/* High-Fidelity Coffee Storefront Concept Frame */}
+                        <div
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'var(--bg-card)',
+                            border: '1px solid var(--border-subtle)',
+                            borderRadius: '2px',
+                            padding: '16px',
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1.2fr',
+                            gap: '16px',
+                            alignItems: 'center'
+                          }}
+                        >
+                          {/* Packaging Visual */}
+                          <div
+                            style={{
+                              height: '100%',
+                              backgroundColor: 'var(--bg-input)',
+                              border: '1px solid var(--border-subtle)',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <svg width="60" height="74" viewBox="0 0 84 100" fill="none" aria-hidden="true">
+                              <path d="M14 18H70L66 94H18L14 18Z" fill="#14181D" stroke="#303740" strokeWidth="1.5" />
+                              <rect x="12" y="10" width="60" height="8" rx="1" fill="#191E25" stroke="#303740" strokeWidth="1.2" />
+                              <circle cx="42" cy="46" r="6" fill="#F27645" />
+                            </svg>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--accent-orange)', marginTop: '4px' }}>
+                              ARTISAN SINGLE-ORIGIN
+                            </span>
+                          </div>
+
+                          <div>
+                            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'var(--accent-orange)' }}>
+                              SHOPIFY DAWN 2.0
+                            </div>
+                            <div style={{ fontFamily: 'var(--font-display)', fontWeight: '700', fontSize: '1.05rem', color: 'var(--text-primary)' }}>
+                              Coffee Storefront Theme
+                            </div>
+                            <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', margin: '4px 0 10px', lineHeight: '1.5' }}>
+                              Custom Liquid sections for roast flavor profiles, origin notes, and drawer cart.
+                            </div>
+                            <button
+                              onClick={() => setShowBlueprint(true)}
+                              style={{
+                                fontSize: '0.75rem',
+                                fontFamily: 'var(--font-mono)',
+                                color: 'var(--accent-orange)',
+                                background: 'rgba(242, 118, 69, 0.1)',
+                                border: '1px solid var(--accent-orange)',
+                                padding: '4px 10px',
+                                cursor: 'pointer',
+                                borderRadius: '2px'
+                              }}
+                            >
+                              See the Build (Slider) →
+                            </button>
+                          </div>
+                        </div>
+
+                        <div
+                          style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            backgroundColor: 'rgba(11, 13, 16, 0.9)',
+                            padding: '8px 14px',
+                            borderTop: '1px solid var(--border-default)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.6875rem',
+                            color: 'var(--text-tertiary)'
+                          }}
+                        >
+                          <span>LIQUID SECTION & DAWN ARCHITECTURE</span>
+                          <span style={{ color: 'var(--accent-orange)' }}>Interactive concept — not a client project</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               );
@@ -817,7 +949,7 @@ export default function Portfolio() {
                   }}
                 >
                   <div>
-                    {/* Frame Screenshot */}
+                    {/* Frame Preview (Corrected Assets) */}
                     <div
                       style={{
                         width: '100%',
@@ -825,15 +957,69 @@ export default function Portfolio() {
                         backgroundColor: 'var(--bg-input)',
                         border: '1px solid var(--border-default)',
                         overflow: 'hidden',
-                        marginBottom: '20px'
+                        marginBottom: '20px',
+                        position: 'relative'
                       }}
                     >
-                      <img
-                        src={proj.image}
-                        alt={`${proj.title} screenshot`}
-                        loading="lazy"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
+                      {proj.isFleetArchitecture ? (
+                        /* Dedicated Multi-Store Fleet Architecture Frame */
+                        <div
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            padding: '16px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            backgroundColor: '#0E1217'
+                          }}
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'var(--accent-orange)' }}>
+                              COMMERCIAL FLEET ARCHITECTURE
+                            </span>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: '#10B981', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '2px 6px' }}>
+                              4 ACTIVE STORES
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', margin: '8px 0' }}>
+                            <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)', padding: '8px', borderRadius: '2px' }}>
+                              <div style={{ fontSize: '0.8125rem', fontWeight: '600', color: 'var(--text-primary)' }}>Mavena</div>
+                              <div style={{ fontSize: '0.6875rem', color: 'var(--text-secondary)' }}>Women's Fashion · Dawn</div>
+                            </div>
+                            <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)', padding: '8px', borderRadius: '2px' }}>
+                              <div style={{ fontSize: '0.8125rem', fontWeight: '600', color: 'var(--text-primary)' }}>MidFox</div>
+                              <div style={{ fontSize: '0.6875rem', color: 'var(--text-secondary)' }}>Pet Products · Custom</div>
+                            </div>
+                            <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)', padding: '8px', borderRadius: '2px' }}>
+                              <div style={{ fontSize: '0.8125rem', fontWeight: '600', color: 'var(--text-primary)' }}>Pawfully</div>
+                              <div style={{ fontSize: '0.6875rem', color: 'var(--text-secondary)' }}>Pet Care & Nutrition</div>
+                            </div>
+                            <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)', padding: '8px', borderRadius: '2px' }}>
+                              <div style={{ fontSize: '0.8125rem', fontWeight: '600', color: 'var(--text-primary)' }}>Retromedy</div>
+                              <div style={{ fontSize: '0.6875rem', color: 'var(--text-secondary)' }}>Lifestyle & Apparel</div>
+                            </div>
+                          </div>
+
+                          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-tertiary)', backgroundColor: 'var(--bg-card)', padding: '2px 6px' }}>
+                              snippets/promo-banner.liquid
+                            </span>
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', color: 'var(--text-tertiary)', backgroundColor: 'var(--bg-card)', padding: '2px 6px' }}>
+                              snippets/review-sync.liquid
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Real Screenshot for AI Review Generator */
+                        <img
+                          src={proj.image}
+                          alt={`${proj.title} screenshot`}
+                          loading="lazy"
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      )}
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
@@ -1137,7 +1323,7 @@ export default function Portfolio() {
                     Core Technical Strengths
                   </h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                    Practical skills grounded in real project execution without arbitrary percentage ratings.
+                    Skills applied across Shopify and frontend projects.
                   </p>
                 </div>
 
@@ -1883,7 +2069,7 @@ export default function Portfolio() {
         </div>
       </footer>
 
-      {/* ─── CASE STUDY MODAL ──────────────────────────────────────────── */}
+      {/* ─── CASE STUDY MODAL (Includes Responsive Breakpoint Window) ──── */}
       {activeCaseStudy && (
         <CaseStudyModal
           study={activeCaseStudy}
