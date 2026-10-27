@@ -1567,6 +1567,7 @@ function Resume() {
 /* ─── ROOT ────────────────────────────────────────────────────────────── */
 
 export default function Portfolio() {
+  const { t } = useLang();
   const [activeSection, setActiveSection] = useState("home");
   const [introLoading, setIntroLoading] = useState(true);
 
