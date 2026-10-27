@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { IconBack, IconArrowRight } from "./Icons";
 
 export default function NotFound() {
   return (
@@ -9,102 +10,82 @@ export default function NotFound() {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      background: "radial-gradient(circle at 50% 40%, #1e1b4b 0%, #060a14 70%)",
-      color: "#fff",
+      backgroundColor: "var(--bg-primary)",
+      color: "var(--text-primary)",
       padding: "24px",
-      textAlign: "center",
-      position: "relative",
-      overflow: "hidden"
+      textAlign: "center"
     }}>
-      {/* Background ambient glow */}
-      <div style={{
-        position: "absolute",
-        width: 450,
-        height: 450,
-        borderRadius: "50%",
-        background: "radial-gradient(circle, #ff6b3515 0%, transparent 70%)",
-        filter: "blur(50px)",
-        pointerEvents: "none"
-      }} />
-
-      <div style={{ zIndex: 1, maxWidth: 520 }}>
+      <div style={{ maxWidth: 540 }}>
         <div style={{
-          fontFamily: "'JetBrains Mono', monospace",
-          fontSize: 14,
-          color: "#ff6b35",
-          letterSpacing: 3,
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.8125rem",
+          color: "var(--accent-orange)",
+          letterSpacing: "0.08em",
           textTransform: "uppercase",
-          marginBottom: 12
+          marginBottom: 16
         }}>
-          Error 404 — Lost In Space
+          Page Not Found
         </div>
 
         <h1 style={{
-          fontFamily: "'Syne', sans-serif",
-          fontSize: "clamp(4.5rem, 14vw, 8rem)",
+          fontFamily: "var(--font-display)",
+          fontSize: "clamp(4.5rem, 12vw, 7.5rem)",
           fontWeight: 800,
           lineHeight: 1,
-          margin: "0 0 16px",
-          background: "linear-gradient(135deg, #fff 30%, #ff6b35 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
+          margin: "0 0 20px",
+          color: "var(--text-primary)"
         }}>
           404
         </h1>
 
         <p style={{
-          color: "#94a3b8",
-          fontFamily: "'Syne', sans-serif",
-          fontSize: "clamp(16px, 3vw, 20px)",
-          lineHeight: 1.6,
+          color: "var(--text-secondary)",
+          fontSize: "1.05rem",
+          lineHeight: 1.7,
           marginBottom: 36
         }}>
-          The page or route you're looking for doesn't exist or has moved into another branch.
+          The page or route you are looking for does not exist or has been relocated.
         </p>
 
         <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
           <Link
             to="/"
             style={{
-              padding: "14px 32px",
-              background: "#d9531b",
-              color: "#fff",
-              borderRadius: 10,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "12px 24px",
+              backgroundColor: "var(--text-primary)",
+              color: "#0B0D10",
+              fontWeight: 600,
+              fontSize: "0.9375rem",
               textDecoration: "none",
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 700,
-              fontSize: 15,
-              boxShadow: "0 8px 25px rgba(217, 83, 27, 0.35)",
-              transition: "all 0.25s"
+              borderRadius: "2px",
+              boxShadow: "3px 3px 0 var(--accent-orange)"
             }}
-            onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-            onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
           >
-            ← Return to Portfolio
+            <IconBack size={16} />
+            <span>Return to Portfolio</span>
           </Link>
+
           <Link
             to="/projects"
             style={{
-              padding: "14px 28px",
-              border: "1.5px solid #334155",
-              color: "#cbd5e1",
-              borderRadius: 10,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "12px 22px",
+              border: "1px solid var(--border-default)",
+              backgroundColor: "var(--bg-card)",
+              color: "var(--text-primary)",
+              fontWeight: 500,
+              fontSize: "0.9375rem",
               textDecoration: "none",
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 700,
-              fontSize: 15,
-              transition: "all 0.25s"
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = "#ff6b35";
-              e.currentTarget.style.color = "#fff";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = "#334155";
-              e.currentTarget.style.color = "#cbd5e1";
+              borderRadius: "2px"
             }}
           >
-            View Projects ↗
+            <span>View Projects</span>
+            <IconArrowRight size={16} />
           </Link>
         </div>
       </div>

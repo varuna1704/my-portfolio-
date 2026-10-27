@@ -1,271 +1,324 @@
-// src/components/Projects.jsx
-
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/projects.css';
+import { ALL_PROJECTS } from '../data/caseStudies';
+import {
+  IconBack,
+  IconArrowRight,
+  IconLiveWebsite,
+  IconSourceCode,
+  IconCheck
+} from './Icons';
+import { UtilityButton, SplitArrowButton } from './Buttons';
+import CaseStudyModal from './CaseStudyModal';
 
-import FEATURED_PROJECTS from '../data/projects.json';
-import REPOS from '../data/repos.json';
+const FILTERS = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'shopify', label: 'Shopify & Liquid' },
+  { id: 'frontend', label: 'Frontend & React' },
+  { id: 'ai', label: 'AI Tooling' }
+];
 
 export default function Projects() {
-  const [githubProjects, setGithubProjects] = useState([]);
-  const [hoveredId, setHoveredId] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeCaseStudy, setActiveCaseStudy] = useState(null);
 
-  useEffect(() => {
-    const duplicateRepos = ['my-portfolio-', 'exam-railway', 'nashik-kubh-mela', 'online-system-for-farm', 'online-system-for-farm-', 'online_farm_system-1'];
-    // Filter out repos that are featured or shouldn't be shown
-    const filtered = REPOS
-      .filter(repo => 
-        !repo.fork && 
-        repo.name.toLowerCase() !== 'varuna' && 
-        !duplicateRepos.includes(repo.name.toLowerCase()) &&
-        !FEATURED_PROJECTS.some(f => 
-          f.title.toLowerCase().includes(repo.name.toLowerCase().replace(/-/g, ' ')) ||
-          f.url.toLowerCase().replace(/\/$/, '') === repo.html_url.toLowerCase().replace(/\/$/, '')
-        )
-      )
-      .map(repo => {
-        let description = repo.description || 'Professional development repository showcased for technical assessment.';
-        let title = repo.name.replace(/-/g, ' ');
-        let liveLink = repo.homepage || null;
-        let topics = repo.topics || [];
-        const nameLower = repo.name.toLowerCase();
-        
-        if (nameLower === 'my-portfolio-') {
-          description = "Personal developer portfolio built with React, showcasing project architecture and UI design decisions.";
-        } else if (nameLower === 'llm-learining-models') {
-          title = "ModelMap — AI & LLM Visual Learning Platform";
-          description = "An interactive AI/LLM learning platform with click-to-explore flowcharts, a searchable model comparison directory, and an in-app AI tutor to teach concepts like RAG and AI agents.";
-          liveLink = "https://llm-learining-models.vercel.app/";
-          topics = ["React 19", "TypeScript", "Vite"];
-        } else if (nameLower === 'examination-system-') {
-          description = "PHP-based examination management system with question banks, timed tests, and result tracking.";
-        } else if (nameLower === 'bharat-vrindavan') {
-          title = "Bharat Vrindavan";
-          description = "An immersive cultural heritage gallery showcasing India's traditional clothing, artifacts, and festivals, with 3D item viewers, state-wise browsing, and animated story modals.";
-          liveLink = "https://bharat-vrindavan.vercel.app/";
-          topics = ["React 18", "Three.js", "React Three Fiber", "Framer Motion", "Zustand", "Tailwind CSS"];
-        }
-
-        return {
-          id: repo.id,
-          title: title,
-          description: description,
-          image: null,
-          url: repo.html_url,
-          liveLink: liveLink,
-          language: repo.language || 'Code',
-          stars: repo.stargazers_count,
-          topics: topics,
-          updatedAt: new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }),
-          isFeatured: false
-        };
-      });
-
-    setGithubProjects(filtered);
-    window.scrollTo(0, 0);
-  }, []);
-
-  const allProjects = [...FEATURED_PROJECTS, ...githubProjects];
-
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Varuna Nikam's Projects",
-    "description": "My developer portfolio — a curated collection of Shopify stores, React apps, and AI-powered projects.",
-    "url": "https://varuna-nikam.vercel.app/projects",
-    "numberOfItems": allProjects.length,
-    "itemListElement": allProjects.map((project, idx) => ({
-      "@type": "ListItem",
-      "position": idx + 1,
-      "item": {
-        "@type": "CreativeWork",
-        "name": project.title,
-        "description": project.description,
-        "url": project.url,
-        "programmingLanguage": project.language,
-        "creator": {
-          "@type": "Person",
-          "name": "Varuna Nikam"
-        }
-      }
-    }))
-  };
+  const filteredProjects = ALL_PROJECTS.filter(p => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'shopify') {
+      return p.category.toLowerCase().includes('shopify') || p.technologies.some(t => t.toLowerCase().includes('liquid') || t.toLowerCase().includes('shopify'));
+    }
+    if (activeFilter === 'frontend') {
+      return p.category.toLowerCase().includes('frontend') || p.category.toLowerCase().includes('web') || p.technologies.some(t => t.toLowerCase().includes('react'));
+    }
+    if (activeFilter === 'ai') {
+      return p.category.toLowerCase().includes('ai') || p.technologies.some(t => t.toLowerCase().includes('ai') || t.toLowerCase().includes('prompt'));
+    }
+    return true;
+  });
 
   return (
-    <section className="projects-section">
-      {/* JSON-LD Structured Data Schema */}
-      <script 
-        type="application/ld+json" 
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-      />
-      {/* Background Flow */}
-      <div className="projects-bg-flow"></div>
+    <div style={{ backgroundColor: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
+      {/* Top Header Bar */}
+      <header
+        style={{
+          borderBottom: '1px solid var(--border-default)',
+          backgroundColor: 'rgba(11, 13, 16, 0.94)',
+          backdropFilter: 'blur(10px)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 50
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '70px'
+          }}
+        >
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '0.9375rem',
+              color: 'var(--text-secondary)',
+              fontWeight: '500',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
+            onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+          >
+            <IconBack size={18} />
+            <span>Back to Portfolio</span>
+          </Link>
 
-      <div className="projects-container">
-        {/* Nav Link back to Home */}
-        <Link to="/" className="back-link" data-hover>
-          <span>←</span> Back to Portfolio
-        </Link>
-
-        {/* Header Section */}
-        <div className="projects-header">
-          <div className="header-content">
-            <h2 className="projects-title">
-              <span className="title-text">My</span>
-              <span className="title-highlight">Projects</span>
-            </h2>
-            <p className="projects-subtitle">
-              My developer portfolio — a curated collection of Shopify stores, React apps, and AI-powered projects.
-            </p>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', color: 'var(--text-tertiary)' }}>
+            CURATED DIRECTORY · {filteredProjects.length} PROJECTS
           </div>
-          <div className="header-line"></div>
+        </div>
+      </header>
+
+      {/* Main Container */}
+      <main className="container" style={{ padding: 'clamp(48px, 6vw, 80px) var(--section-padding-x)' }}>
+        {/* Intro */}
+        <div style={{ maxWidth: '780px', marginBottom: '44px' }}>
+          <span className="mono-label">Projects Index</span>
+          <h1
+            style={{
+              fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)',
+              color: 'var(--text-primary)',
+              margin: '12px 0 16px',
+              fontFamily: 'var(--font-display)'
+            }}
+          >
+            Engineering & Project Showcase
+          </h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: '1.7' }}>
+            A curated collection of commercial Shopify storefronts, theme customizations, responsive web applications, and developer tools. Every entry represents verified personal contributions with active links or documented architecture.
+          </p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="projects-grid">
-          {allProjects.map((project, index) => (
+        {/* Filter Pills */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            flexWrap: 'wrap',
+            marginBottom: '40px',
+            borderBottom: '1px solid var(--border-default)',
+            paddingBottom: '20px'
+          }}
+        >
+          {FILTERS.map(f => {
+            const isActive = activeFilter === f.id;
+            return (
+              <button
+                key={f.id}
+                onClick={() => setActiveFilter(f.id)}
+                style={{
+                  padding: '8px 18px',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.8125rem',
+                  fontWeight: isActive ? '600' : '400',
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  backgroundColor: isActive ? 'var(--bg-card)' : 'transparent',
+                  border: `1px solid ${isActive ? 'var(--accent-orange)' : 'var(--border-default)'}`,
+                  borderRadius: '2px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Project Cards Grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+            gap: '32px'
+          }}
+        >
+          {filteredProjects.map((p) => (
             <div
-              key={project.id}
-              className={`project-card ${project.isFeatured ? 'featured' : ''}`}
-              data-hover
+              key={p.id}
               style={{
-                animationDelay: `${index * 0.1}s`,
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-default)',
+                padding: '28px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                borderRadius: '2px'
               }}
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
             >
-              {/* Visual Flair */}
-              <div className="card-accent" style={{ background: project.isFeatured ? '#ff6b35' : '#ffffff' }}></div>
-              <div className="card-depth" style={{ opacity: hoveredId === project.id ? 1 : 0 }}></div>
-
-              {/* Project Image */}
-              <div style={{
-                width: '100%', height: '190px', position: 'relative', overflow: 'hidden',
-                background: project.image ? '#0f172a' : 'linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)',
-                borderBottom: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center'
-              }}>
-                {project.image ? (
-                  <picture>
-                    <source srcSet={project.image.replace(/\.(png|jpg|jpeg)$/, '.webp')} type="image/webp" />
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
-                      style={{
-                        width: '100%', height: '100%', objectFit: 'cover',
-                        transform: hoveredId === project.id ? 'scale(1.05)' : 'scale(1)',
-                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                        opacity: 0.9, filter: hoveredId === project.id ? 'brightness(1.1)' : 'brightness(0.95)'
-                      }}
-                      onError={e => {
-                        e.target.style.display = 'none';
-                        e.target.parentElement.innerHTML = `<span style="font-size:40px;opacity:0.5">📂</span>`;
-                      }}
+              <div>
+                {/* 16:10 Frame Preview */}
+                <div
+                  style={{
+                    width: '100%',
+                    aspectRatio: '16 / 10',
+                    backgroundColor: 'var(--bg-input)',
+                    border: '1px solid var(--border-default)',
+                    overflow: 'hidden',
+                    marginBottom: '20px',
+                    position: 'relative'
+                  }}
+                >
+                  {p.image ? (
+                    <img
+                      src={p.image}
+                      alt={`${p.title} preview`}
+                      loading="lazy"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
-                  </picture>
-                ) : (
-                  <span style={{ 
-                    fontSize: '60px', opacity: 0.15,
-                    transform: hoveredId === project.id ? 'scale(1.1)' : 'scale(1)',
-                    transition: 'transform 0.4s ease', color: '#fff'
-                  }}>
-                    {project.language === 'React' ? '⚛️' : project.language === 'Python' ? '🐍' : '💻'}
-                  </span>
-                )}
-                {/* Hover Overlay Hint */}
-                <div style={{
-                  position: 'absolute', inset: 0, background: 'rgba(10,14,39,0.4)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  opacity: hoveredId === project.id ? 1 : 0, transition: 'opacity 0.3s ease',
-                  backdropFilter: 'blur(2px)'
-                }}>
-                  <span style={{ 
-                    background: '#ff6b35', color: '#fff', padding: '8px 16px', 
-                    borderRadius: '8px', fontSize: '13px', fontWeight: 700, 
-                    fontFamily: "'Syne', sans-serif", transform: hoveredId === project.id ? 'translateY(0)' : 'translateY(10px)',
-                    transition: 'transform 0.3s ease', boxShadow: '0 8px 16px rgba(255,107,53,0.3)'
-                  }}>View Project</span>
-                </div>
-              </div>
-
-              {/* Card Content */}
-              <div className="card-content">
-                {/* Top: Badges & Info */}
-                <div className="card-header">
-                  <div className="header-left">
-                    <h3 className="card-title">{project.title}</h3>
-                    {project.badge && <span className="featured-badge">{project.badge}</span>}
-                  </div>
-                  {project.language && (
-                    <span className="language-badge">{project.language}</span>
+                  ) : (
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--text-tertiary)',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '0.8125rem',
+                        gap: '8px'
+                      }}
+                    >
+                      <span>[ INTERFACE PREVIEW ]</span>
+                      <span style={{ color: 'var(--text-secondary)', fontSize: '0.75rem' }}>{p.category}</span>
+                    </div>
                   )}
                 </div>
 
-                {/* Body: Description */}
-                <p className="card-description">{project.description}</p>
-
-                {/* Topics: Tags */}
-                {project.topics.length > 0 && (
-                  <div className="card-topics">
-                    {project.topics.slice(0, 4).map(topic => (
-                      <span key={topic} className="topic-tag">{topic}</span>
-                    ))}
-                  </div>
-                )}
-
-                {/* Footer: Stats & Actions */}
-                <div className="card-footer">
-                  <div className="card-stats">
-                    {project.stars > 0 && (
-                      <span className="stat">
-                        <span className="stat-icon">⭐</span>
-                        {project.stars}
-                      </span>
-                    )}
-                    <span className="stat">
-                      <span className="stat-icon">📅</span>
-                      {project.updatedAt}
-                    </span>
-                  </div>
-
-                  <div className="card-actions">
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-github" aria-label={`View code for ${project.title} on GitHub`}>
-                      <GitHubIcon /> Code
-                    </a>
-                    {project.liveLink && (
-                      <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn btn-live" aria-label={`View live site for ${project.title}`}>
-                        Live ↗
-                      </a>
-                    )}
-                  </div>
+                {/* Tags & Badges */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                    {p.category}
+                  </span>
+                  <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', border: '1px solid var(--border-default)', padding: '2px 6px', color: 'var(--text-secondary)' }}>
+                    {p.badge}
+                  </span>
                 </div>
+
+                <h3
+                  style={{
+                    fontSize: '1.35rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '10px',
+                    fontFamily: 'var(--font-display)'
+                  }}
+                >
+                  {p.title}
+                </h3>
+
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', lineHeight: '1.65', marginBottom: '12px' }}>
+                  <strong style={{ color: 'var(--text-primary)', fontWeight: '600' }}>Contribution: </strong>
+                  {p.contribution}
+                </p>
+
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '20px' }}>
+                  <strong style={{ color: 'var(--text-primary)', fontWeight: '600' }}>Outcome: </strong>
+                  {p.outcome}
+                </p>
+
+                {/* Tech Tags */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '24px' }}>
+                  {p.technologies.map((t, idx) => (
+                    <span
+                      key={idx}
+                      style={{
+                        fontSize: '0.75rem',
+                        fontFamily: 'var(--font-mono)',
+                        padding: '2px 8px',
+                        backgroundColor: 'var(--bg-input)',
+                        border: '1px solid var(--border-default)',
+                        color: 'var(--text-secondary)',
+                        borderRadius: '2px'
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div
+                style={{
+                  borderTop: '1px solid var(--border-subtle)',
+                  paddingTop: '18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  flexWrap: 'wrap'
+                }}
+              >
+                {p.links?.caseStudy && (
+                  <SplitArrowButton
+                    label="Case Study"
+                    onClick={() => setActiveCaseStudy(p)}
+                  />
+                )}
+                {p.links?.live && (
+                  <UtilityButton
+                    type="live"
+                    href={p.links.live}
+                    label="Live Site"
+                  />
+                )}
+                {p.links?.github && (
+                  <UtilityButton
+                    type="code"
+                    href={p.links.github}
+                    label="Code"
+                  />
+                )}
               </div>
             </div>
           ))}
         </div>
 
-        {/* CTA Section */}
-        <div className="projects-cta">
-          <div className="cta-content">
-            <p className="cta-text">Interested in my approach to software development?</p>
-            <div className="cta-buttons">
-              <a href="https://github.com/varuna1704" target="_blank" rel="noopener noreferrer" className="cta-link primary" data-hover>
-                Explore GitHub <span className="cta-arrow">→</span>
-              </a>
-              <Link to="/#contact" className="cta-link secondary" data-hover>
-                Start a Conversation
-              </Link>
-            </div>
-          </div>
+        {/* Back Link at Bottom */}
+        <div style={{ marginTop: '64px', textAlign: 'center' }}>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '0.95rem',
+              color: 'var(--text-primary)',
+              fontWeight: '600',
+              padding: '12px 24px',
+              backgroundColor: 'var(--bg-card)',
+              border: '1px solid var(--border-default)'
+            }}
+          >
+            <IconBack size={18} />
+            <span>Return to Portfolio Homepage</span>
+          </Link>
         </div>
-      </div>
-    </section>
+      </main>
+
+      {/* Case Study Modal */}
+      {activeCaseStudy && (
+        <CaseStudyModal
+          study={activeCaseStudy}
+          onClose={() => setActiveCaseStudy(null)}
+        />
+      )}
+    </div>
   );
 }
-
-// Inline Icons to avoid imports
-const GitHubIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-  </svg>
-);

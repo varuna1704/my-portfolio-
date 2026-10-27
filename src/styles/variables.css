@@ -1,12 +1,35 @@
-/* Global variables for colors, fonts, spacing */
 :root {
-  --primary: #ff6b35;
-  --secondary: #00d4aa;
-  --accent: #7c3aed;
-  --bg-color: #060a14;
-  --text-main: #fff;
-  --text-muted: #94a3b8;
-  --border-color: #1e293b;
-  --font-main: 'Syne', sans-serif;
+  /* Editorial Dark Theme Palette */
+  --bg-primary: #0B0D10;
+  --bg-card: #14181D;
+  --bg-card-hover: #1A2027;
+  --bg-surface-elevated: #1F262F;
+  --bg-input: #0E1217;
+
+  --text-primary: #F4F1EA;
+  --text-secondary: #AAB2BD;
+  --text-tertiary: #75808E;
+
+  --accent-orange: #F27645;
+  --accent-orange-hover: #E05E2B;
+  --accent-orange-subtle: rgba(242, 118, 69, 0.12);
+  --accent-orange-border: rgba(242, 118, 69, 0.35);
+
+  --border-default: #303740;
+  --border-subtle: #21262E;
+  --border-focus: #F27645;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Syne', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing & Layout */
+  --container-max-width: 1200px;
+  --section-padding-y: clamp(72px, 8vw, 120px);
+  --section-padding-x: clamp(20px, 6vw, 64px);
+
+  /* Focus ring */
+  --focus-ring: 2px solid #F27645;
+  --focus-offset: 3px;
 }

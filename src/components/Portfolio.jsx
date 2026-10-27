@@ -1,125 +1,115 @@
-import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  IconExploreWork,
+  IconResume,
+  IconLiveWebsite,
+  IconSourceCode,
+  IconCaseStudy,
+  IconContact,
+  IconMenu,
+  IconClose,
+  IconGitHub,
+  IconLinkedIn,
+  IconArrowRight,
+  IconArrowUpRight,
+  IconCheck,
+  IconSparkles
+} from './Icons';
+import {
+  EditorialAction,
+  ClippedButton,
+  SplitArrowButton,
+  UtilityButton,
+  OffsetShadowButton
+} from './Buttons';
+import CaseStudyModal from './CaseStudyModal';
+import { FEATURED_WORK } from '../data/caseStudies';
+import { submitFormToFormspree } from '../services/emailService';
 
-import AboutSection from "./AboutSection";
-import ContactSection from "./ContactSection";
-import PROJECTS_DATA from "../data/projects.json";
-import REPOS from "../data/repos.json";
-import { useLang } from "../context/LangContext.jsx";
-import IntroLoader from "./IntroLoader.jsx";
-import SkillsRadar from "./SkillsRadar.jsx";
-import GithubActivityGraph from "./GithubActivityGraph.jsx";
+/* ─── DATA CONSTANTS ─────────────────────────────────────────────────── */
+const RESUME_URL = "https://drive.google.com/file/d/1_S__H96JjAN67uPp7c1F7o6wYR00hOUS/view?usp=drive_link";
+const GITHUB_URL = "https://github.com/varuna1704";
+const LINKEDIN_URL = "https://www.linkedin.com/in/varunanikam-200255255/";
+const EMAIL_ADDRESS = "nikamvaruna@gmail.com";
 
-// GitHub SVG Icon
-const GitHubIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-  </svg>
-);
-
-/* ─── DATA ─────────────────────────────────────────────────────────────── */
-
-const NAV_ITEMS = ["About", "Projects", "GitHub Showcase", "Skills", "AI Development", "Experience", "Education", "Certifications", "Resume", "Contact"];
-
-const SKILLS = [
+const CAPABILITIES = [
   {
-    category: "Shopify",
-    icon: "🛍️",
-    skills: [
-      "Shopify Store Management",
-      "Shopify Liquid",
-      "Dawn Theme",
-      "Sections & Snippets",
-      "Theme Customization",
-      "Product Management",
-      "Product Listings",
-      "Product Description Writing",
-      "Product Image Management",
-      "Judge.me Integration"
-    ]
+    title: "Shopify Theme Customization",
+    desc: "Customizing Dawn and OS 2.0 themes with clean Liquid architectures, reducing reliance on slow third-party apps.",
+    tags: ["Liquid", "Dawn Theme", "Theme App Extensions", "JSON Templates"]
   },
   {
-    category: "Frontend",
-    icon: "⚛️",
-    skills: [
-      "React",
-      "JavaScript",
-      "TypeScript",
-      "HTML5",
-      "CSS3",
-      "Responsive Design",
-      "Cross Browser Testing"
-    ]
+    title: "Liquid Sections & Snippets",
+    desc: "Modular, reusable Liquid sections and snippet components tailored for merchant autonomy in the theme customizer.",
+    tags: ["Sections", "Snippets", "Liquid Schema", "Shopify Objects"]
   },
   {
-    category: "Programming",
-    icon: "💻",
-    skills: [
-      "PHP",
-      "Python",
-      "Java",
-      "SQL"
-    ]
+    title: "Responsive Frontend UI",
+    desc: "Accessible, fast-loading web interfaces built with React, TypeScript, and semantic modern CSS.",
+    tags: ["React", "TypeScript", "CSS Grid", "WCAG A11y"]
   },
   {
-    category: "Databases",
-    icon: "🗄️",
-    skills: [
-      "MySQL",
-      "PostgreSQL"
-    ]
+    title: "Store Operations & Integrations",
+    desc: "Review widget synchronization, catalog and collection tagging, drawer cart tuning, and checkout readiness.",
+    tags: ["Catalog Architecture", "Review Widgets", "Drawer Cart", "Store Ops"]
   },
   {
-    category: "Cloud",
-    icon: "☁️",
-    skills: [
-      "AWS",
-      "AWS re/Start Program (EC2, S3, IAM fundamentals)"
-    ]
-  },
-  {
-    category: "AI & GenAI",
-    icon: "🤖",
-    skills: [
-      "Prompt Engineering",
-      "ChatGPT",
-      "GitHub Copilot",
-      "AI-Assisted Development",
-      "Vibe Coding",
-      "LLM Workflows"
-    ]
-  },
-  {
-    category: "Tools",
-    icon: "🛠️",
-    skills: [
-      "Git",
-      "GitHub",
-      "VS Code"
-    ]
+    title: "Selected AI Applications",
+    desc: "Prompt-engineered developer tools and workflow assistants for testing e-commerce layout variations.",
+    tags: ["Prompt Workflows", "JavaScript", "Evaluation UI"]
   }
 ];
 
-const EXPERIENCE = [
+const WORK_PROCESS = [
+  {
+    step: "01",
+    title: "Store & UI Audit",
+    desc: "Review existing theme structure, asset weight, app script overhead, and target responsive layouts."
+  },
+  {
+    step: "02",
+    title: "Liquid Architecture",
+    desc: "Build modular sections with clean schema settings, semantic markup, and native CSS styling."
+  },
+  {
+    step: "03",
+    title: "Cross-Device Testing",
+    desc: "Rigorous QA across mobile viewports, touch interactions, checkout pathways, and loading speeds."
+  },
+  {
+    step: "04",
+    title: "Merchant Handover",
+    desc: "Configure intuitive customizer controls and provide clear documentation so clients manage drops effortlessly."
+  }
+];
+
+const EXPERIENCE_HISTORY = [
   {
     role: "Shopify Developer",
     company: "Indigen Services & AI SaaS Development",
     location: "Nashik, MH",
     period: "Nov 2025 – May 2026",
-    icon: "🛍️",
-    color: "#ff6b35",
-    points: [
-      "Managing and maintaining 4 live Shopify stores: Mavena (Women's Fashion), MidFox (Pet Products), Pawfully (Pet Products), and Retromedy (Lifestyle Products).",
-      "Full store administration including catalog architecture, product listing setup, content syncs, and review widgets integration.",
-      "Developing theme sections and snippet templates in custom Liquid, HTML, CSS, and JS to expand Dawn Theme features.",
-      "Built a complete Shopify store for a coffee shop client from scratch, configuring custom sections, catalogs, navigation, and fully responsive layouts."
+    summary: "Led theme customization, custom section development, and store maintenance across multiple live e-commerce brands.",
+    contributions: [
+      {
+        type: "Store Maintenance",
+        detail: "Maintained 4 live commercial Shopify stores: Mavena (Women's Fashion), MidFox (Pet Products), Pawfully (Pet Products), and Retromedy (Lifestyle Products)."
+      },
+      {
+        type: "Full Store Build",
+        detail: "Built a complete Shopify storefront for an artisan coffee house client from scratch on Dawn, including custom roast guides, origin maps, and drawer cart."
+      },
+      {
+        type: "Liquid Engineering",
+        detail: "Replaced heavy third-party promotional apps with lightweight native Liquid snippets for announcement bars and synchronized review widgets."
+      }
     ],
     stores: [
-      { name: "Mavena", desc: "Women's Fashion", link: "https://mavenaco.com/" },
-      { name: "MidFox", desc: "Pet Products", link: "https://midfox.com/" },
-      { name: "Pawfully", desc: "Pet Products" },
-      { name: "Retromedy", desc: "Lifestyle Products" }
+      { name: "Mavena", niche: "Women's Fashion", url: "https://mavenaco.com/" },
+      { name: "MidFox", niche: "Pet Products", url: "https://midfox.com/" },
+      { name: "Pawfully", niche: "Pet Supplies" },
+      { name: "Retromedy", niche: "Lifestyle Goods" }
     ]
   },
   {
@@ -127,1489 +117,1779 @@ const EXPERIENCE = [
     company: "Privan Sports",
     location: "Nashik, MH",
     period: "Jul 2024 – Mar 2025",
-    icon: "📊",
-    color: "#a78bfa",
-    points: [
-      "SQ Project: Sports data annotation, frame-by-frame event tagging, and dataset preparation.",
-      "VidSwap Project: Basketball match annotation, play tagging, possession tracking, and event classification."
+    summary: "Sports data annotation, video analysis, and dataset preparation for algorithmic performance models.",
+    contributions: [
+      {
+        type: "VidSwap Project",
+        detail: "Basketball match annotation, possession tracking, player positioning classification, and event logging."
+      },
+      {
+        type: "SQ Project",
+        detail: "Frame-by-frame event tagging and structured dataset verification for high-precision sports analytics."
+      }
     ]
   }
 ];
 
-const PROJECTS = PROJECTS_DATA;
-
-const EDUCATION = [
+const EDUCATION_HISTORY = [
   {
     degree: "Master of Computer Applications (MCA)",
-    school: "Dr. B.V. Hiray College of Management",
-    location: "Nashik",
+    institution: "Dr. B.V. Hiray College of Management",
+    location: "Nashik, Maharashtra",
     period: "2023 – 2025",
-    focus: "Application Development & Data Analytics",
-    icon: "🎓",
-    color: "#ff6b35"
+    focus: "Application Development, Web Architectures & Database Systems"
   },
   {
-    degree: "BSc Computer Science",
-    school: "Loknete Vyankatrao Hiray College",
-    location: "Nashik",
+    degree: "Bachelor of Science in Computer Science (BSc CS)",
+    institution: "Loknete Vyankatrao Hiray College",
+    location: "Nashik, Maharashtra",
     period: "2020 – 2023",
-    focus: "Software Engineering & Database Management",
-    icon: "🏫",
-    color: "#a78bfa"
+    focus: "Software Engineering, Algorithms & Database Management"
   }
 ];
 
-const CERTIFICATIONS = [
-  { title: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services", icon: "☁️", color: "#3b82f6", status: "In Progress" },
-  { title: "AWS re/Start Graduate", issuer: "Amazon Web Services", icon: "🎓", color: "#f59e0b", status: "Completed" },
-  { title: "Shopify Developer Certification", issuer: "Shopify", icon: "🛍️", color: "#ff6b35", status: "Planned" },
-  { title: "AWS Solutions Architecture Simulation", issuer: "Amazon Web Services", icon: "🏗", color: "#ff6b35", status: "Completed" },
-  { title: "Introduction to Tech Apprenticeship", issuer: "Accenture UK", icon: "💼", color: "#00d4aa", status: "Completed" },
-  { title: "Deloitte Australia Technology Job Simulation", issuer: "Deloitte Australia", icon: "🔷", color: "#a78bfa", status: "Completed" },
-  { title: "GenAI Powered Data Analytics", issuer: "Tata", icon: "🤖", color: "#ec4899", status: "Completed" }
-];
+const CREDENTIALS = {
+  completed: [
+    {
+      title: "AWS re/Start Graduate",
+      issuer: "Amazon Web Services",
+      type: "Graduate Program"
+    }
+  ],
+  simulations: [
+    {
+      title: "AWS Solutions Architecture Simulation",
+      issuer: "Amazon Web Services / Forage",
+      type: "Job Simulation"
+    },
+    {
+      title: "Deloitte Australia Technology Simulation",
+      issuer: "Deloitte Australia / Forage",
+      type: "Job Simulation"
+    },
+    {
+      title: "Introduction to Tech Apprenticeship",
+      issuer: "Accenture UK / Forage",
+      type: "Job Simulation"
+    },
+    {
+      title: "GenAI Powered Data Analytics",
+      issuer: "Tata / Forage",
+      type: "Job Simulation"
+    }
+  ],
+  inProgress: [
+    {
+      title: "AWS Certified Cloud Practitioner",
+      issuer: "Amazon Web Services",
+      status: "In Progress"
+    },
+    {
+      title: "Shopify Developer Certification",
+      issuer: "Shopify",
+      status: "Planned"
+    }
+  ]
+};
 
-const RESUME_DETAILS = [
-  { icon: "📧", label: "Email", value: "nikamvaruna@gmail.com" },
-  { icon: "📞", label: "Phone", value: "+91 776 802 8906" },
-  { icon: "📍", label: "Location", value: "Nashik, MH, India" },
-  { icon: "🌐", label: "Languages", value: "English, Hindi, Marathi" }
-];
+/* ─── ROOT COMPONENT ──────────────────────────────────────────────────── */
+export default function Portfolio() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeCaseStudy, setActiveCaseStudy] = useState(null);
 
-/* ─── HOOKS ─────────────────────────────────────────────────────────────── */
+  // Contact Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    inquiryType: 'Hiring for a Role',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState({ loading: false, success: false, error: null });
 
-function useInView(threshold = 0.1) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
+  // Close mobile nav on escape
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-  return [ref, visible];
-}
-
-/* ─── SMALL COMPONENTS ─────────────────────────────────────────────────── */
-
-function SectionLabel({ label }) {
-  return (
-    <p style={{
-      color: "#94a3b8",
-      fontFamily: "'JetBrains Mono', monospace",
-      fontSize: 11,
-      letterSpacing: 3,
-      textTransform: "uppercase",
-      margin: 0,
-    }}>
-      {label}
-    </p>
-  );
-}
-
-function AnimatedBar({ level, color, visible }) {
-  return (
-    <div style={{ background: "#1a1a2e", borderRadius: 99, height: 7, overflow: "hidden" }}>
-      <div style={{
-        height: "100%",
-        borderRadius: 99,
-        background: `linear-gradient(90deg, ${color}, ${color}88)`,
-        width: visible ? `${level}%` : "0%",
-        transition: "width 1.4s cubic-bezier(0.4,0,0.2,1)",
-        boxShadow: `0 0 12px ${color}55`,
-      }} />
-    </div>
-  );
-}
-
-function TypedText({ titles }) {
-  const defaultTitles = ["Shopify Developer", "Frontend Developer", "AI-Assisted Developer", "E-commerce Specialist"];
-  const activeTitles = titles && titles.length ? titles : defaultTitles;
-  const [display, setDisplay] = useState("");
-  const [ti, setTi] = useState(0);
-  const [del, setDel] = useState(false);
-  const [ci, setCi] = useState(0);
-  useEffect(() => {
-    const cur = activeTitles[ti % activeTitles.length];
-    const timer = setTimeout(() => {
-      if (!del) {
-        setDisplay(cur.slice(0, ci + 1));
-        if (ci + 1 === cur.length) setTimeout(() => setDel(true), 1400);
-        else setCi(c => c + 1);
-      } else {
-        setDisplay(cur.slice(0, ci - 1));
-        if (ci - 1 === 0) {
-          setDel(false);
-          setTi(t => (t + 1) % activeTitles.length);
-          setCi(0);
-        } else setCi(c => c - 1);
-      }
-    }, del ? 50 : 95);
-    return () => clearTimeout(timer);
-  }, [ci, del, ti]);
-
-  return (
-    <div style={{ height: 50, display: "flex", alignItems: "center", gap: 6, marginTop: 18 }}>
-      <span style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(1.1rem,2.8vw,1.7rem)",
-        color: "#ff6b35",
-        fontWeight: 700,
-      }}>
-        {display}
-      </span>
-      <span style={{
-        width: 3, height: "1.3em", background: "#ff6b35",
-        borderRadius: 2, animation: "blink 1s infinite",
-      }} />
-    </div>
-  );
-}
-
-/* ─── NAV ────────────────────────────────────────────────────────────────── */
-
-/* ─── LANG TOGGLE (Feature 15) ─────────────────────────────────────────── */
-
-function LangToggle() {
-  const { lang, setLang } = useLang();
-  const langs = [
-    { code: "en", label: "EN" },
-    { code: "hi", label: "हि" },
-    { code: "mr", label: "म" },
-  ];
-  return (
-    <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-      {langs.map(l => (
-        <button
-          key={l.code}
-          onClick={() => setLang(l.code)}
-          title={l.code === "en" ? "English" : l.code === "hi" ? "Hindi" : "Marathi"}
-          style={{
-            background: lang === l.code ? "#ff6b3520" : "transparent",
-            border: `1px solid ${lang === l.code ? "#ff6b35" : "#334155"}`,
-            color: lang === l.code ? "#ff6b35" : "#94a3b8",
-            borderRadius: 6, padding: "4px 8px",
-            fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-            cursor: "pointer", transition: "all 0.2s", lineHeight: 1.4,
-          }}
-        >
-          {l.label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function Nav({ active }) {
-  const { t } = useLang();
-  const n = t.nav || {};
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", h);
-    return () => window.removeEventListener("scroll", h);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus({ loading: false, success: false, error: "Please fill in all required fields." });
+      return;
+    }
+
+    setFormStatus({ loading: true, success: false, error: null });
+
+    try {
+      await submitFormToFormspree(formData);
+      setFormStatus({ loading: false, success: true, error: null });
+      setFormData({ name: '', email: '', inquiryType: 'Hiring for a Role', message: '' });
+    } catch (err) {
+      console.error("Form submission error:", err);
+      setFormStatus({
+        loading: false,
+        success: false,
+        error: "Message delivery failed. Please email me directly at " + EMAIL_ADDRESS
+      });
+    }
+  };
+
   return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-      padding: "0 6vw", height: 64,
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      background: scrolled ? "#060a14f0" : "transparent",
-      backdropFilter: scrolled ? "blur(20px)" : "none",
-      borderBottom: scrolled ? "1px solid #1e293b" : "none",
-      transition: "all 0.3s",
-    }}>
-      <a href="#about" aria-label="Home" style={{
-        fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 22,
-        color: "#fff", textDecoration: "none", letterSpacing: -1,
-      }}>
-        VN<span style={{ color: "#ff6b35" }}>.</span>
+    <div style={{ backgroundColor: 'var(--bg-primary)', minHeight: '100vh', color: 'var(--text-primary)' }}>
+      {/* Skip to Content for Screen Readers & Keyboard Users */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
       </a>
 
-      <div className="nav-links" style={{ display: "flex", gap: 24, alignItems: "center" }}>
-        {NAV_ITEMS.map(item => {
-          if (item === "Projects") {
-            return (
-              <Link
-                key={item}
-                to="/projects"
-                data-hover
-                style={{
-                  color: active === item.toLowerCase() ? "#ff6b35" : "#cbd5e1",
-                  textDecoration: "none",
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 600, fontSize: 13,
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={e => e.target.style.color = "#ff6b35"}
-                onMouseLeave={e => e.target.style.color = active === item.toLowerCase() ? "#ff6b35" : "#cbd5e1"}
-              >
-                Portfolio
-              </Link>
-            );
-          }
-          return (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-              data-hover
-              style={{
-                color: active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#cbd5e1",
-                textDecoration: "none",
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 600, fontSize: 13,
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={e => e.target.style.color = "#ff6b35"}
-              onMouseLeave={e => e.target.style.color = active === item.toLowerCase().replace(/\s+/g, '-') ? "#ff6b35" : "#cbd5e1"}
-            >
-              {item}
-            </a>
-          );
-        })}
-        <a
-          href="https://github.com/varuna1704"
-          target="_blank" rel="noreferrer" data-hover
-          style={{
-            padding: "7px 18px",
-            background: "#ffffff10",
-            border: "1.5px solid #ffffff20",
-            color: "#cbd5e1",
-            borderRadius: 8,
-            textDecoration: "none",
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 700, fontSize: 12,
-            transition: "all 0.2s",
-            display: "flex", alignItems: "center", gap: 6,
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = "#24292e"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#fff"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "#ffffff10"; e.currentTarget.style.color = "#cbd5e1"; e.currentTarget.style.borderColor = "#ffffff20"; }}
-        >
-          <GitHubIcon /> {n.github || "GitHub ↗"}
-        </a>
-        <LangToggle />
-      </div>
-    </nav>
-  );
-}
-
-/* ─── HERO ────────────────────────────────────────────────────────────── */
-
-function Hero() {
-  const { t } = useLang();
-  const h = t.hero || {};
-  // Feature 11: Visitor Counter
-  const [views, setViews] = useState(null);
-  useEffect(() => {
-    fetch("https://api.countapi.xyz/hit/varuna-nikam-portfolio/visits")
-      .then(r => r.json())
-      .then(d => setViews(d.value))
-      .catch(() => {});
-  }, []);
-
-  return (
-    <section id="home" style={{
-      minHeight: "100vh", display: "flex", alignItems: "center",
-      padding: "80px 8vw 40px", position: "relative", overflow: "hidden",
-    }}>
-      {/* Ambient blobs */}
-      <div style={{
-        position: "absolute", top: "8%", right: "3%",
-        width: 500, height: 500, borderRadius: "50%",
-        background: "radial-gradient(circle, #ff6b3512 0%, transparent 70%)",
-        pointerEvents: "none", animation: "float 8s ease-in-out infinite",
-      }} />
-      <div style={{
-        position: "absolute", bottom: "5%", left: "6%",
-        width: 360, height: 360, borderRadius: "50%",
-        background: "radial-gradient(circle, #7c3aed12 0%, transparent 70%)",
-        pointerEvents: "none", animation: "float 10s ease-in-out infinite reverse",
-      }} />
-
-      {/* Main Container */}
-      <div
-        className="hero-grid"
+      {/* ─── HEADER ────────────────────────────────────────────────────── */}
+      <header
         style={{
-          zIndex: 1, display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 60, alignItems: "center",
-          width: "100%", maxWidth: 1200,
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          backgroundColor: 'rgba(11, 13, 16, 0.94)',
+          backdropFilter: 'blur(10px)',
+          borderBottom: '1px solid var(--border-default)',
+          width: '100%'
         }}
       >
-        {/* Left: Text */}
-        <div style={{ animation: "fade-in-up 0.8s ease forwards" }}>
-          <p style={{
-            color: "#ff6b35",
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 12, letterSpacing: 4,
-            textTransform: "uppercase",
-            marginBottom: 14, opacity: 0.8,
-            fontWeight: 600,
-          }}>
-            &gt; Based in Nashik, Maharashtra —
-          </p>
-          <h1 style={{
-            fontFamily: "'Syne', sans-serif",
-            fontSize: "clamp(3rem,8vw,6rem)",
-            fontWeight: 800, lineHeight: 1.04,
-            margin: 0, color: "#fff",
-          }}>
-            {h.greeting || "Varuna"}<br />
-            <span style={{ WebkitTextStroke: "2px #ff6b35", color: "transparent" }}>{h.lastName || "Nikam"}</span>
-          </h1>
-          <TypedText titles={h.roles} />
-          <p style={{
-            color: "#cbd5e1", fontSize: 16, lineHeight: 1.9,
-            maxWidth: 540, marginTop: 22,
-          }}>
-{h.description || `            Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills.
-            Building modern e-commerce experiences, scalable web apps, and AI-powered solutions.
-            Welcome to my developer portfolio — a showcase of Shopify stores, React applications, and AI-powered tools I've built.`}
-          </p>
-
-          <div style={{ display: "flex", gap: 14, marginTop: 36, flexWrap: "wrap" }}>
-            <a
-              href="#contact" data-hover
-              style={{
-                padding: "13px 32px", background: "#d9531b", color: "#FFFFFF",
-                borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-                boxShadow: "0 8px 30px rgba(217, 83, 27, 0.25)", transition: "all 0.25s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(217, 83, 27, 0.4)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(217, 83, 27, 0.25)"; }}
-            >
-              Contact Me
-            </a>
-            <a
-              href="#projects" data-hover
-              style={{
-                padding: "13px 32px", border: "1.5px solid #334155",
-                color: "#cbd5e1", borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-                transition: "all 0.25s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#cbd5e1"; e.currentTarget.style.transform = "translateY(0)"; }}
-            >
-              View Projects
-            </a>
-            <a
-              href="https://drive.google.com/file/d/1_S__H96JjAN67uPp7c1F7o6wYR00hOUS/view?usp=drive_link"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-hover
-              style={{
-                padding: "13px 32px", border: "1.5px solid #334155",
-                color: "#cbd5e1", borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-                transition: "all 0.25s", display: "flex", alignItems: "center", gap: 8,
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#cbd5e1"; e.currentTarget.style.transform = "translateY(0)"; }}
-            >
-              📄 Download Resume
-            </a>
-          </div>
-
-          {/* Social Links */}
-          <div style={{ display: "flex", gap: 24, marginTop: 24, alignItems: "center" }}>
-            <span style={{ color: "#cbd5e1", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5, fontWeight: 600 }}>{h.connect || "Connect:"}</span>
-            <a href="https://www.linkedin.com/in/varunanikam-200255255" target="_blank" rel="noreferrer" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>LinkedIn ↗</a>
-            <a href="https://github.com/varuna1704" target="_blank" rel="noreferrer" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>GitHub ↗</a>
-            <a href="mailto:nikamvaruna@gmail.com" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>Email ↗</a>
-          </div>
-
-          <div style={{
-            display: "flex", gap: 36, marginTop: 54, paddingTop: 36,
-            borderTop: "1px solid #1e293b", flexWrap: "wrap",
-          }}>
-            {[
-              { label: h.experience || "Experience", val: h.experienceVal || "1 Year" },
-              { label: h.storeProjects || "Store Projects", val: h.storeProjectsVal || "5+" },
-              { label: h.available || "Available", val: h.availableVal || "Now" },
-              { label: h.portfolioViews || "Portfolio Views", val: views ? views.toLocaleString() : "..." },
-            ].map(s => (
-              <div key={s.label}>
-                <div style={{
-                  fontFamily: "'Syne', sans-serif", fontSize: 28,
-                  fontWeight: 800, color: "#fff",
-                }}>{s.val}</div>
-                <div style={{
-                  color: "#cbd5e1", fontSize: 12, marginTop: 4,
-                  fontFamily: "'JetBrains Mono', monospace",
-                }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right: Profile Image */}
         <div
-          className="hero-image-col"
-          style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }}
+          className="container"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '72px'
+          }}
         >
-          {/* Glow rings */}
-          <div style={{
-            position: "absolute", width: 460, height: 460, borderRadius: "50%",
-            background: "radial-gradient(circle, #ff6b3510 0%, transparent 70%)",
-            filter: "blur(40px)",
-          }} />
-          
-          {/* Profile image container */}
-          <div
+          {/* Distinctive VN Monogram returning to top */}
+          <a
+            href="#home"
             style={{
-              position: "relative",
-              width: "100%", maxWidth: 380,
-              aspectRatio: "1/1.3",
-              borderRadius: 24, overflow: "hidden",
-              border: "1.5px solid #1e293b",
-              boxShadow: "0 25px 50px rgba(255,107,53,0.18), 0 0 1px rgba(255,107,53,0.1)",
-              transition: "all 0.4s cubic-bezier(0.34,1.56,0.64,1)",
-              zIndex: 2,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              textDecoration: 'none',
+              color: 'var(--text-primary)'
             }}
-            onMouseEnter={e => {
-              e.currentTarget.style.transform = "translateY(-8px) scale(1.01)";
-              e.currentTarget.style.boxShadow = "0 40px 70px rgba(255,107,53,0.28)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = "translateY(0) scale(1)";
-              e.currentTarget.style.boxShadow = "0 25px 50px rgba(255,107,53,0.18), 0 0 1px rgba(255,107,53,0.1)";
-            }}
+            aria-label="Varuna Nikam - Return to top"
           >
-            <picture style={{ width: "100%", height: "100%", display: "block" }}>
-              <source srcSet="/images/headshots/varuna-headshot-professional-dark.webp" type="image/webp" />
-              <img
-                src="/images/headshots/varuna-headshot-professional-dark.png"
-                alt="Varuna Nikam"
-                fetchPriority="high"
-                style={{
-                  width: "100%", height: "100%",
-                  objectFit: "cover", objectPosition: "center",
-                  display: "block",
-                }}
-                onError={e => {
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.parentElement.innerHTML = `
-                    <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b);gap:16px;">
-                      <div style="font-size:80px">👩‍💻</div>
-                      <div style="color:#475569;font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;">Profile Image</div>
-                    </div>
-                  `;
-                }}
-              />
-            </picture>
-          </div>
-
-          {/* Badge */}
-          <div style={{
-            position: "absolute", bottom: 20, left: "10%",
-            background: "#0f172aee", border: "1px solid #ff6b3540",
-            borderRadius: 12, padding: "10px 16px",
-            backdropFilter: "blur(12px)", zIndex: 3,
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#00d4aa", animation: "blink 2s infinite" }} />
-              <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>
-                Open to full-time opportunities
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── SKILLS ─────────────────────────────────────────────────────────── */
-
-function Skills() {
-  const { t } = useLang();
-  const s = t.skills || {};
-  const [ref, visible] = useInView();
-  const [hovered, setHovered] = useState(null);
-
-  return (
-    <section id="skills" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.6s ease" }}>
-      <SectionLabel label="06 — Skills" />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff",
-        margin: "12px 0 48px",
-      }}>
-        {s.titlePrefix || "My "}<span style={{ color: "#ff6b35" }}>{s.titleHighlight || "Toolkit"}</span>
-      </h2>
-
-      {/* Feature 7: Skills Proficiency Radar Chart */}
-      <SkillsRadar />
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
-        {SKILLS.map((cat, i) => (
-          <div
-            key={i}
-            onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
-            style={{
-              background: "#0f172a", border: "1.5px solid #1e293b",
-              borderRadius: 20, padding: 30, transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              transform: hovered === i ? "translateY(-5px)" : "translateY(0)",
-              borderColor: hovered === i ? "#ff6b35" : "#1e293b",
-              boxShadow: hovered === i ? "0 20px 40px rgba(255,107,53,0.08)" : "none",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <span style={{ fontSize: 24 }}>{cat.icon}</span>
-              <h3 style={{
-                fontFamily: "'Syne', sans-serif", fontSize: 20,
-                fontWeight: 800, color: "#fff", margin: 0
-              }}>{cat.category}</h3>
-            </div>
-            
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-              {cat.skills.map(skill => (
-                <span
-                  key={skill}
-                  style={{
-                    fontSize: 12,
-                    fontFamily: "'JetBrains Mono', monospace",
-                    color: "#ff6b35",
-                    background: "#ff6b3512",
-                    border: "1px solid #ff6b3524",
-                    padding: "6px 12px",
-                    borderRadius: 8,
-                    fontWeight: 600,
-                    transition: "all 0.2s"
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = "#ff6b35";
-                    e.currentTarget.style.color = "#fff";
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = "#ff6b3512";
-                    e.currentTarget.style.color = "#ff6b35";
-                  }}
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ─── AI DEVELOPMENT ─────────────────────────────────────────────────── */
-
-function AIDevelopment() {
-  const { t } = useLang();
-  const a = t.ai || {};
-  const [ref, visible] = useInView();
-  const workflow = [
-    { title: "Prompt Engineering", desc: "Crafting structured system prompts, few-shot contexts, and chain-of-thought rules to get reliable output from LLMs." },
-    { title: "ChatGPT & Claude", desc: "Integrating API gateways, chat contexts, and agentic workflows to build interactive conversational applications." },
-    { title: "GitHub Copilot", desc: "Using editor-integrated tools to write boilerplate, auto-generate comments, and test scripts in real time." },
-    { title: "AI Development Workflows", desc: "Orchestrating agent frameworks, vector datastores, and Retrieval-Augmented Generation (RAG) loops." },
-    { title: "Vibe Coding", desc: "Accelerating prototype loops by describing interfaces in natural language while maintaining control of system architecture." },
-    { title: "Rapid Prototyping", desc: "Deploying production-ready sandboxes and wireframes in days rather than weeks by leveraging generative code foundations." }
-  ];
-
-  return (
-    <section id="ai-development" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
-      <SectionLabel label={a.sectionLabel || "05 — AI-Assisted Development"} />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 24px",
-      }}>
-        {a.titlePrefix || "Generative "}<span style={{ color: "#ff6b35" }}>{a.titleHighlight || "AI Integration"}</span>
-      </h2>
-      <p style={{ color: "#94a3b8", fontSize: "16px", lineHeight: 1.8, marginBottom: 48, maxWidth: "700px" }}>
-        {a.description || `I leverage AI tools and prompt engineering workflows to accelerate development, improve productivity, and build intelligent solutions. By incorporating LLM capabilities, I speed up prototype testing and maintain high code coverage.`}
-      </p>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
-        {workflow.map((item, idx) => (
-          <div
-            key={idx}
-            style={{
-              background: "#0f172a", border: "1px solid #1e293b",
-              borderRadius: 16, padding: "24px 28px", transition: "all 0.25s"
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.transform = "translateY(-5px)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateY(0)"; }}
-          >
-            <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 16, fontWeight: 700, marginBottom: 10 }}>{item.title}</h3>
-            <p style={{ color: "#94a3b8", fontSize: 13, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ─── EXPERIENCE ─────────────────────────────────────────────────────── */
-
-function Experience() {
-  const { t } = useLang();
-  const exp = t.experience || {};
-  return (
-    <section id="experience" style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="03 — Experience" />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 52px",
-      }}>
-        {exp.titlePrefix || "Work "}<span style={{ color: "#ff6b35" }}>{exp.titleHighlight || "History"}</span>
-      </h2>
-      <div style={{ maxWidth: 800, position: "relative" }}>
-        <div style={{
-          position: "absolute", left: 7, top: 4, bottom: 0,
-          width: 2,
-          background: "linear-gradient(to bottom, #ff6b35, #7c3aed44)",
-          borderRadius: 2,
-        }} />
-        {EXPERIENCE.map((e, i) => (
-          <div key={i} style={{ paddingLeft: 46, marginBottom: 52, position: "relative" }}>
-            <div style={{
-              position: "absolute", left: 0, top: 5,
-              width: 16, height: 16, borderRadius: "50%",
-              background: e.color, border: "3px solid #060a14",
-              boxShadow: `0 0 0 4px ${e.color}30`,
-            }} />
             <div
               style={{
-                background: "#0f172a", border: "1px solid #1e293b",
-                borderRadius: 16, padding: "28px 30px", transition: "border-color 0.2s",
+                width: '38px',
+                height: '38px',
+                backgroundColor: 'var(--bg-card)',
+                border: '1.5px solid var(--border-default)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontFamily: 'var(--font-mono)',
+                fontWeight: '700',
+                fontSize: '0.9375rem',
+                letterSpacing: '-0.02em',
+                clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%)',
+                color: 'var(--text-primary)'
               }}
-              onMouseEnter={el => el.currentTarget.style.borderColor = e.color}
-              onMouseLeave={el => el.currentTarget.style.borderColor = "#1e293b"}
             >
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                <span style={{ fontSize: 22 }}>{e.icon}</span>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>{e.role}</h3>
-                <span style={{ color: e.color, fontSize: 13, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>@ {e.company}</span>
-              </div>
-              <div style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginBottom: 20 }}>
-                <span>📍 {e.location}</span>
-                <span style={{ margin: "0 12px", opacity: 0.3 }}>|</span>
-                <span>📅 {e.period}</span>
-              </div>
-              <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
-                {e.points.map((p, j) => (
-                  <li key={j} style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.6, marginBottom: 10, display: "flex", gap: 12 }}>
-                    <span style={{ color: e.color, marginTop: 4 }}>▹</span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              {/* Managed stores card grid */}
-              {e.stores && (
-                <div style={{ marginTop: 24, borderTop: "1px solid #1e293b", paddingTop: 20 }}>
-                  <h4 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, marginBottom: 14 }}>
-                    {exp.managedStoresHeading || "Managed Production Stores"}
-                  </h4>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
-                    {e.stores.map((s, idx) => {
-                      const cardStyle = {
-                        background: "#111827",
-                        border: "1px solid #1e293b",
-                        borderRadius: 10,
-                        padding: 12,
-                        transition: "all 0.3s ease",
-                        textDecoration: "none",
-                        display: "block"
-                      };
-                      if (s.link) {
-                        return (
-                          <a
-                            key={idx}
-                            href={s.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="store-card-link"
-                            style={cardStyle}
-                          >
-                            <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                              <span>{s.name}</span>
-                              <span style={{ color: e.color, fontSize: 11 }}>↗</span>
-                            </div>
-                            <div style={{ color: "#94a3b8", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
-                          </a>
-                        );
-                      }
-                      return (
-                        <div key={idx} style={cardStyle}>
-                          <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 13, fontWeight: 700 }}>{s.name}</div>
-                          <div style={{ color: "#94a3b8", fontSize: 11, fontFamily: "'JetBrains Mono', monospace", marginTop: 4 }}>{s.desc}</div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+              <span style={{ color: 'var(--accent-orange)' }}>V</span>N
+            </div>
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontWeight: '600',
+                fontSize: '0.9375rem',
+                letterSpacing: '-0.01em'
+              }}
+            >
+              Varuna Nikam
+            </span>
+          </a>
+
+          {/* Desktop Navigation Links */}
+          <nav
+            aria-label="Main Navigation"
+            className="desktop-nav"
+            style={{ display: 'flex', alignItems: 'center', gap: '32px' }}
+          >
+            <a
+              href="#work"
+              style={{
+                fontSize: '0.9375rem',
+                color: 'var(--text-secondary)',
+                fontWeight: '500',
+                transition: 'color 0.2s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+            >
+              Work
+            </a>
+            <a
+              href="#about"
+              style={{
+                fontSize: '0.9375rem',
+                color: 'var(--text-secondary)',
+                fontWeight: '500',
+                transition: 'color 0.2s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+            >
+              About
+            </a>
+            <a
+              href="#experience"
+              style={{
+                fontSize: '0.9375rem',
+                color: 'var(--text-secondary)',
+                fontWeight: '500',
+                transition: 'color 0.2s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+            >
+              Experience
+            </a>
+            <a
+              href="#contact"
+              style={{
+                fontSize: '0.9375rem',
+                color: 'var(--text-secondary)',
+                fontWeight: '500',
+                transition: 'color 0.2s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+            >
+              Contact
+            </a>
+
+            {/* Compact Resume Action */}
+            <ClippedButton
+              label="View Resume"
+              href={RESUME_URL}
+            />
+          </nav>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="mobile-menu-toggle"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            style={{
+              display: 'none',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '42px',
+              height: '42px',
+              border: '1px solid var(--border-default)',
+              backgroundColor: 'var(--bg-card)',
+              color: 'var(--text-primary)',
+              borderRadius: '2px',
+              cursor: 'pointer'
+            }}
+          >
+            {mobileMenuOpen ? <IconClose size={20} /> : <IconMenu size={20} />}
+          </button>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div
+            id="mobile-navigation"
+            style={{
+              backgroundColor: 'var(--bg-card)',
+              borderBottom: '1px solid var(--border-default)',
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px'
+            }}
+          >
+            <a
+              href="#work"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: '600' }}
+            >
+              Work
+            </a>
+            <a
+              href="#about"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: '600' }}
+            >
+              About
+            </a>
+            <a
+              href="#experience"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: '600' }}
+            >
+              Experience
+            </a>
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: '600' }}
+            >
+              Contact
+            </a>
+            <div style={{ paddingTop: '12px', borderTop: '1px solid var(--border-subtle)' }}>
+              <ClippedButton
+                label="View Resume"
+                href={RESUME_URL}
+                onClick={() => setMobileMenuOpen(false)}
+              />
             </div>
           </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+        )}
+      </header>
 
-/* ─── PROJECTS ────────────────────────────────────────────────────────── */
+      {/* ─── MAIN CONTENT ──────────────────────────────────────────────── */}
+      <main id="main-content">
 
-function Projects() {
-  const { t } = useLang();
-  const p = t.projects || {};
-  const [ref, visible] = useInView();
-  const [hovered, setHovered] = useState(null);
-  const scrollRef = useRef(null);
-
-  // Track horizontal scroll position for parallax effect
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [containerWidth, setContainerWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setContainerWidth(el.clientWidth);
-
-    const onScroll = () => {
-      setScrollLeft(el.scrollLeft);
-    };
-    const onResize = () => {
-      setContainerWidth(el.clientWidth);
-    };
-
-    el.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-
-    return () => {
-      el.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
-  // Convert vertical mouse wheel scrolling into horizontal scrolling
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const onWheel = (e) => {
-      if (e.deltaY === 0) return;
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      
-      const isScrollingRight = e.deltaY > 0;
-      const isAtEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 10;
-      const isAtStart = el.scrollLeft <= 10;
-
-      if ((isScrollingRight && !isAtEnd) || (!isScrollingRight && !isAtStart)) {
-        e.preventDefault();
-        el.scrollLeft += e.deltaY;
-      }
-    };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, []);
-
-  const glowColors = [
-    "#3b82f6", // Blue
-    "#a855f7", // Purple
-    "#ec4899", // Pink
-    "#ff6b35", // Orange
-    "#06b6d4", // Cyan
-    "#10b981"  // Green
-  ];
-
-  const glowRgb = [
-    "59, 130, 246",
-    "168, 85, 247",
-    "236, 72, 153",
-    "255, 107, 53",
-    "6, 182, 212",
-    "16, 185, 129"
-  ];
-
-  const tilts = [-3.5, 4, -4.5, 3, -3, 4.5, -4];
-
-  return (
-    <section id="projects" ref={ref} style={{ padding: "100px 0", overflow: "hidden" }}>
-      <div style={{ padding: "0 8vw" }}>
-        <SectionLabel label="04 — Projects" />
-        <h2 style={{
-          fontFamily: "'Syne', sans-serif",
-          fontSize: "clamp(2rem,5vw,3.2rem)",
-          fontWeight: 800, color: "#fff", margin: "12px 0 48px",
-        }}>
-          Selected <span style={{ color: "#ff6b35" }}>Works</span>
-        </h2>
-      </div>
-
-      {/* Horizontal Carousel Container */}
-      <div
-        ref={scrollRef}
-        className="projects-scroll-container"
-        style={{
-          display: "flex",
-          overflowX: "auto",
-          gap: "40px",
-          padding: "40px 8vw 60px",
-          scrollBehavior: "smooth",
-          scrollSnapType: "x mandatory",
-          WebkitOverflowScrolling: "touch",
-          scrollbarWidth: "none",
-        }}
-      >
-        {PROJECTS.map((p, i) => {
-          const tilt = tilts[i % tilts.length];
-          const glowColor = glowColors[i % glowColors.length];
-          const glowColorRgb = glowRgb[i % glowRgb.length];
-
-          // Calculate relative position within the container viewport (-1 to 1)
-          const cardWidth = 380;
-          const gap = 40;
-          const cardLeft = i * (cardWidth + gap);
-          const relativePos = containerWidth ? (cardLeft - scrollLeft) / containerWidth : 0;
-          // Map relative position to horizontal parallax offset (-25px to +25px)
-          const parallaxX = relativePos * -25;
-
-          return (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 50, rotate: tilt, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, rotate: tilt, scale: 1 }}
-              viewport={{ root: scrollRef, once: true, amount: 0.1 }}
-              transition={{ duration: 0.8, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{
-                y: -15,
-                rotate: tilt * 1.15,
-                scale: 1.01,
-                transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
-              }}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
+        {/* ─── HERO SECTION ────────────────────────────────────────────── */}
+        <section
+          id="home"
+          className="section-padding"
+          style={{
+            borderBottom: '1px solid var(--border-default)',
+            position: 'relative'
+          }}
+        >
+          <div className="container">
+            <div
               style={{
-                background: "#0f172a",
-                border: "1.5px solid #1e293b",
-                borderRadius: 24,
-                width: "clamp(300px, 85vw, 380px)",
-                flexShrink: 0,
-                scrollSnapAlign: "center",
-                position: "relative",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                overflow: "visible",
-                boxShadow: hovered === i 
-                  ? `0 10px 30px rgba(${glowColorRgb}, 0.15), 0 30px 60px rgba(${glowColorRgb}, 0.1), 0 0 100px rgba(${glowColorRgb}, 0.08)`
-                  : "0 10px 30px rgba(0,0,0,0.5)",
-                borderColor: hovered === i ? glowColor : "#1e293b",
-                transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: 'clamp(36px, 6vw, 64px)',
+                alignItems: 'center'
               }}
             >
-              {/* Soft Radial Ambient Backplate Glow */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: "-15px",
-                  background: `radial-gradient(circle, rgba(${glowColorRgb}, 0.2) 0%, transparent 70%)`,
-                  filter: "blur(35px)",
-                  zIndex: -1,
-                  pointerEvents: "none",
-                  opacity: hovered === i ? 1 : 0.5,
-                  transform: hovered === i ? "scale(1.05)" : "scale(1)",
-                  transition: "opacity 0.4s ease, transform 0.4s ease"
-                }}
-              />
+              {/* Left Column: Intro, Headline, Copy, Actions */}
+              <div>
+                {/* Small Introduction */}
+                <div style={{ marginBottom: '16px' }}>
+                  <span className="mono-label">
+                    Hi, I’m Varuna Nikam
+                  </span>
+                </div>
 
-              {/* Top: Project Image */}
-              <div style={{ height: 210, overflow: "hidden", position: "relative", borderTopLeftRadius: 22, borderTopRightRadius: 22, background: p.image ? "#111827" : "linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {p.image ? (
-                  <div style={{ 
-                    width: "100%", height: "100%", overflow: "hidden",
-                    transform: `translateX(${parallaxX}px)`,
-                  }}>
-                    <picture>
-                      <source srcSet={p.image.replace(/\.(png|jpg|jpeg)$/, '.webp')} type="image/webp" />
-                      <img 
-                        src={p.image} 
-                        alt={p.title} 
-                        style={{ 
-                          width: "125%", height: "100%", objectFit: "cover", 
-                          marginLeft: "-12.5%",
-                          opacity: hovered === i ? 1 : 0.85,
-                          transform: hovered === i ? "scale(1.06)" : "scale(1)",
-                          transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)" 
-                        }}
-                        onError={e => {
-                          e.target.style.display = 'none';
-                          e.target.parentElement.innerHTML = `<span style="font-size:60px;opacity:0.15">💻</span>`;
-                        }}
-                      />
-                    </picture>
-                  </div>
-                ) : (
-                  <span style={{ 
-                    fontSize: '60px', opacity: 0.15, color: '#fff',
-                    transform: hovered === i ? 'scale(1.06)' : 'scale(1)',
-                    transition: 'transform 0.5s ease'
-                  }}>💻</span>
-                )}
-                
-                {/* Tech Type Badge */}
-                <div style={{
-                  position: "absolute",
-                  top: 16,
-                  left: 16,
-                  background: "rgba(15, 23, 42, 0.85)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  backdropFilter: "blur(8px)",
-                  padding: "4px 12px",
-                  borderRadius: 99,
-                  fontSize: 10,
-                  fontFamily: "'JetBrains Mono', monospace",
-                  color: "#fff",
-                  fontWeight: 600,
-                  zIndex: 2
-                }}>
-                  {p.language || "Project"}
+                {/* Primary Headline */}
+                <h1
+                  style={{
+                    fontSize: 'clamp(2.5rem, 5.5vw, 4rem)',
+                    color: 'var(--text-primary)',
+                    marginBottom: '20px',
+                    letterSpacing: '-0.03em',
+                    lineHeight: '1.08',
+                    fontFamily: 'var(--font-display)'
+                  }}
+                >
+                  Shopify stores.<br />
+                  <span style={{ color: 'var(--accent-orange)' }}>Thoughtful</span> web experiences.
+                </h1>
+
+                {/* Supporting Text */}
+                <p
+                  style={{
+                    fontSize: 'clamp(1rem, 1.8vw, 1.15rem)',
+                    color: 'var(--text-secondary)',
+                    marginBottom: '32px',
+                    lineHeight: '1.75'
+                  }}
+                >
+                  I build and customize Shopify storefronts with Liquid, responsive interfaces and practical integrations. Based in Nashik, I also create React applications and selected AI-powered tools.
+                </p>
+
+                {/* Action Buttons */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '24px',
+                    flexWrap: 'wrap',
+                    marginBottom: '36px'
+                  }}
+                >
+                  <EditorialAction
+                    label="Explore My Work"
+                    href="#work"
+                  />
+                  <ClippedButton
+                    label="Get My Resume"
+                    href={RESUME_URL}
+                  />
+                </div>
+
+                {/* Availability Status Badge */}
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '8px 14px',
+                    backgroundColor: 'var(--bg-card)',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: '2px',
+                    fontSize: '0.8125rem',
+                    fontFamily: 'var(--font-mono)',
+                    color: 'var(--text-secondary)'
+                  }}
+                >
+                  <span
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      backgroundColor: '#10B981',
+                      boxShadow: '0 0 8px rgba(16, 185, 129, 0.4)'
+                    }}
+                    aria-hidden="true"
+                  />
+                  <span>Available for frontend & Shopify roles · Nashik / Remote</span>
                 </div>
               </div>
 
-              {/* Middle: Content */}
-              <div style={{ padding: 28, flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                <div>
-                  <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 22, fontWeight: 800, color: "#fff", margin: "0 0 12px" }}>{p.title}</h3>
-                  <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.7, margin: "0 0 24px", height: 72, overflow: "hidden" }}>{p.description || p.desc}</p>
-                </div>
-
-                {/* Bottom: Tech Badges */}
-                <div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24 }}>
-                    {(p.tech || p.topics || []).map(t => (
-                      <span
-                        key={t}
-                        style={{
-                          fontSize: 10,
-                          fontFamily: "'JetBrains Mono', monospace",
-                          color: "#ff6b35",
-                          background: "#ff6b3512",
-                          border: "1px solid #ff6b3524",
-                          padding: "4px 10px",
-                          borderRadius: 99,
-                          fontWeight: 700
-                        }}
-                      >
-                        {t}
-                      </span>
-                    ))}
+              {/* Right Column: Professional Portrait naturally cropped */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}
+              >
+                <div
+                  style={{
+                    position: 'relative',
+                    maxWidth: '420px',
+                    width: '100%',
+                    backgroundColor: 'var(--bg-card)',
+                    border: '1px solid var(--border-default)',
+                    padding: '12px',
+                    clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)'
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '100%',
+                      aspectRatio: '4 / 5',
+                      overflow: 'hidden',
+                      backgroundColor: 'var(--bg-input)',
+                      position: 'relative'
+                    }}
+                  >
+                    <img
+                      src="/images/headshots/varuna-headshot-professional-dark.webp"
+                      alt="Varuna Nikam - Shopify and Frontend Developer based in Nashik, Maharashtra"
+                      loading="eager"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/images/headshots/varuna-headshot-professional-dark.png";
+                      }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center top',
+                        filter: 'contrast(1.03)'
+                      }}
+                    />
                   </div>
 
-                  {/* Footer Action Buttons */}
-                  <div style={{ display: "flex", gap: 14 }}>
-                    <a
-                      href={p.url}
-                      target="_blank" rel="noreferrer" data-hover
-                      aria-label={`View code for ${p.title} on GitHub`}
+                  {/* Subtle Caption Plate */}
+                  <div
+                    style={{
+                      marginTop: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '4px 4px 0',
+                      borderTop: '1px solid var(--border-subtle)'
+                    }}
+                  >
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
+                      VARUNA NIKAM
+                    </span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)' }}>
+                      NASHIK, MH
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── FEATURED WORK ───────────────────────────────────────────── */}
+        <section
+          id="work"
+          className="section-padding"
+          style={{
+            borderBottom: '1px solid var(--border-default)'
+          }}
+        >
+          <div className="container">
+            {/* Section Header */}
+            <div style={{ marginBottom: '48px' }}>
+              <span className="mono-label">Selected Work</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  color: 'var(--text-primary)',
+                  marginTop: '12px',
+                  fontFamily: 'var(--font-display)'
+                }}
+              >
+                Featured Projects
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', marginTop: '8px' }}>
+                Verified Shopify storefronts, theme architectures, and developer tooling.
+              </p>
+            </div>
+
+            {/* Layout: 1 Large Primary Featured Project */}
+            {FEATURED_WORK.length > 0 && (() => {
+              const main = FEATURED_WORK[0];
+              return (
+                <div
+                  style={{
+                    backgroundColor: 'var(--bg-card)',
+                    border: '1px solid var(--border-default)',
+                    marginBottom: '36px',
+                    padding: 'clamp(24px, 4vw, 44px)',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                    gap: 'clamp(24px, 4vw, 48px)',
+                    alignItems: 'center'
+                  }}
+                >
+                  {/* Left Column: Details */}
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                        {main.category}
+                      </span>
+                      <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', border: '1px solid var(--border-default)', padding: '2px 8px', color: 'var(--text-secondary)', borderRadius: '2px' }}>
+                        {main.badge}
+                      </span>
+                    </div>
+
+                    <h3
                       style={{
-                        flex: 1, padding: "11px 16px", borderRadius: "10px",
-                        border: "1.5px solid #1e293b", color: "#94a3b8", textDecoration: "none",
-                        fontSize: 13, fontWeight: 700, fontFamily: "'Syne', sans-serif",
-                        textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                        transition: "all 0.25s"
+                        fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
+                        color: 'var(--text-primary)',
+                        marginBottom: '14px',
+                        fontFamily: 'var(--font-display)'
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.color = "#94a3b8"; }}
                     >
-                      <GitHubIcon /> Code
-                    </a>
-                    {p.liveLink && (
-                      <a
-                        href={p.liveLink}
-                        target="_blank" rel="noreferrer" data-hover
-                        aria-label={`View live site for ${p.title}`}
+                      {main.title}
+                    </h3>
+
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '18px', fontSize: '1rem', lineHeight: '1.7' }}>
+                      <strong style={{ color: 'var(--text-primary)', fontWeight: '600' }}>Personal Contribution: </strong>
+                      {main.contribution}
+                    </p>
+
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '24px', fontSize: '0.95rem', lineHeight: '1.65' }}>
+                      <strong style={{ color: 'var(--text-primary)', fontWeight: '600' }}>Outcome: </strong>
+                      {main.outcome}
+                    </p>
+
+                    {/* Tech Badges */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px' }}>
+                      {main.technologies.map((t, idx) => (
+                        <span
+                          key={idx}
+                          style={{
+                            fontSize: '0.8125rem',
+                            fontFamily: 'var(--font-mono)',
+                            padding: '4px 10px',
+                            backgroundColor: 'var(--bg-input)',
+                            border: '1px solid var(--border-default)',
+                            color: 'var(--text-secondary)',
+                            borderRadius: '2px'
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Actions */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+                      <SplitArrowButton
+                        label="View Case Study"
+                        onClick={() => setActiveCaseStudy(main)}
+                      />
+                      {main.links?.live && (
+                        <UtilityButton
+                          type="live"
+                          href={main.links.live}
+                          label="Live Store"
+                        />
+                      )}
+                      {main.links?.github && (
+                        <UtilityButton
+                          type="code"
+                          href={main.links.github}
+                          label="Repository"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Right Column: 16:10 Frame Preview */}
+                  <div>
+                    <div
+                      style={{
+                        width: '100%',
+                        aspectRatio: '16 / 10',
+                        backgroundColor: 'var(--bg-input)',
+                        border: '1px solid var(--border-default)',
+                        overflow: 'hidden',
+                        position: 'relative'
+                      }}
+                    >
+                      <img
+                        src={main.image}
+                        alt={`${main.title} screenshot`}
+                        loading="lazy"
                         style={{
-                          flex: 1, padding: "11px 16px", borderRadius: "10px",
-                          background: "#d9531b", color: "#FFFFFF", textDecoration: "none",
-                          fontSize: 13, fontWeight: 600, fontFamily: "'Syne', sans-serif",
-                          textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                          boxShadow: "0 4px 12px rgba(217, 83, 27, 0.15)", transition: "all 0.25s"
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(217, 83, 27, 0.3)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(217, 83, 27, 0.15)"; }}
+                      />
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          backgroundColor: 'rgba(11, 13, 16, 0.85)',
+                          padding: '10px 16px',
+                          borderTop: '1px solid var(--border-default)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          fontFamily: 'var(--font-mono)',
+                          fontSize: '0.75rem',
+                          color: 'var(--text-tertiary)'
+                        }}
                       >
-                        Live Demo ↗
-                      </a>
+                        <span>SHOPIFY · DAWN 2.0</span>
+                        <span style={{ color: 'var(--accent-orange)' }}>FEATURED BUILD</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Layout: 2 Supporting Featured Projects Grid */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: '28px'
+              }}
+            >
+              {FEATURED_WORK.slice(1, 3).map((proj) => (
+                <div
+                  key={proj.id}
+                  style={{
+                    backgroundColor: 'var(--bg-card)',
+                    border: '1px solid var(--border-default)',
+                    padding: '28px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <div>
+                    {/* Frame Screenshot */}
+                    <div
+                      style={{
+                        width: '100%',
+                        aspectRatio: '16 / 10',
+                        backgroundColor: 'var(--bg-input)',
+                        border: '1px solid var(--border-default)',
+                        overflow: 'hidden',
+                        marginBottom: '20px'
+                      }}
+                    >
+                      <img
+                        src={proj.image}
+                        alt={`${proj.title} screenshot`}
+                        loading="lazy"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                        {proj.category}
+                      </span>
+                      <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', border: '1px solid var(--border-default)', padding: '2px 6px', color: 'var(--text-secondary)' }}>
+                        {proj.badge}
+                      </span>
+                    </div>
+
+                    <h3 style={{ fontSize: '1.35rem', color: 'var(--text-primary)', marginBottom: '12px', fontFamily: 'var(--font-display)' }}>
+                      {proj.title}
+                    </h3>
+
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', lineHeight: '1.65', marginBottom: '14px' }}>
+                      <strong style={{ color: 'var(--text-primary)', fontWeight: '600' }}>Contribution: </strong>
+                      {proj.contribution}
+                    </p>
+
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '20px' }}>
+                      <strong style={{ color: 'var(--text-primary)', fontWeight: '600' }}>Outcome: </strong>
+                      {proj.outcome}
+                    </p>
+
+                    {/* Tech List */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '24px' }}>
+                      {proj.technologies.slice(0, 4).map((t, idx) => (
+                        <span
+                          key={idx}
+                          style={{
+                            fontSize: '0.75rem',
+                            fontFamily: 'var(--font-mono)',
+                            padding: '3px 8px',
+                            backgroundColor: 'var(--bg-input)',
+                            border: '1px solid var(--border-default)',
+                            color: 'var(--text-secondary)'
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', borderTop: '1px solid var(--border-subtle)', paddingTop: '18px' }}>
+                    <SplitArrowButton
+                      label="View Case Study"
+                      onClick={() => setActiveCaseStudy(proj)}
+                    />
+                    {proj.links?.live && (
+                      <UtilityButton
+                        type="live"
+                        href={proj.links.live}
+                        label="Live Site"
+                      />
+                    )}
+                    {proj.links?.github && (
+                      <UtilityButton
+                        type="code"
+                        href={proj.links.github}
+                        label="Code"
+                      />
                     )}
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      <div style={{ marginTop: 20, display: "flex", justifyContent: "center", padding: "0 8vw" }}>
-        <Link 
-          to="/projects"
-          data-hover
-          style={{
-            padding: "14px 40px",
-            background: "transparent",
-            border: "2px solid #ff6b35",
-            color: "#ff6b35",
-            borderRadius: 12,
-            textDecoration: "none",
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 700,
-            fontSize: 15,
-            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-            display: "flex",
-            alignItems: "center",
-            gap: 10
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = "#ff6b35";
-            e.currentTarget.style.color = "#fff";
-            e.currentTarget.style.boxShadow = "0 10px 30px #ff6b3540";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "#ff6b35";
-            e.currentTarget.style.boxShadow = "none";
-          }}
-        >
-          View All Projects <span style={{ fontSize: 18 }}>→</span>
-        </Link>
-      </div>
-    </section>
-  );
-}
-
-/* ─── GITHUB SHOWCASE ────────────────────────────────────────────────── */
-
-function GithubShowcase() {
-  const { t } = useLang();
-  const g = t.github || {};
-  const [ref, visible] = useInView();
-  /* TODO: confirm these 3 repos are set to Public on GitHub, they will 404 otherwise */
-  const [repos] = useState(() => {
-    const fallbackRepos = [
-      {
-        name: "AI-customer-reviews-generator",
-        desc: "Generates authentic customer reviews with prompt engineering workflows and bulk URL processing options.",
-        lang: "JavaScript",
-        stars: 2,
-        url: "https://github.com/varuna1704/AI-customer-reviews-generator"
-      },
-      {
-        name: "vastra-bharat-legacy",
-        desc: "Premium frontend e-commerce web interface showcasing regional Indian textile heritage.",
-        lang: "TypeScript",
-        stars: 1,
-        url: "https://github.com/varuna1704/vastra-bharat-legacy"
-      },
-      {
-        name: "nashik-kubh-mela",
-        desc: "Highly responsive informational and guide platform designed for tourists visiting Nashik Kumbh Mela.",
-        lang: "JavaScript",
-        stars: 1,
-        url: "https://github.com/varuna1704/nashik-kubh-mela"
-      },
-      {
-        name: "online-system-for-farm",
-        desc: "An ERP farm management tool featuring crop record maintenance, sales flow monitoring, and a PostgreSQL database.",
-        lang: "PHP",
-        stars: 1,
-        url: "https://github.com/varuna1704/online-system-for-farm"
-      },
-      {
-        name: "the_photowala",
-        desc: "Elegant professional photography studio website including client gallery pre-selections and scheduling.",
-        lang: "TypeScript",
-        stars: 1,
-        url: "https://github.com/varuna1704/the_photowala"
-      }
-    ];
-
-    return fallbackRepos.map(r => {
-      const match = REPOS.find(m => m.name.toLowerCase() === r.name.toLowerCase() || (r.name === "AI-customer-reviews-generator" && m.name === "AI-customer-reviews-generator"));
-      if (match) {
-        return { ...r, stars: match.stargazers_count, desc: match.description || r.desc };
-      }
-      return r;
-    });
-  });
-
-  return (
-    <section id="github-showcase" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
-      <SectionLabel label="05 — GitHub Showcase" />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 48px",
-      }}>
-        {g.titlePrefix || "Code "}<span style={{ color: "#ff6b35" }}>{g.titleHighlight || "Repositories"}</span>
-      </h2>
-      
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20, marginBottom: 40 }}>
-        {[
-          { label: "Total Repositories", val: "18" },
-          { label: "Contributions (Year)", val: "320+" },
-          { label: "Top Languages", val: "Liquid, React, PHP" },
-          { label: "Streak Days", val: "12" }
-        ].map((s, idx) => (
-          <div key={idx} style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 12, padding: 20, textAlign: "center" }}>
-            <div style={{ color: "#ff6b35", fontFamily: "'Syne', sans-serif", fontSize: 24, fontWeight: 800 }}>{s.val}</div>
-            <div style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginTop: 4, textTransform: "uppercase" }}>{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
-        {repos.map((r, i) => (
-          <a
-            key={i} href={r.url} target="_blank" rel="noreferrer" data-hover
-            style={{
-              background: "#0f172a", border: "1px solid #1e293b",
-              borderRadius: 16, padding: 24, textDecoration: "none", display: "flex", flexDirection: "column", justifyContent: "space-between",
-              transition: "all 0.25s", height: "100%"
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.transform = "translateY(-5px)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateY(0)"; }}
-          >
-            <div>
-              <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, marginBottom: 8, display: "flex", justifyContent: "space-between" }}>
-                <span>{r.name}</span>
-                <span style={{ fontSize: 12 }}>↗</span>
-              </div>
-              <p style={{ color: "#94a3b8", fontSize: 13, lineHeight: 1.6, margin: "0 0 20px" }}>{r.desc}</p>
+              ))}
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", borderTop: "1px solid #1e293b", paddingTop: 12 }}>
-              <span style={{ background: "#ff6b3515", color: "#ff6b35", padding: "4px 10px", borderRadius: 99, fontSize: 10, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>
-                {r.lang}
-              </span>
-              <span style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace" }}>
-                ⭐ {r.stars}
-              </span>
-            </div>
-          </a>
-        ))}
-      </div>
-    
-      {/* Feature 9: Live GitHub Activity Graph */}
-      <GithubActivityGraph />
-</section>
-  );
-}
 
-/* ─── EDUCATION ──────────────────────────────────────────────────────── */
-
-function Education() {
-  const { t } = useLang();
-  const edu = t.education || {};
-  return (
-    <section id="education" style={{ padding: "100px 8vw" }}>
-      <SectionLabel label={edu.sectionLabel || "07 — Education"} />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 48px",
-      }}>
-        {edu.titlePrefix || "Academic "}<span style={{ color: "#ff6b35" }}>{edu.titleHighlight || "Journey"}</span>
-      </h2>
-
-      {/* Feature 8: Vertical Timeline for Education */}
-      <div style={{ maxWidth: 800, position: "relative" }}>
-        <div style={{
-          position: "absolute", left: 7, top: 4, bottom: 0,
-          width: 2,
-          background: "linear-gradient(to bottom, #ff6b35, #a78bfa 70%, transparent)",
-          borderRadius: 2,
-        }} />
-
-        {EDUCATION.map((e, i) => (
-          <div key={i} style={{ paddingLeft: 46, marginBottom: 48, position: "relative" }}>
-            <div style={{
-              position: "absolute", left: 0, top: 5,
-              width: 16, height: 16, borderRadius: "50%",
-              background: e.color, border: "3px solid #060a14",
-              boxShadow: `0 0 0 4px ${e.color}30`,
-            }} />
+            {/* Archive / Full Index Link */}
             <div
               style={{
-                background: "#0f172a", border: "1px solid #1e293b",
-                borderRadius: 16, padding: "28px 30px",
-                transition: "all 0.3s", position: "relative", overflow: "hidden",
+                marginTop: '44px',
+                textAlign: 'center',
+                padding: '24px',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-default)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '16px'
               }}
-              onMouseEnter={el => { el.currentTarget.style.borderColor = e.color; el.currentTarget.style.transform = "translateX(5px)"; }}
-              onMouseLeave={el => { el.currentTarget.style.borderColor = "#1e293b"; el.currentTarget.style.transform = "translateX(0)"; }}
             >
-              <div style={{
-                position: "absolute", top: -30, right: -30,
-                width: 120, height: 120, borderRadius: "50%",
-                background: `${e.color}12`, pointerEvents: "none",
-              }} />
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                <span style={{ fontSize: 24 }}>{e.icon}</span>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>
-                  {e.degree}
-                </h3>
+              <div>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', color: 'var(--accent-orange)' }}>
+                  CURATED PROJECT DIRECTORY
+                </span>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', marginTop: '4px' }}>
+                  Explore additional React applications, full-stack projects, and repositories.
+                </p>
               </div>
-              <p style={{ color: e.color, fontSize: 14, fontFamily: "'Syne', sans-serif", fontWeight: 700, margin: "0 0 10px" }}>
-                {e.school}
-              </p>
-              <div style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginBottom: 16, display: "flex", gap: 16 }}>
-                <span>📍 {e.location}</span>
-                <span>🗓️ {e.period}</span>
-              </div>
-              <span style={{
-                padding: "6px 16px", borderRadius: 99,
-                background: `${e.color}18`, color: e.color,
-                fontSize: 12, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600,
-                display: "inline-block"
-              }}>
-                {e.focus}
-              </span>
+
+              <Link
+                to="/projects"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  color: 'var(--text-primary)',
+                  fontFamily: 'var(--font-sans)',
+                  fontWeight: '600',
+                  fontSize: '0.9375rem',
+                  border: '1px solid var(--border-default)',
+                  backgroundColor: 'var(--bg-input)',
+                  padding: '10px 20px',
+                  borderRadius: '2px',
+                  transition: 'border-color 0.2s ease'
+                }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-orange)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-default)'}
+              >
+                <span>View All Projects</span>
+                <IconArrowRight size={16} />
+              </Link>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+        </section>
 
-/* ─── CERTIFICATIONS ─────────────────────────────────────────────────── */
+        {/* ─── ABOUT & COMPACT BENTO SECTION ───────────────────────────── */}
+        <section
+          id="about"
+          className="section-padding"
+          style={{
+            borderBottom: '1px solid var(--border-default)'
+          }}
+        >
+          <div className="container">
+            {/* Header */}
+            <div style={{ marginBottom: '44px' }}>
+              <span className="mono-label">Background & Capabilities</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  color: 'var(--text-primary)',
+                  marginTop: '12px',
+                  fontFamily: 'var(--font-display)'
+                }}
+              >
+                About & Expertise
+              </h2>
+            </div>
 
-function Certifications() {
-  const { t } = useLang();
-  const cert = t.certifications || {};
-  const [ref, visible] = useInView();
-  return (
-    <section id="certifications" ref={ref} style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="06 — Certifications" />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 48px",
-      }}>
-        {cert.titlePrefix || "Professional "}<span style={{ color: "#ff6b35" }}>{cert.titleHighlight || "Credentials"}</span>
-      </h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 18 }}>
-        {CERTIFICATIONS.map((c, i) => (
-          <div
-            key={i} data-hover
-            style={{
-              background: "#0f172a", border: "1px solid #1e293b",
-              borderRadius: 16, padding: "24px 26px",
-              display: "flex", gap: 16, alignItems: "flex-start",
-              transition: "all 0.25s",
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transitionDelay: `${i * 80}ms`,
-              cursor: "default",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = c.color; e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = `0 14px 30px ${c.color}18`; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-          >
-            <div style={{
-              fontSize: 26, flexShrink: 0, width: 50, height: 50,
-              background: `${c.color}18`, borderRadius: 12,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>{c.icon}</div>
-            <div style={{ flexGrow: 1 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8, flexWrap: "wrap", width: "100%" }}>
-                <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14, lineHeight: 1.4, marginBottom: 6, flex: 1 }}>{c.title}</div>
-                {c.status && (
-                  <span style={{
-                    fontSize: 9, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700,
-                    padding: "2px 6px", borderRadius: 4, textTransform: "uppercase",
-                    border: `1px solid ${c.status === 'Completed' ? '#00d4aa' : c.status === 'In Progress' ? '#f59e0b' : '#3b82f6'}`,
-                    background: `${c.status === 'Completed' ? '#00d4aa' : c.status === 'In Progress' ? '#f59e0b' : '#3b82f6'}15`,
-                    color: c.status === 'Completed' ? '#00d4aa' : c.status === 'In Progress' ? '#f59e0b' : '#3b82f6',
-                    whiteSpace: "nowrap"
-                  }}>{c.status}</span>
+            {/* Compact Bento Grid */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(12, 1fr)',
+                gap: '24px'
+              }}
+            >
+              {/* Card 1: Professional Story (8 Cols on Desktop) */}
+              <div
+                className="bento-card-story"
+                style={{
+                  gridColumn: 'span 8',
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--border-default)',
+                  padding: 'clamp(24px, 3.5vw, 40px)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <div>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                    01 — The Story
+                  </span>
+                  <h3
+                    style={{
+                      fontSize: '1.5rem',
+                      color: 'var(--text-primary)',
+                      margin: '12px 0 16px',
+                      fontFamily: 'var(--font-display)'
+                    }}
+                  >
+                    Frontend Foundations with Commercial E-Commerce Focus
+                  </h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.75', marginBottom: '14px' }}>
+                    Based in Nashik, Maharashtra, I hold a Master of Computer Applications (MCA) and specialize in developing customized Shopify storefronts using Liquid alongside responsive frontend applications.
+                  </p>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.75' }}>
+                    My work bridges the gap between clean code and commercial store operations. Whether configuring custom Liquid sections for Dawn, streamlining product catalogs, or engineering responsive React dashboards, I prioritize fast load times, accessible interfaces, and maintainable architectures.
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '24px',
+                    borderTop: '1px solid var(--border-subtle)',
+                    paddingTop: '20px',
+                    marginTop: '24px',
+                    flexWrap: 'wrap'
+                  }}
+                >
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>LOCATION</div>
+                    <div style={{ fontWeight: '600', color: 'var(--text-primary)' }}>Nashik, MH, India</div>
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>SPECIALTY</div>
+                    <div style={{ fontWeight: '600', color: 'var(--text-primary)' }}>Shopify Liquid & Frontend</div>
+                  </div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>DEGREE</div>
+                    <div style={{ fontWeight: '600', color: 'var(--text-primary)' }}>MCA (2023–2025)</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Availability & Collaboration (4 Cols on Desktop) */}
+              <div
+                className="bento-card-avail"
+                style={{
+                  gridColumn: 'span 4',
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--border-default)',
+                  padding: 'clamp(24px, 3.5vw, 40px)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <div>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                    02 — Availability
+                  </span>
+                  <h3
+                    style={{
+                      fontSize: '1.4rem',
+                      color: 'var(--text-primary)',
+                      margin: '12px 0 16px',
+                      fontFamily: 'var(--font-display)'
+                    }}
+                  >
+                    Open for Opportunities
+                  </h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.7', marginBottom: '20px' }}>
+                    Actively considering full-time Shopify / Frontend Developer positions, as well as selected client contracts for custom store builds and theme modernizations.
+                  </p>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                      <IconCheck size={16} color="var(--accent-orange)" />
+                      <span>Full-Time Frontend / Shopify Roles</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                      <IconCheck size={16} color="var(--accent-orange)" />
+                      <span>Shopify Theme Customization Contracts</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                      <IconCheck size={16} color="var(--accent-orange)" />
+                      <span>Remote (IST / Global) or Nashik / Pune</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: '24px' }}>
+                  <a
+                    href="#contact"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      color: 'var(--accent-orange)',
+                      fontFamily: 'var(--font-sans)'
+                    }}
+                  >
+                    <span>Discuss a role or project</span>
+                    <IconArrowRight size={16} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Card 3: Core Capabilities (Full Width / 12 Cols) */}
+              <div
+                style={{
+                  gridColumn: 'span 12',
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--border-default)',
+                  padding: 'clamp(24px, 3.5vw, 40px)'
+                }}
+              >
+                <div style={{ marginBottom: '24px' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                    03 — Capabilities
+                  </span>
+                  <h3
+                    style={{
+                      fontSize: '1.5rem',
+                      color: 'var(--text-primary)',
+                      margin: '8px 0',
+                      fontFamily: 'var(--font-display)'
+                    }}
+                  >
+                    Core Technical Strengths
+                  </h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    Practical skills grounded in real project execution without arbitrary percentage ratings.
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '20px'
+                  }}
+                >
+                  {CAPABILITIES.map((cap, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        backgroundColor: 'var(--bg-input)',
+                        border: '1px solid var(--border-subtle)',
+                        padding: '20px',
+                        borderRadius: '2px'
+                      }}
+                    >
+                      <h4
+                        style={{
+                          fontSize: '1.05rem',
+                          color: 'var(--text-primary)',
+                          marginBottom: '8px',
+                          fontFamily: 'var(--font-sans)',
+                          fontWeight: '600'
+                        }}
+                      >
+                        {cap.title}
+                      </h4>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.6', marginBottom: '14px' }}>
+                        {cap.desc}
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                        {cap.tags.map((tag, tIdx) => (
+                          <span
+                            key={tIdx}
+                            style={{
+                              fontSize: '0.75rem',
+                              fontFamily: 'var(--font-mono)',
+                              padding: '2px 8px',
+                              backgroundColor: 'var(--bg-card)',
+                              border: '1px solid var(--border-default)',
+                              color: 'var(--text-tertiary)'
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 4: Working Process (Full Width / 12 Cols) */}
+              <div
+                style={{
+                  gridColumn: 'span 12',
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--border-default)',
+                  padding: 'clamp(24px, 3.5vw, 40px)'
+                }}
+              >
+                <div style={{ marginBottom: '24px' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', textTransform: 'uppercase' }}>
+                    04 — How I Work
+                  </span>
+                  <h3
+                    style={{
+                      fontSize: '1.5rem',
+                      color: 'var(--text-primary)',
+                      margin: '8px 0',
+                      fontFamily: 'var(--font-display)'
+                    }}
+                  >
+                    Structured Delivery Process
+                  </h3>
+                </div>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gap: '20px'
+                  }}
+                >
+                  {WORK_PROCESS.map((proc, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: '16px',
+                        borderLeft: '2px solid var(--accent-orange)',
+                        backgroundColor: 'var(--bg-input)'
+                      }}
+                    >
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', color: 'var(--accent-orange)', marginBottom: '4px' }}>
+                        {proc.step}
+                      </div>
+                      <h4 style={{ fontSize: '1rem', color: 'var(--text-primary)', marginBottom: '6px', fontWeight: '600' }}>
+                        {proc.title}
+                      </h4>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.6' }}>
+                        {proc.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── EXPERIENCE & CREDENTIALS ────────────────────────────────── */}
+        <section
+          id="experience"
+          className="section-padding"
+          style={{
+            borderBottom: '1px solid var(--border-default)'
+          }}
+        >
+          <div className="container">
+            {/* Header */}
+            <div style={{ marginBottom: '48px' }}>
+              <span className="mono-label">Career & Education</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  color: 'var(--text-primary)',
+                  marginTop: '12px',
+                  fontFamily: 'var(--font-display)'
+                }}
+              >
+                Experience & Credentials
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', marginTop: '8px' }}>
+                Accurate record of professional roles, verified credentials, and academic background.
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: 'clamp(32px, 5vw, 64px)'
+              }}
+            >
+              {/* Left Column: Work History */}
+              <div>
+                <h3
+                  style={{
+                    fontSize: '1.3rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '24px',
+                    fontFamily: 'var(--font-display)',
+                    borderBottom: '1px solid var(--border-default)',
+                    paddingBottom: '12px'
+                  }}
+                >
+                  Professional Experience
+                </h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                  {EXPERIENCE_HISTORY.map((exp, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        backgroundColor: 'var(--bg-card)',
+                        border: '1px solid var(--border-default)',
+                        padding: '24px',
+                        borderRadius: '2px'
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px', marginBottom: '8px' }}>
+                        <div>
+                          <h4 style={{ fontSize: '1.15rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                            {exp.role}
+                          </h4>
+                          <div style={{ color: 'var(--accent-orange)', fontSize: '0.9375rem', fontWeight: '500' }}>
+                            {exp.company}
+                          </div>
+                        </div>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', color: 'var(--text-tertiary)' }}>
+                          {exp.period}
+                        </div>
+                      </div>
+
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '16px' }}>
+                        {exp.summary}
+                      </p>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {exp.contributions.map((c, cIdx) => (
+                          <div key={cIdx} style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                            <strong style={{ color: 'var(--text-primary)' }}>{c.type}: </strong>
+                            {c.detail}
+                          </div>
+                        ))}
+                      </div>
+
+                      {exp.stores && (
+                        <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: '1px solid var(--border-subtle)' }}>
+                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
+                            MAINTAINED CLIENT STORES:
+                          </span>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '6px' }}>
+                            {exp.stores.map((s, sIdx) => (
+                              <span
+                                key={sIdx}
+                                style={{
+                                  fontSize: '0.75rem',
+                                  fontFamily: 'var(--font-mono)',
+                                  backgroundColor: 'var(--bg-input)',
+                                  padding: '2px 8px',
+                                  border: '1px solid var(--border-subtle)',
+                                  color: 'var(--text-secondary)'
+                                }}
+                              >
+                                {s.name} ({s.niche})
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Column: Credentials & Education */}
+              <div>
+                {/* Credentials Grouping */}
+                <h3
+                  style={{
+                    fontSize: '1.3rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '24px',
+                    fontFamily: 'var(--font-display)',
+                    borderBottom: '1px solid var(--border-default)',
+                    paddingBottom: '12px'
+                  }}
+                >
+                  Verified Credentials
+                </h3>
+
+                <div style={{ marginBottom: '32px' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange)', marginBottom: '10px' }}>
+                    COMPLETED CREDENTIALS
+                  </div>
+                  {CREDENTIALS.completed.map((c, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        backgroundColor: 'var(--bg-card)',
+                        border: '1px solid var(--border-default)',
+                        padding: '14px 18px',
+                        marginBottom: '10px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: '600', color: 'var(--text-primary)', fontSize: '0.9375rem' }}>{c.title}</div>
+                        <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>{c.issuer}</div>
+                      </div>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#10B981', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '2px 8px' }}>
+                        COMPLETED
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ marginBottom: '32px' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)', marginBottom: '10px' }}>
+                    INDUSTRY JOB SIMULATIONS
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '8px' }}>
+                    {CREDENTIALS.simulations.map((c, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          backgroundColor: 'var(--bg-card)',
+                          border: '1px solid var(--border-default)',
+                          padding: '12px 16px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontWeight: '500', color: 'var(--text-primary)', fontSize: '0.875rem' }}>{c.title}</div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>{c.issuer}</div>
+                        </div>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+                          SIMULATION
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Education Grouping */}
+                <h3
+                  style={{
+                    fontSize: '1.3rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '20px',
+                    fontFamily: 'var(--font-display)',
+                    borderBottom: '1px solid var(--border-default)',
+                    paddingBottom: '12px'
+                  }}
+                >
+                  Education
+                </h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {EDUCATION_HISTORY.map((edu, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        backgroundColor: 'var(--bg-card)',
+                        border: '1px solid var(--border-default)',
+                        padding: '16px 20px'
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px' }}>
+                        <div style={{ fontWeight: '600', color: 'var(--text-primary)', fontSize: '0.95rem' }}>
+                          {edu.degree}
+                        </div>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
+                          {edu.period}
+                        </span>
+                      </div>
+                      <div style={{ color: 'var(--accent-orange)', fontSize: '0.875rem', marginTop: '2px' }}>
+                        {edu.institution} · {edu.location}
+                      </div>
+                      <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                        Focus: {edu.focus}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── CONTACT SECTION ─────────────────────────────────────────── */}
+        <section
+          id="contact"
+          className="section-padding"
+          style={{
+            position: 'relative'
+          }}
+        >
+          <div className="container">
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: 'clamp(36px, 6vw, 64px)'
+              }}
+            >
+              {/* Left Column: Headline & Direct Contact Info */}
+              <div>
+                <span className="mono-label">Get in Touch</span>
+                <h2
+                  style={{
+                    fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+                    color: 'var(--text-primary)',
+                    margin: '16px 0',
+                    fontFamily: 'var(--font-display)',
+                    lineHeight: '1.1'
+                  }}
+                >
+                  Let’s build something useful.
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: '1.7', marginBottom: '32px' }}>
+                  Whether you are hiring for a Shopify / Frontend developer role, need a custom Liquid storefront, or want to explore collaboration — my inbox is open.
+                </p>
+
+                {/* Direct Channels */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', marginBottom: '36px' }}>
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)', marginBottom: '4px' }}>
+                      DIRECT EMAIL
+                    </div>
+                    <a
+                      href={`mailto:${EMAIL_ADDRESS}`}
+                      style={{
+                        fontSize: '1.1rem',
+                        color: 'var(--text-primary)',
+                        fontWeight: '600',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      {EMAIL_ADDRESS}
+                    </a>
+                  </div>
+
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)', marginBottom: '4px' }}>
+                      LOCATION & TIMEZONE
+                    </div>
+                    <div style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>
+                      Nashik, Maharashtra, India · IST (UTC+5:30)
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)', marginBottom: '6px' }}>
+                      PROFILES
+                    </div>
+                    <div style={{ display: 'flex', gap: '14px' }}>
+                      <a
+                        href={GITHUB_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: 'var(--text-secondary)',
+                          fontSize: '0.875rem',
+                          padding: '6px 12px',
+                          border: '1px solid var(--border-default)',
+                          backgroundColor: 'var(--bg-card)'
+                        }}
+                      >
+                        <IconGitHub size={16} />
+                        <span>GitHub</span>
+                      </a>
+                      <a
+                        href={LINKEDIN_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: 'var(--text-secondary)',
+                          fontSize: '0.875rem',
+                          padding: '6px 12px',
+                          border: '1px solid var(--border-default)',
+                          backgroundColor: 'var(--bg-card)'
+                        }}
+                      >
+                        <IconLinkedIn size={16} />
+                        <span>LinkedIn</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Contact Form */}
+              <div
+                style={{
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--border-default)',
+                  padding: 'clamp(24px, 4vw, 40px)',
+                  borderRadius: '2px'
+                }}
+              >
+                <h3 style={{ fontSize: '1.3rem', color: 'var(--text-primary)', marginBottom: '20px', fontFamily: 'var(--font-display)' }}>
+                  Send a Message
+                </h3>
+
+                {formStatus.success ? (
+                  <div
+                    style={{
+                      padding: '24px',
+                      backgroundColor: 'var(--bg-input)',
+                      border: '1px solid #10B981',
+                      borderRadius: '2px',
+                      textAlign: 'center'
+                    }}
+                  >
+                    <div style={{ color: '#10B981', fontSize: '1.8rem', marginBottom: '8px' }}>✓</div>
+                    <h4 style={{ color: 'var(--text-primary)', marginBottom: '8px', fontSize: '1.1rem' }}>
+                      Message Received
+                    </h4>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                      Thank you for reaching out! I will review your note and get back to you promptly.
+                    </p>
+                    <button
+                      onClick={() => setFormStatus({ loading: false, success: false, error: null })}
+                      style={{
+                        marginTop: '16px',
+                        padding: '8px 16px',
+                        border: '1px solid var(--border-default)',
+                        backgroundColor: 'transparent',
+                        color: 'var(--text-primary)',
+                        cursor: 'pointer',
+                        fontSize: '0.875rem'
+                      }}
+                    >
+                      Send Another Message
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleFormSubmit} noValidate>
+                    {formStatus.error && (
+                      <div
+                        style={{
+                          padding: '12px 16px',
+                          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                          border: '1px solid #EF4444',
+                          color: '#F87171',
+                          fontSize: '0.875rem',
+                          marginBottom: '20px'
+                        }}
+                      >
+                        {formStatus.error}
+                      </div>
+                    )}
+
+                    {/* Name */}
+                    <div style={{ marginBottom: '18px' }}>
+                      <label
+                        htmlFor="contact-name"
+                        style={{
+                          display: 'block',
+                          fontSize: '0.875rem',
+                          fontFamily: 'var(--font-sans)',
+                          fontWeight: '500',
+                          color: 'var(--text-primary)',
+                          marginBottom: '6px'
+                        }}
+                      >
+                        Your Name <span style={{ color: 'var(--accent-orange)' }}>*</span>
+                      </label>
+                      <input
+                        id="contact-name"
+                        name="name"
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={handleFormChange}
+                        placeholder="e.g. Maya Sharma"
+                        style={{
+                          width: '100%',
+                          backgroundColor: 'var(--bg-input)',
+                          border: '1px solid var(--border-default)',
+                          color: 'var(--text-primary)',
+                          padding: '12px 14px',
+                          fontSize: '0.9375rem',
+                          borderRadius: '2px'
+                        }}
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div style={{ marginBottom: '18px' }}>
+                      <label
+                        htmlFor="contact-email"
+                        style={{
+                          display: 'block',
+                          fontSize: '0.875rem',
+                          fontFamily: 'var(--font-sans)',
+                          fontWeight: '500',
+                          color: 'var(--text-primary)',
+                          marginBottom: '6px'
+                        }}
+                      >
+                        Your Email <span style={{ color: 'var(--accent-orange)' }}>*</span>
+                      </label>
+                      <input
+                        id="contact-email"
+                        name="email"
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={handleFormChange}
+                        placeholder="e.g. maya@company.com"
+                        style={{
+                          width: '100%',
+                          backgroundColor: 'var(--bg-input)',
+                          border: '1px solid var(--border-default)',
+                          color: 'var(--text-primary)',
+                          padding: '12px 14px',
+                          fontSize: '0.9375rem',
+                          borderRadius: '2px'
+                        }}
+                      />
+                    </div>
+
+                    {/* Inquiry Type */}
+                    <div style={{ marginBottom: '18px' }}>
+                      <label
+                        htmlFor="contact-inquiry"
+                        style={{
+                          display: 'block',
+                          fontSize: '0.875rem',
+                          fontFamily: 'var(--font-sans)',
+                          fontWeight: '500',
+                          color: 'var(--text-primary)',
+                          marginBottom: '6px'
+                        }}
+                      >
+                        Nature of Inquiry
+                      </label>
+                      <select
+                        id="contact-inquiry"
+                        name="inquiryType"
+                        value={formData.inquiryType}
+                        onChange={handleFormChange}
+                        style={{
+                          width: '100%',
+                          backgroundColor: 'var(--bg-input)',
+                          border: '1px solid var(--border-default)',
+                          color: 'var(--text-primary)',
+                          padding: '12px 14px',
+                          fontSize: '0.9375rem',
+                          borderRadius: '2px'
+                        }}
+                      >
+                        <option value="Hiring for a Role">Hiring for a Developer Role</option>
+                        <option value="Shopify Project">Shopify Store Build / Theme Customization</option>
+                        <option value="Frontend Application">Frontend Web Application</option>
+                        <option value="General Conversation">General Inquiries / Networking</option>
+                      </select>
+                    </div>
+
+                    {/* Message */}
+                    <div style={{ marginBottom: '24px' }}>
+                      <label
+                        htmlFor="contact-message"
+                        style={{
+                          display: 'block',
+                          fontSize: '0.875rem',
+                          fontFamily: 'var(--font-sans)',
+                          fontWeight: '500',
+                          color: 'var(--text-primary)',
+                          marginBottom: '6px'
+                        }}
+                      >
+                        Tell me about the role or project <span style={{ color: 'var(--accent-orange)' }}>*</span>
+                      </label>
+                      <textarea
+                        id="contact-message"
+                        name="message"
+                        required
+                        rows={4}
+                        value={formData.message}
+                        onChange={handleFormChange}
+                        placeholder="Briefly describe your timeline, requirements, or role details..."
+                        style={{
+                          width: '100%',
+                          backgroundColor: 'var(--bg-input)',
+                          border: '1px solid var(--border-default)',
+                          color: 'var(--text-primary)',
+                          padding: '12px 14px',
+                          fontSize: '0.9375rem',
+                          borderRadius: '2px',
+                          resize: 'vertical'
+                        }}
+                      />
+                    </div>
+
+                    {/* Offset-Shadow Button: "Send Message" */}
+                    <OffsetShadowButton
+                      label="Send Message"
+                      loading={formStatus.loading}
+                      type="submit"
+                    />
+                  </form>
                 )}
               </div>
-              <div style={{ color: c.color, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 600 }}>{c.issuer}</div>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+        </section>
 
-/* ─── RESUME ─────────────────────────────────────────────────────────── */
+      </main>
 
-function Resume() {
-  const { t } = useLang();
-  const r = t.resume || {};
-  return (
-    <section id="resume" style={{ padding: "100px 8vw" }}>
-      <SectionLabel label={r.sectionLabel || "09 — Resume"} />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 14px",
-      }}>
-        {r.titlePrefix || "My "}<span style={{ color: "#ff6b35" }}>{r.titleHighlight || "Resume"}</span>
-      </h2>
-      <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 48 }}>
-        {r.subtitle || "A snapshot of my professional background — download the full PDF below."}
-      </p>
-
-      <div
-        className="resume-grid"
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, maxWidth: 960, alignItems: "start" }}
+      {/* ─── FOOTER ────────────────────────────────────────────────────── */}
+      <footer
+        style={{
+          borderTop: '1px solid var(--border-default)',
+          backgroundColor: 'var(--bg-input)',
+          padding: '36px 0'
+        }}
       >
         <div
-          style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 20, overflow: "hidden", transition: "box-shadow 0.3s" }}
-          onMouseEnter={e => e.currentTarget.style.boxShadow = "0 24px 60px #ff6b3520"}
-          onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
+          className="container"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '16px'
+          }}
         >
-          <div style={{ background: "#111827", padding: "16px 24px", borderBottom: "1px solid #1e293b", display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff6b35" }} />
-            <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }} />
-            <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#00d4aa" }} />
-            <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, marginLeft: 8 }}>
-              Varuna_Nikam_Resume.pdf
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontWeight: '700',
+                fontSize: '0.875rem',
+                color: 'var(--text-primary)'
+              }}
+            >
+              <span style={{ color: 'var(--accent-orange)' }}>V</span>N
+            </div>
+            <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              © 2026 Varuna Nikam. Crafted with React & Liquid.
             </span>
           </div>
-          <div style={{ padding: "28px 28px 24px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid #1e293b" }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: "50%",
-                background: "#ff6b3520", border: "2px solid #ff6b3540",
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20,
-              }}>👩‍💻</div>
-              <div>
-                <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 16 }}>Varuna Nikam</div>
-                <div style={{ color: "#ff6b35", fontFamily: "'JetBrains Mono', monospace", fontSize: 10, marginTop: 2 }}>
-                  SHOPIFY DEVELOPER · DATA ANALYST · MCA 2025
-                </div>
-              </div>
-            </div>
-            {RESUME_DETAILS.map((d, i) => (
-              <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
-                <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{d.icon}</span>
-                <div>
-                  <div style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: 1 }}>{d.label}</div>
-                  <div style={{ color: "#94a3b8", fontFamily: "'Syne', sans-serif", fontSize: 12, fontWeight: 600, marginTop: 2 }}>{d.value}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 24, justifyContent: "center" }}>
-          <div>
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 22, color: "#fff", margin: "0 0 12px" }}>
-              Professional Resume
-            </h3>
-            <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.8 }}>
-              My resume includes my full work history, educational background, technical skills,
-              and all 5 professional certifications — ready for any recruiter or job portal.
-            </p>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <a
-              href="https://drive.google.com/file/d/1_S__H96JjAN67uPp7c1F7o6wYR00hOUS/view?usp=drive_link"
+              href="#home"
+              style={{
+                fontSize: '0.8125rem',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--text-secondary)',
+                textDecoration: 'none'
+              }}
+            >
+              BACK TO TOP ↑
+            </a>
+            <a
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              data-hover
-              style={{
-                padding: "14px 28px", background: "#d9531b", color: "#FFFFFF",
-                borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: 14,
-                boxShadow: "0 8px 30px rgba(217, 83, 27, 0.25)", transition: "all 0.25s",
-                textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(217, 83, 27, 0.4)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(217, 83, 27, 0.25)"; }}
+              aria-label="GitHub Profile"
+              style={{ color: 'var(--text-secondary)' }}
             >
-              <span style={{ fontSize: 16 }}>📄</span> View Resume (Google Drive) ↗
+              <IconGitHub size={18} />
             </a>
             <a
-              href="/Varuna_Nikam_Resume.pdf"
-              download="Varuna_Nikam_Resume.pdf"
-              data-hover
-              style={{
-                padding: "14px 28px", border: "1.5px solid #334155", color: "#94a3b8",
-                borderRadius: 10, textDecoration: "none",
-                fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-                transition: "all 0.25s",
-                textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-3px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#334155"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.transform = "translateY(0)"; }}
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
+              style={{ color: 'var(--text-secondary)' }}
             >
-              <span style={{ fontSize: 16 }}>⬇</span> Download PDF Resume
+              <IconLinkedIn size={18} />
             </a>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── CONTACT ────────────────────────────────────────────────────────── */
-
-
-
-/* ─── ROOT ────────────────────────────────────────────────────────────── */
-
-export default function Portfolio() {
-  const { t } = useLang();
-  const [activeSection, setActiveSection] = useState("home");
-  const [introLoading, setIntroLoading] = useState(true);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
-      { threshold: 0.25 }
-    );
-    document.querySelectorAll("section[id]").forEach(s => obs.observe(s));
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <>
-      {introLoading && <IntroLoader onComplete={() => setIntroLoading(false)} />}
-      <Nav active={activeSection} />
-      <main>
-        <Hero />
-        <AboutSection />
-        <Projects />
-        <GithubShowcase />
-        <Skills />
-        <AIDevelopment />
-        <Experience />
-        <Education />
-        <Certifications />
-        <Resume />
-        <ContactSection />
-      </main>
-      <footer style={{
-        borderTop: "1px solid #0f172a",
-        padding: "24px 8vw",
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        flexWrap: "wrap", gap: 12,
-      }}>
-        <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
-          {t.footer?.copyright || "© 2025 Varuna Nikam · Nashik, Maharashtra"}
-        </span>
-        <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
-          {t.footer?.builtWith || "Built with React ⚡"}
-        </span>
       </footer>
-    </>
+
+      {/* ─── CASE STUDY MODAL ──────────────────────────────────────────── */}
+      {activeCaseStudy && (
+        <CaseStudyModal
+          study={activeCaseStudy}
+          onClose={() => setActiveCaseStudy(null)}
+        />
+      )}
+    </div>
   );
 }
