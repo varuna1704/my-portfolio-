@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Portfolio from './components/Portfolio';
 import Cursor from './components/Cursor';
+import NotFound from './components/NotFound';
 
 const Projects = lazy(() => import('./components/Projects'));
 
@@ -22,6 +23,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Portfolio />} />
           <Route path="/projects" element={<Projects />} />
+          {/* Feature 10: Branded 404 Page */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </Router>

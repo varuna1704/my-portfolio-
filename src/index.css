@@ -4,7 +4,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: none !important;
 }
 
 html {
@@ -70,10 +69,20 @@ body {
   animation: fade-in-up 0.7s ease forwards;
 }
 
-/* Mobile nav */
+/* Desktop nav — hide hamburger */
+.hamburger-btn {
+  display: none !important;
+}
+
+/* Mobile nav — hide links, show hamburger */
 @media (max-width: 768px) {
-  .nav-links a:not(:last-child) {
-    display: none;
+  .nav-links {
+    display: none !important;
+  }
+  .hamburger-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
   }
 }
 

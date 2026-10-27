@@ -6,6 +6,10 @@ import AboutSection from "./AboutSection";
 import ContactSection from "./ContactSection";
 import PROJECTS_DATA from "../data/projects.json";
 import REPOS from "../data/repos.json";
+import { useLang } from "../context/LangContext.jsx";
+import IntroLoader from "./IntroLoader.jsx";
+import SkillsRadar from "./SkillsRadar.jsx";
+import GithubActivityGraph from "./GithubActivityGraph.jsx";
 
 // GitHub SVG Icon
 const GitHubIcon = () => (
@@ -172,16 +176,6 @@ const RESUME_DETAILS = [
   { icon: "🌐", label: "Languages", value: "English, Hindi, Marathi" }
 ];
 
-const CAT_COLORS = {
-  "Shopify": "#ff6b35",
-  "Frontend": "#00d4aa",
-  "Programming": "#7c3aed",
-  "Databases": "#f59e0b",
-  "Cloud/AWS": "#ec4899",
-  "AI & GenAI": "#10b981",
-  "Tools": "#3b82f6"
-};
-
 /* ─── HOOKS ─────────────────────────────────────────────────────────────── */
 
 function useInView(threshold = 0.1) {
@@ -230,14 +224,15 @@ function AnimatedBar({ level, color, visible }) {
   );
 }
 
-function TypedText() {
-  const titles = ["Shopify Developer", "Frontend Developer", "AI-Assisted Developer", "E-commerce Specialist"];
+function TypedText({ titles }) {
+  const defaultTitles = ["Shopify Developer", "Frontend Developer", "AI-Assisted Developer", "E-commerce Specialist"];
+  const activeTitles = titles && titles.length ? titles : defaultTitles;
   const [display, setDisplay] = useState("");
   const [ti, setTi] = useState(0);
   const [del, setDel] = useState(false);
   const [ci, setCi] = useState(0);
   useEffect(() => {
-    const cur = titles[ti];
+    const cur = activeTitles[ti % activeTitles.length];
     const timer = setTimeout(() => {
       if (!del) {
         setDisplay(cur.slice(0, ci + 1));
@@ -247,7 +242,7 @@ function TypedText() {
         setDisplay(cur.slice(0, ci - 1));
         if (ci - 1 === 0) {
           setDel(false);
-          setTi(t => (t + 1) % titles.length);
+          setTi(t => (t + 1) % activeTitles.length);
           setCi(0);
         } else setCi(c => c - 1);
       }
@@ -275,7 +270,41 @@ function TypedText() {
 
 /* ─── NAV ────────────────────────────────────────────────────────────────── */
 
+/* ─── LANG TOGGLE (Feature 15) ─────────────────────────────────────────── */
+
+function LangToggle() {
+  const { lang, setLang } = useLang();
+  const langs = [
+    { code: "en", label: "EN" },
+    { code: "hi", label: "हि" },
+    { code: "mr", label: "म" },
+  ];
+  return (
+    <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+      {langs.map(l => (
+        <button
+          key={l.code}
+          onClick={() => setLang(l.code)}
+          title={l.code === "en" ? "English" : l.code === "hi" ? "Hindi" : "Marathi"}
+          style={{
+            background: lang === l.code ? "#ff6b3520" : "transparent",
+            border: `1px solid ${lang === l.code ? "#ff6b35" : "#334155"}`,
+            color: lang === l.code ? "#ff6b35" : "#94a3b8",
+            borderRadius: 6, padding: "4px 8px",
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+            cursor: "pointer", transition: "all 0.2s", lineHeight: 1.4,
+          }}
+        >
+          {l.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function Nav({ active }) {
+  const { t } = useLang();
+  const n = t.nav || {};
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -360,8 +389,9 @@ function Nav({ active }) {
           onMouseEnter={e => { e.currentTarget.style.background = "#24292e"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#fff"; }}
           onMouseLeave={e => { e.currentTarget.style.background = "#ffffff10"; e.currentTarget.style.color = "#cbd5e1"; e.currentTarget.style.borderColor = "#ffffff20"; }}
         >
-          <GitHubIcon /> GitHub ↗
+          <GitHubIcon /> {n.github || "GitHub ↗"}
         </a>
+        <LangToggle />
       </div>
     </nav>
   );
@@ -370,6 +400,17 @@ function Nav({ active }) {
 /* ─── HERO ────────────────────────────────────────────────────────────── */
 
 function Hero() {
+  const { t } = useLang();
+  const h = t.hero || {};
+  // Feature 11: Visitor Counter
+  const [views, setViews] = useState(null);
+  useEffect(() => {
+    fetch("https://api.countapi.xyz/hit/varuna-nikam-portfolio/visits")
+      .then(r => r.json())
+      .then(d => setViews(d.value))
+      .catch(() => {});
+  }, []);
+
   return (
     <section id="home" style={{
       minHeight: "100vh", display: "flex", alignItems: "center",
@@ -417,17 +458,17 @@ function Hero() {
             fontWeight: 800, lineHeight: 1.04,
             margin: 0, color: "#fff",
           }}>
-            Varuna<br />
-            <span style={{ WebkitTextStroke: "2px #ff6b35", color: "transparent" }}>Nikam</span>
+            {h.greeting || "Varuna"}<br />
+            <span style={{ WebkitTextStroke: "2px #ff6b35", color: "transparent" }}>{h.lastName || "Nikam"}</span>
           </h1>
-          <TypedText />
+          <TypedText titles={h.roles} />
           <p style={{
             color: "#cbd5e1", fontSize: 16, lineHeight: 1.9,
             maxWidth: 540, marginTop: 22,
           }}>
-            Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills.
+{h.description || `            Experienced Shopify Developer managing real production stores, with strong frontend and AI development skills.
             Building modern e-commerce experiences, scalable web apps, and AI-powered solutions.
-            Welcome to my developer portfolio — a showcase of Shopify stores, React applications, and AI-powered tools I've built.
+            Welcome to my developer portfolio — a showcase of Shopify stores, React applications, and AI-powered tools I've built.`}
           </p>
 
           <div style={{ display: "flex", gap: 14, marginTop: 36, flexWrap: "wrap" }}>
@@ -477,7 +518,7 @@ function Hero() {
 
           {/* Social Links */}
           <div style={{ display: "flex", gap: 24, marginTop: 24, alignItems: "center" }}>
-            <span style={{ color: "#cbd5e1", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5, fontWeight: 600 }}>Connect:</span>
+            <span style={{ color: "#cbd5e1", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5, fontWeight: 600 }}>{h.connect || "Connect:"}</span>
             <a href="https://www.linkedin.com/in/varunanikam-200255255" target="_blank" rel="noreferrer" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>LinkedIn ↗</a>
             <a href="https://github.com/varuna1704" target="_blank" rel="noreferrer" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>GitHub ↗</a>
             <a href="mailto:nikamvaruna@gmail.com" data-hover style={{ color: "#cbd5e1", textDecoration: "none", fontSize: 13, fontFamily: "'JetBrains Mono', monospace", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "#ff6b35"} onMouseLeave={e => e.currentTarget.style.color = "#cbd5e1"}>Email ↗</a>
@@ -488,9 +529,10 @@ function Hero() {
             borderTop: "1px solid #1e293b", flexWrap: "wrap",
           }}>
             {[
-              { label: "Experience", val: "1 Year" },
-              { label: "Store Projects", val: "5+" },
-              { label: "Available", val: "Now" },
+              { label: h.experience || "Experience", val: h.experienceVal || "1 Year" },
+              { label: h.storeProjects || "Store Projects", val: h.storeProjectsVal || "5+" },
+              { label: h.available || "Available", val: h.availableVal || "Now" },
+              { label: h.portfolioViews || "Portfolio Views", val: views ? views.toLocaleString() : "..." },
             ].map(s => (
               <div key={s.label}>
                 <div style={{
@@ -586,6 +628,8 @@ function Hero() {
 /* ─── SKILLS ─────────────────────────────────────────────────────────── */
 
 function Skills() {
+  const { t } = useLang();
+  const s = t.skills || {};
   const [ref, visible] = useInView();
   const [hovered, setHovered] = useState(null);
 
@@ -598,8 +642,11 @@ function Skills() {
         fontWeight: 800, color: "#fff",
         margin: "12px 0 48px",
       }}>
-        My <span style={{ color: "#ff6b35" }}>Toolkit</span>
+        {s.titlePrefix || "My "}<span style={{ color: "#ff6b35" }}>{s.titleHighlight || "Toolkit"}</span>
       </h2>
+
+      {/* Feature 7: Skills Proficiency Radar Chart */}
+      <SkillsRadar />
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
         {SKILLS.map((cat, i) => (
@@ -661,6 +708,8 @@ function Skills() {
 /* ─── AI DEVELOPMENT ─────────────────────────────────────────────────── */
 
 function AIDevelopment() {
+  const { t } = useLang();
+  const a = t.ai || {};
   const [ref, visible] = useInView();
   const workflow = [
     { title: "Prompt Engineering", desc: "Crafting structured system prompts, few-shot contexts, and chain-of-thought rules to get reliable output from LLMs." },
@@ -673,16 +722,16 @@ function AIDevelopment() {
 
   return (
     <section id="ai-development" ref={ref} style={{ padding: "100px 8vw", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
-      <SectionLabel label="03 — AI-Assisted Development" />
+      <SectionLabel label={a.sectionLabel || "05 — AI-Assisted Development"} />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
         fontWeight: 800, color: "#fff", margin: "12px 0 24px",
       }}>
-        Generative <span style={{ color: "#ff6b35" }}>AI Integration</span>
+        {a.titlePrefix || "Generative "}<span style={{ color: "#ff6b35" }}>{a.titleHighlight || "AI Integration"}</span>
       </h2>
       <p style={{ color: "#94a3b8", fontSize: "16px", lineHeight: 1.8, marginBottom: 48, maxWidth: "700px" }}>
-        I leverage AI tools and prompt engineering workflows to accelerate development, improve productivity, and build intelligent solutions. By incorporating LLM capabilities, I speed up prototype testing and maintain high code coverage.
+        {a.description || `I leverage AI tools and prompt engineering workflows to accelerate development, improve productivity, and build intelligent solutions. By incorporating LLM capabilities, I speed up prototype testing and maintain high code coverage.`}
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
@@ -708,6 +757,8 @@ function AIDevelopment() {
 /* ─── EXPERIENCE ─────────────────────────────────────────────────────── */
 
 function Experience() {
+  const { t } = useLang();
+  const exp = t.experience || {};
   return (
     <section id="experience" style={{ padding: "100px 8vw" }}>
       <SectionLabel label="03 — Experience" />
@@ -716,7 +767,7 @@ function Experience() {
         fontSize: "clamp(2rem,5vw,3.2rem)",
         fontWeight: 800, color: "#fff", margin: "12px 0 52px",
       }}>
-        Work <span style={{ color: "#ff6b35" }}>History</span>
+        {exp.titlePrefix || "Work "}<span style={{ color: "#ff6b35" }}>{exp.titleHighlight || "History"}</span>
       </h2>
       <div style={{ maxWidth: 800, position: "relative" }}>
         <div style={{
@@ -764,7 +815,7 @@ function Experience() {
               {e.stores && (
                 <div style={{ marginTop: 24, borderTop: "1px solid #1e293b", paddingTop: 20 }}>
                   <h4 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: 12, textTransform: "uppercase", letterSpacing: 1, marginBottom: 14 }}>
-                    Managed Production Stores
+                    {exp.managedStoresHeading || "Managed Production Stores"}
                   </h4>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
                     {e.stores.map((s, idx) => {
@@ -816,6 +867,8 @@ function Experience() {
 /* ─── PROJECTS ────────────────────────────────────────────────────────── */
 
 function Projects() {
+  const { t } = useLang();
+  const p = t.projects || {};
   const [ref, visible] = useInView();
   const [hovered, setHovered] = useState(null);
   const scrollRef = useRef(null);
@@ -1143,6 +1196,8 @@ function Projects() {
 /* ─── GITHUB SHOWCASE ────────────────────────────────────────────────── */
 
 function GithubShowcase() {
+  const { t } = useLang();
+  const g = t.github || {};
   const [ref, visible] = useInView();
   /* TODO: confirm these 3 repos are set to Public on GitHub, they will 404 otherwise */
   const [repos] = useState(() => {
@@ -1201,7 +1256,7 @@ function GithubShowcase() {
         fontSize: "clamp(2rem,5vw,3.2rem)",
         fontWeight: 800, color: "#fff", margin: "12px 0 48px",
       }}>
-        Code <span style={{ color: "#ff6b35" }}>Repositories</span>
+        {g.titlePrefix || "Code "}<span style={{ color: "#ff6b35" }}>{g.titleHighlight || "Repositories"}</span>
       </h2>
       
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20, marginBottom: 40 }}>
@@ -1248,50 +1303,82 @@ function GithubShowcase() {
           </a>
         ))}
       </div>
-    </section>
+    
+      {/* Feature 9: Live GitHub Activity Graph */}
+      <GithubActivityGraph />
+</section>
   );
 }
 
 /* ─── EDUCATION ──────────────────────────────────────────────────────── */
 
 function Education() {
+  const { t } = useLang();
+  const edu = t.education || {};
   return (
     <section id="education" style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="05 — Education" />
+      <SectionLabel label={edu.sectionLabel || "07 — Education"} />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
         fontWeight: 800, color: "#fff", margin: "12px 0 48px",
       }}>
-        Academic <span style={{ color: "#ff6b35" }}>Journey</span>
+        {edu.titlePrefix || "Academic "}<span style={{ color: "#ff6b35" }}>{edu.titleHighlight || "Journey"}</span>
       </h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(320px,1fr))", gap: 24 }}>
+
+      {/* Feature 8: Vertical Timeline for Education */}
+      <div style={{ maxWidth: 800, position: "relative" }}>
+        <div style={{
+          position: "absolute", left: 7, top: 4, bottom: 0,
+          width: 2,
+          background: "linear-gradient(to bottom, #ff6b35, #a78bfa 70%, transparent)",
+          borderRadius: 2,
+        }} />
+
         {EDUCATION.map((e, i) => (
-          <div
-            key={i}
-            style={{
-              background: "#0f172a", border: "1px solid #1e293b",
-              borderRadius: 20, padding: "32px",
-              transition: "all 0.3s", position: "relative", overflow: "hidden",
-            }}
-            onMouseEnter={el => { el.currentTarget.style.borderColor = e.color; el.currentTarget.style.transform = "translateY(-5px)"; }}
-            onMouseLeave={el => { el.currentTarget.style.borderColor = "#1e293b"; el.currentTarget.style.transform = "translateY(0)"; }}
-          >
+          <div key={i} style={{ paddingLeft: 46, marginBottom: 48, position: "relative" }}>
             <div style={{
-              position: "absolute", top: -30, right: -30,
-              width: 120, height: 120, borderRadius: "50%",
-              background: `${e.color}12`, pointerEvents: "none",
+              position: "absolute", left: 0, top: 5,
+              width: 16, height: 16, borderRadius: "50%",
+              background: e.color, border: "3px solid #060a14",
+              boxShadow: `0 0 0 4px ${e.color}30`,
             }} />
-            <span style={{ fontSize: 38, display: "block", marginBottom: 18 }}>{e.icon}</span>
-            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 17, fontWeight: 800, color: "#fff", margin: "0 0 8px", lineHeight: 1.4 }}>{e.degree}</h3>
-            <p style={{ color: e.color, fontSize: 13, fontFamily: "'Syne', sans-serif", fontWeight: 700, margin: "0 0 8px" }}>{e.school}</p>
-            <p style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 6px" }}>📍 {e.location}</p>
-            <p style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 16px" }}>📅 {e.period}</p>
-            <span style={{
-              padding: "5px 14px", borderRadius: 99,
-              background: `${e.color}18`, color: e.color,
-              fontSize: 11, fontFamily: "'JetBrains Mono', monospace",
-            }}>{e.focus}</span>
+            <div
+              style={{
+                background: "#0f172a", border: "1px solid #1e293b",
+                borderRadius: 16, padding: "28px 30px",
+                transition: "all 0.3s", position: "relative", overflow: "hidden",
+              }}
+              onMouseEnter={el => { el.currentTarget.style.borderColor = e.color; el.currentTarget.style.transform = "translateX(5px)"; }}
+              onMouseLeave={el => { el.currentTarget.style.borderColor = "#1e293b"; el.currentTarget.style.transform = "translateX(0)"; }}
+            >
+              <div style={{
+                position: "absolute", top: -30, right: -30,
+                width: 120, height: 120, borderRadius: "50%",
+                background: `${e.color}12`, pointerEvents: "none",
+              }} />
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                <span style={{ fontSize: 24 }}>{e.icon}</span>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>
+                  {e.degree}
+                </h3>
+              </div>
+              <p style={{ color: e.color, fontSize: 14, fontFamily: "'Syne', sans-serif", fontWeight: 700, margin: "0 0 10px" }}>
+                {e.school}
+              </p>
+              <div style={{ color: "#94a3b8", fontSize: 12, fontFamily: "'JetBrains Mono', monospace", marginBottom: 16, display: "flex", gap: 16 }}>
+                <span>📍 {e.location}</span>
+                <span>🗓️ {e.period}</span>
+              </div>
+              <span style={{
+                padding: "6px 16px", borderRadius: 99,
+                background: `${e.color}18`, color: e.color,
+                fontSize: 12, fontFamily: "'JetBrains Mono', monospace", fontWeight: 600,
+                display: "inline-block"
+              }}>
+                {e.focus}
+              </span>
+            </div>
           </div>
         ))}
       </div>
@@ -1302,6 +1389,8 @@ function Education() {
 /* ─── CERTIFICATIONS ─────────────────────────────────────────────────── */
 
 function Certifications() {
+  const { t } = useLang();
+  const cert = t.certifications || {};
   const [ref, visible] = useInView();
   return (
     <section id="certifications" ref={ref} style={{ padding: "100px 8vw" }}>
@@ -1311,7 +1400,7 @@ function Certifications() {
         fontSize: "clamp(2rem,5vw,3.2rem)",
         fontWeight: 800, color: "#fff", margin: "12px 0 48px",
       }}>
-        Professional <span style={{ color: "#ff6b35" }}>Credentials</span>
+        {cert.titlePrefix || "Professional "}<span style={{ color: "#ff6b35" }}>{cert.titleHighlight || "Credentials"}</span>
       </h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 18 }}>
         {CERTIFICATIONS.map((c, i) => (
@@ -1361,18 +1450,20 @@ function Certifications() {
 /* ─── RESUME ─────────────────────────────────────────────────────────── */
 
 function Resume() {
+  const { t } = useLang();
+  const r = t.resume || {};
   return (
     <section id="resume" style={{ padding: "100px 8vw" }}>
-      <SectionLabel label="07 — Resume" />
+      <SectionLabel label={r.sectionLabel || "09 — Resume"} />
       <h2 style={{
         fontFamily: "'Syne', sans-serif",
         fontSize: "clamp(2rem,5vw,3.2rem)",
         fontWeight: 800, color: "#fff", margin: "12px 0 14px",
       }}>
-        My <span style={{ color: "#ff6b35" }}>Resume</span>
+        {r.titlePrefix || "My "}<span style={{ color: "#ff6b35" }}>{r.titleHighlight || "Resume"}</span>
       </h2>
       <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 48 }}>
-        A snapshot of my professional background — download the full PDF below.
+        {r.subtitle || "A snapshot of my professional background — download the full PDF below."}
       </p>
 
       <div
@@ -1471,113 +1562,13 @@ function Resume() {
 
 /* ─── CONTACT ────────────────────────────────────────────────────────── */
 
-function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
-  const handle = (k, v) => setForm(f => ({ ...f, [k]: v }));
-  const submit = () => {
-    if (form.name && form.email && form.message) {
-      setSent(true);
-      setTimeout(() => setSent(false), 3000);
-      setForm({ name: "", email: "", message: "" });
-    }
-  };
 
-  const inp = {
-    width: "100%", background: "#0f172a", border: "1.5px solid #1e293b",
-    borderRadius: 10, padding: "13px 16px", color: "#fff",
-    fontFamily: "'Syne', sans-serif", fontSize: 14,
-    outline: "none", boxSizing: "border-box",
-    transition: "border-color 0.2s", marginBottom: 14,
-  };
-
-  return (
-    <section id="contact" style={{ padding: "100px 8vw 60px" }}>
-      <SectionLabel label="08 — Contact" />
-      <h2 style={{
-        fontFamily: "'Syne', sans-serif",
-        fontSize: "clamp(2rem,5vw,3.2rem)",
-        fontWeight: 800, color: "#fff", margin: "12px 0 14px",
-      }}>
-        Let&apos;s <span style={{ color: "#ff6b35" }}>Work Together</span>
-      </h2>
-      <p style={{ color: "#94a3b8", fontSize: 15, marginBottom: 48 }}>
-        Open to freelance projects, full-time roles, and collaborations!
-      </p>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 52, maxWidth: 880 }}>
-        <div>
-          <input
-            type="text" placeholder="Your Name" value={form.name}
-            onChange={e => handle("name", e.target.value)} style={inp}
-            onFocus={e => e.target.style.borderColor = "#ff6b35"}
-            onBlur={e => e.target.style.borderColor = "#1e293b"}
-          />
-          <input
-            type="email" placeholder="Your Email" value={form.email}
-            onChange={e => handle("email", e.target.value)} style={inp}
-            onFocus={e => e.target.style.borderColor = "#ff6b35"}
-            onBlur={e => e.target.style.borderColor = "#1e293b"}
-          />
-          <textarea
-            placeholder="Your Message" value={form.message}
-            onChange={e => handle("message", e.target.value)} rows={5}
-            style={{ ...inp, resize: "none", marginBottom: 0 }}
-            onFocus={e => e.target.style.borderColor = "#ff6b35"}
-            onBlur={e => e.target.style.borderColor = "#1e293b"}
-          />
-          <button
-            onClick={submit} data-hover
-            style={{
-              marginTop: 14, padding: "13px 0",
-              background: sent ? "#00d4aa" : "#ff6b35",
-              color: "#fff", border: "none", borderRadius: 10,
-              fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 14,
-              cursor: "pointer", transition: "all 0.3s", width: "100%",
-              boxShadow: `0 8px 28px ${sent ? "#00d4aa40" : "#ff6b3540"}`,
-            }}
-          >
-            {sent ? "✓ Sent!" : "Send Message →"}
-          </button>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 14, justifyContent: "center" }}>
-          {[
-            { icon: "✉️", label: "Email", val: "nikamvaruna@gmail.com", href: "mailto:nikamvaruna@gmail.com" },
-            { icon: "📱", label: "Mobile", val: "+91 7768028906", href: "tel:+917768028906" },
-            { icon: "💼", label: "LinkedIn", val: "linkedin.com/in/varunanikam-200255255", href: "https://www.linkedin.com/in/varunanikam-200255255" },
-            { icon: "📍", label: "Location", val: "Nashik, Maharashtra, India", href: null },
-          ].map(c => (
-            <a
-              key={c.label} href={c.href || "#"} data-hover
-              target={c.href && c.href.startsWith("http") ? "_blank" : undefined}
-              rel={c.href && c.href.startsWith("http") ? "noreferrer" : undefined}
-              style={{
-                display: "flex", alignItems: "center", gap: 16,
-                padding: "14px 20px", background: "#0f172a",
-                border: "1px solid #1e293b", borderRadius: 12,
-                textDecoration: "none", transition: "all 0.2s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff6b35"; e.currentTarget.style.transform = "translateX(5px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e293b"; e.currentTarget.style.transform = "translateX(0)"; }}
-            >
-              <span style={{ fontSize: 20 }}>{c.icon}</span>
-              <div>
-                <div style={{ color: "#94a3b8", fontSize: 10, fontFamily: "'JetBrains Mono', monospace", textTransform: "uppercase", letterSpacing: 1 }}>{c.label}</div>
-                <div style={{ color: "#e2e8f0", fontSize: 13, fontFamily: "'Syne', sans-serif", marginTop: 2, fontWeight: 600 }}>{c.val}</div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ─── ROOT ────────────────────────────────────────────────────────────── */
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home");
+  const [introLoading, setIntroLoading] = useState(true);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -1590,6 +1581,7 @@ export default function Portfolio() {
 
   return (
     <>
+      {introLoading && <IntroLoader onComplete={() => setIntroLoading(false)} />}
       <Nav active={activeSection} />
       <main>
         <Hero />
@@ -1611,10 +1603,10 @@ export default function Portfolio() {
         flexWrap: "wrap", gap: 12,
       }}>
         <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
-          © 2025 Varuna Nikam · Nashik, Maharashtra
+          {t.footer?.copyright || "© 2025 Varuna Nikam · Nashik, Maharashtra"}
         </span>
         <span style={{ color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
-          Built with React ⚡
+          {t.footer?.builtWith || "Built with React ⚡"}
         </span>
       </footer>
     </>

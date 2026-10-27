@@ -1,11 +1,14 @@
 import { useInView, SectionLabel } from './shared';
+import { useLang } from '../context/LangContext.jsx';
 
 export default function AboutSection() {
   const [ref, visible] = useInView();
+  const { t } = useLang();
+  const a = t.about;
 
   return (
     <section id="about" ref={ref} style={{ padding: "100px 8vw", display: "flex", flexDirection: "column", gap: "60px", opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-40px)", transition: "all 0.8s ease" }}>
-      <SectionLabel label="01 — About Me" />
+      <SectionLabel label={a.sectionLabel} />
       
       <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: "60px", alignItems: "start" }}>
         {/* Left: Photo */}
@@ -34,29 +37,21 @@ export default function AboutSection() {
           {/* Header & Bio */}
           <div>
             <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 800, color: "#fff", lineHeight: 1.1, marginBottom: 24 }}>
-              Hi, I&apos;m <span style={{ color: "#ff6b35" }}>Varuna Nikam</span>
+              {a.titlePrefix}<span style={{ color: "#ff6b35" }}>{a.name}</span>
             </h2>
             <div style={{ color: "#94a3b8", fontSize: "16px", lineHeight: 1.8, display: "flex", flexDirection: "column", gap: "16px" }}>
-              <p>I am an MCA graduate and Shopify Developer with hands-on experience managing and customizing 4 live Shopify stores across fashion, pet care, and lifestyle niches.</p>
-              <p>I specialize in translating design ideas into high-performing storefronts using Liquid development, custom sections, and third-party integrations. I have experience building complete Shopify stores from scratch, managing large product catalogs, customizing themes, and delivering responsive user experiences.</p>
+              <p>{a.bio1}</p>
+              <p>{a.bio2}</p>
             </div>
           </div>
 
-          {/* What I Do */}
+          {/* What I Do / Specializations */}
           <div>
             <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "22px", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
-              <span style={{ color: "#ff6b35" }}>⚡</span> Specializations
+              {a.specializationsHeading}
             </h3>
             <div className="what-i-do-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
-              {[
-                { title: "Shopify Store Management", desc: "Full administrative setup, catalog structures, navigation, and ongoing store maintenance." },
-                { title: "Shopify Liquid Development", desc: "Writing custom templates, snippets, and section code to modify theme behaviour." },
-                { title: "Dawn Theme Customization", desc: "Configuring and extending Shopify's flagship theme with pixel-perfect styles." },
-                { title: "Product Management", desc: "Managing catalogs, conversion-focused product descriptions, image layouts, and listings." },
-                { title: "Frontend Development", desc: "Designing responsive, accessible user interfaces using HTML5, CSS3, and JavaScript." },
-                { title: "React Applications", desc: "Building scalable e-commerce showcases and single-page applications with React and TypeScript." },
-                { title: "AI-Assisted Development", desc: "Leveraging LLMs, prompt engineering workflows, and vibe coding for rapid prototyping." }
-              ].map((item, idx) => (
+              {a.specializations.map((item, idx) => (
                 <div key={idx} style={{ background: "#0f172a", border: "1px solid #1e293b", padding: "24px", borderRadius: "12px" }}>
                   <h4 style={{ color: "#e2e8f0", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "10px" }}>{item.title}</h4>
                   <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7, margin: 0 }}>{item.desc}</p>
@@ -68,16 +63,10 @@ export default function AboutSection() {
           {/* Key Stats */}
           <div>
             <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "22px", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
-              <span style={{ color: "#00d4aa" }}>📈</span> Key Stats
+              {a.keyStatsHeading}
             </h3>
             <div className="stats-facts-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "16px" }}>
-              {[
-                { label: "Live Stores", val: "4" },
-                { label: "Experience", val: "1+ Year" },
-                { label: "Projects Built", val: "7+" },
-                { label: "Availability", val: "Open" },
-                { label: "Response Time", val: "< 24h" }
-              ].map((stat, i) => (
+              {a.stats.map((stat, i) => (
                 <div key={i} style={{ background: "#111827", border: "1px solid #1e293b", padding: "16px", borderRadius: "10px", textAlign: "center" }}>
                   <div style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", fontWeight: 800 }}>{stat.val}</div>
                   <div style={{ color: "#94a3b8", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", marginTop: "4px" }}>{stat.label}</div>
@@ -89,34 +78,35 @@ export default function AboutSection() {
           {/* Why I Do This & Personal Touch */}
           <div style={{ display: "grid", gap: "24px" }}>
             <div style={{ padding: "24px", background: "#ff6b3510", borderRadius: "12px", borderLeft: "4px solid #ff6b35" }}>
-              <h3 style={{ color: "#ff6b35", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "12px" }}>Why I Do This</h3>
-              <p style={{ color: "#e2e8f0", fontSize: "15px", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>&quot;I became a developer because I love solving complex puzzles and building tools that make a difference. There&apos;s nothing more satisfying than turning a blank screen into a functional, user-friendly application that works flawlessly.&quot;</p>
+              <h3 style={{ color: "#ff6b35", fontFamily: "'Syne', sans-serif", fontSize: "18px", marginBottom: "12px" }}>{a.whyHeading}</h3>
+              <p style={{ color: "#e2e8f0", fontSize: "15px", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>{a.whyQuote}</p>
             </div>
             
             <div>
-              <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", marginBottom: "12px" }}>Personal Touch</h3>
-              <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7 }}>When I&apos;m not optimizing stores or analyzing data, you&apos;ll find me exploring new e-commerce trends, researching growth strategies, or helping other developers level up their skills.</p>
+              <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "20px", marginBottom: "12px" }}>{a.personalHeading}</h3>
+              <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.7 }}>{a.personalDesc}</p>
             </div>
           </div>
 
           {/* Working Style */}
           <div>
             <h3 style={{ color: "#fff", fontFamily: "'Syne', sans-serif", fontSize: "22px", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
-              <span style={{ color: "#f59e0b" }}>🤝</span> Working Style
+              {a.workingStyleHeading}
             </h3>
-            <p style={{ color: "#94a3b8", fontSize: "15px", marginBottom: "20px" }}>I believe in transparency, communication, and data-driven decisions. Here&apos;s how I work:</p>
+            <p style={{ color: "#94a3b8", fontSize: "15px", marginBottom: "20px" }}>{a.workingStyleIntro}</p>
             <ul style={{ color: "#94a3b8", fontSize: "15px", lineHeight: 1.8, paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "12px", margin: 0 }}>
-              <li><strong style={{ color: "#fff" }}>Collaborate First:</strong> I thrive on cross-functional alignment, actively listening to team goals, product requirements, and engineering constraints.</li>
-              <li><strong style={{ color: "#fff" }}>Analyze Deeply:</strong> I dig into the root causes of issues, reviewing performance bottlenecks and analyzing system design to implement robust, clean code.</li>
-              <li><strong style={{ color: "#fff" }}>Test & Verify:</strong> I prioritize writing clean, maintainable code backed by solid testing and verification to ensure reliability and minimize regressions.</li>
-              <li><strong style={{ color: "#fff" }}>Communicate Clearly:</strong> I keep developers, designers, and project managers aligned with clear technical documentation, code comments, and project updates.</li>
-              <li><strong style={{ color: "#fff" }}>Focus on Quality:</strong> I balance technical excellence with product delivery, focusing on stable, scalable systems that create real value for users.</li>
+              {a.workingStyles.map((ws, idx) => (
+                <li key={idx}>
+                  <strong style={{ color: "#fff" }}>{ws.title}</strong>
+                  {ws.desc}
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* CTA */}
           <div style={{ marginTop: "10px" }}>
-            <p style={{ color: "#e2e8f0", fontSize: "16px", marginBottom: "20px", fontWeight: 600 }}>If you&apos;re looking for a Shopify expert who understands both the technical side and the business impact, let&apos;s connect. I&apos;d love to learn about your store and discuss how I can help you grow.</p>
+            <p style={{ color: "#e2e8f0", fontSize: "16px", marginBottom: "20px", fontWeight: 600 }}>{a.ctaText}</p>
             <a
               href="#contact" data-hover
               style={{
@@ -128,7 +118,7 @@ export default function AboutSection() {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(217, 83, 27, 0.4)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 8px 30px rgba(217, 83, 27, 0.25)"; }}
             >
-              Let&apos;s Work Together <span style={{ fontSize: "20px" }}>→</span>
+              {a.ctaButton}
             </a>
           </div>
         </div>
@@ -139,7 +129,7 @@ export default function AboutSection() {
           .about-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 600px) {
-          .facts-grid { grid-template-columns: 1fr !important; }
+          .stats-facts-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
